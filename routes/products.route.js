@@ -5,6 +5,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const products = await readDB("products");
   res.json({
+    status: "success",
     products,
   });
 });
@@ -53,7 +54,10 @@ router.put("/:id", async (req, res) => {
   }
   products[productPut].product = req.body.product;
   await writeDB("products", products);
-  res.status(200).send();
+  res.status(200).json({
+    status: "success",
+    message: "Product updated successfully",
+  });
 });
 
 router.delete("/:id", async (req, res) => {
@@ -70,7 +74,10 @@ router.delete("/:id", async (req, res) => {
   }
   products.splice(productDelete, 1);
   await writeDB("products", products);
-  res.status(200).send();
+  res.status(200).json({
+    status: "success",
+    message: "Product deleted successfully",
+  });
 });
 
 module.exports = router;
