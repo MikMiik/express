@@ -1,16 +1,14 @@
-const express = require("express");
 const { readDB, writeDB } = require("../utils/files.util");
-const router = express.Router();
 
-router.get("/", async (req, res) => {
+const index = async (req, res) => {
   const products = await readDB("products");
   res.json({
     status: "success",
     products,
   });
-});
+};
 
-router.get("/:id", async (req, res) => {
+const show = async (req, res) => {
   const products = await readDB("products");
   const product = products.find((product) => product.id === +req.params.id);
   if (!product) {
@@ -24,9 +22,9 @@ router.get("/:id", async (req, res) => {
     status: "success",
     data: product,
   });
-});
+};
 
-router.post("/", async (req, res) => {
+const store = async (req, res) => {
   const products = await readDB("products");
   const newProduct = {
     id: products.length ? products[products.length - 1].id + 1 : 1,
@@ -38,9 +36,9 @@ router.post("/", async (req, res) => {
     status: "success",
     data: newProduct,
   });
-});
+};
 
-router.put("/:id", async (req, res) => {
+const update = async (req, res) => {
   const products = await readDB("products");
   const productPut = products.findIndex(
     (product) => product.id === +req.params.id
@@ -58,9 +56,9 @@ router.put("/:id", async (req, res) => {
     status: "success",
     message: "Product updated successfully",
   });
-});
+};
 
-router.delete("/:id", async (req, res) => {
+const destroy = async (req, res) => {
   const products = await readDB("products");
   const productDelete = products.findIndex(
     (product) => product.id === +req.params.id
@@ -78,6 +76,6 @@ router.delete("/:id", async (req, res) => {
     status: "success",
     message: "Product deleted successfully",
   });
-});
+};
 
-module.exports = router;
+module.exports = { index, show, store, update, destroy };

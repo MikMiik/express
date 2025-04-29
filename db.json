@@ -5,16 +5,33 @@
       "product": "New Product"
     },
     {
-      "id": 2,
-      "product": "Put Product"
-    },
-    {
       "id": 3,
-      "product": "Put Product"
+      "product": "empty product"
     },
     {
       "id": 4,
       "product": "New Product"
+    },
+    {
+      "id": 5,
+      "product": "More product"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "post_id": 1,
+      "content": "comment 1"
+    },
+    {
+      "id": 2,
+      "post_id": 2,
+      "content": "sssssssssss"
+    },
+    {
+      "id": 4,
+      "post_id": 4,
+      "content": "sssssssssss"
     }
   ]
 }

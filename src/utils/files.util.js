@@ -4,7 +4,6 @@ const DB_FILE = "./db.json";
 async function readDB(resource) {
   try {
     const jsonDB = await fs.readFile(DB_FILE, "utf-8");
-
     return jsonDB ? JSON.parse(jsonDB)[resource] : [];
   } catch (error) {
     return error;
