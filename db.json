@@ -1,0 +1,20 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "product": "New Product"
+    },
+    {
+      "id": 2,
+      "product": "Put Product"
+    },
+    {
+      "id": 3,
+      "product": "Put Product"
+    },
+    {
+      "id": 4,
+      "product": "New Product"
+    }
+  ]
+}
