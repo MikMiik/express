@@ -1,4 +1,8 @@
 const express = require("express");
+const {
+  createCommentValidator,
+  updateCommentValidator,
+} = require("../validation/comments.validator.js");
 
 const {
   index,
@@ -11,9 +15,9 @@ const router = express.Router();
 
 router.get("/", index);
 router.get("/:id", show);
-router.post("/", store);
-router.put("/:id", update);
-router.patch("/:id", update);
+router.post("/", createCommentValidator, store);
+router.put("/:id", updateCommentValidator, update);
+router.patch("/:id", updateCommentValidator, update);
 router.delete("/:id", destroy);
 
 module.exports = router;

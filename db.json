@@ -15,6 +15,14 @@
     {
       "id": 5,
       "product": "More product"
+    },
+    {
+      "id": 6,
+      "product": "hhhhh"
+    },
+    {
+      "id": 7,
+      "product": "yguihuhjhjk"
     }
   ],
   "comments": [
@@ -32,6 +40,31 @@
       "id": 4,
       "post_id": 4,
       "content": "sssssssssss"
+    },
+    {
+      "id": 5,
+      "post_id": 5,
+      "comment": "yguihuhjhj"
+    },
+    {
+      "id": 6,
+      "post_id": 6,
+      "comment": "yg"
+    },
+    {
+      "id": 7,
+      "post_id": 7,
+      "comment": "yg"
+    },
+    {
+      "id": 8,
+      "post_id": 8,
+      "comment": "yg"
+    },
+    {
+      "id": 9,
+      "post_id": 9,
+      "comment": "yg"
     }
   ]
 }
