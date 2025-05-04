@@ -2,16 +2,16 @@ const { readDB, writeDB } = require("../utils/files.util");
 
 const index = async (req, res) => {
   try {
-    const products = await readDB("products");
-    if (!products) {
+    const todos = await readDB("todos");
+    if (!todos) {
       return res.status(404).json({
         status: "Error",
-        message: "Product not found",
+        message: "Todo not found",
       });
     }
     res.status(200).json({
       status: "Success",
-      data: products,
+      data: todos,
     });
   } catch (error) {
     res.status(500).json({
@@ -23,17 +23,17 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
   try {
-    const products = await readDB("products");
-    const product = products.find((product) => product.id === +req.params.id);
-    if (!product) {
+    const todos = await readDB("todos");
+    const todo = todos.find((todo) => todo.id === +req.params.id);
+    if (!todo) {
       return res.status(404).json({
         status: "Error",
-        message: "Product not found",
+        message: "Todo not found",
       });
     }
     res.status(200).json({
       status: "Success",
-      data: product,
+      data: todo,
     });
   } catch (error) {
     res.status(500).json({
@@ -45,17 +45,20 @@ const show = async (req, res) => {
 
 const store = async (req, res) => {
   try {
-    const products = await readDB("products");
-    const newProduct = {
-      id: products.length ? products[products.length - 1].id + 1 : 1,
-      title: req.body.title ?? "Empty title",
-      price: req.body.price ?? 0,
-    };
-    products.push(newProduct);
-    await writeDB("products", products);
+    const todos = await readDB("todos");
+    let newTodo;
+    if (req.body.task) {
+      newTodo = {
+        id: todos.length ? todos[todos.length - 1].id + 1 : 1,
+        task: req.body.task,
+        done: req.body.done ?? false,
+      };
+    } else req.send("No task added");
+    todos.push(newTodo);
+    await writeDB("todos", todos);
     res.status(201).json({
       status: "Success",
-      data: newProduct,
+      data: newTodo,
     });
   } catch (error) {
     res.status(500).json({
@@ -67,22 +70,20 @@ const store = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const products = await readDB("products");
-    const productUpdate = products.findIndex(
-      (product) => product.id === +req.params.id
-    );
-    if (productUpdate === -1) {
+    const todos = await readDB("todos");
+    const todoUpdate = todos.findIndex((todo) => todo.id === +req.params.id);
+    if (todoUpdate === -1) {
       return res.status(404).json({
         status: "Error",
-        message: "Product not found",
+        message: "Todo not found",
       });
     }
-    products[productUpdate].title =
-      req.body.title ?? products[productUpdate].title;
-    await writeDB("products", products);
+    todos[todoUpdate].task = req.body.task ?? todos[todoUpdate].task;
+    todos[todoUpdate].done = req.body.done ?? false;
+    await writeDB("todos", todos);
     res.status(200).json({
       status: "Success",
-      data: products[productUpdate],
+      data: todos[todoUpdate],
     });
   } catch (error) {
     res.status(500).json({
@@ -94,18 +95,16 @@ const update = async (req, res) => {
 
 const destroy = async (req, res) => {
   try {
-    const products = await readDB("products");
-    const productDelete = products.findIndex(
-      (product) => product.id === +req.params.id
-    );
-    if (productDelete === -1) {
+    const todos = await readDB("todos");
+    const todoDelete = todos.findIndex((todo) => todo.id === +req.params.id);
+    if (todoDelete === -1) {
       return res.status(404).json({
         status: "Error",
-        message: "Product not found",
+        message: "Todo not found",
       });
     }
-    products.splice(productDelete, 1);
-    await writeDB("products", products);
+    todos.splice(todoDelete, 1);
+    await writeDB("todos", todos);
     res.status(200).send();
   } catch (error) {
     res.status(500).json({

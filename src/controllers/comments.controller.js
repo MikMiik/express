@@ -73,10 +73,7 @@ const destroy = async (req, res) => {
   }
   comments.splice(commentDelete, 1);
   await writeDB("comments", comments);
-  res.status(200).json({
-    status: "success",
-    message: "comment deleted successfully",
-  });
+  res.status(200).send();
 };
 
 module.exports = { index, show, store, update, destroy };

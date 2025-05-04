@@ -17,8 +17,8 @@ exports.updateCommentValidator = [
       optional: true,
       notEmpty: true,
       isLength: {
-        options: { min: 5 },
-        errorMessage: "Nghiệm không thỏa mãn",
+        options: { min: 5, max: 100 },
+        errorMessage: "Trong khoảng 5-10",
       },
       errorMessage: "Trường này không được để trống",
     },

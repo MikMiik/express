@@ -1,28 +1,83 @@
 {
-  "products": [
+  "categories": [
     {
       "id": 1,
-      "product": "New Product"
+      "type": "Health",
+      "description": "Health and wellness tips"
     },
     {
       "id": 3,
-      "product": "empty product"
+      "type": "Travel",
+      "description": "Travel far"
     },
     {
       "id": 4,
-      "product": "New Product"
+      "type": "Game",
+      "description": "Albion"
     },
     {
       "id": 5,
-      "product": "More product"
+      "type": "Travel",
+      "description": "Random travel"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "title": "Product 1",
+      "price": 1000
+    },
+    {
+      "id": 2,
+      "title": "Product 2",
+      "price": 2000
+    },
+    {
+      "id": 3,
+      "title": "Product 3",
+      "price": 3000
+    },
+    {
+      "id": 4,
+      "title": "New one",
+      "price": 120
+    }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "task": "Exercise",
+      "done": true
+    },
+    {
+      "id": 2,
+      "task": "Shopping",
+      "done": false
+    },
+    {
+      "id": 3,
+      "task": "Cook",
+      "done": false
+    },
+    {
+      "id": 4,
+      "task": "Homework",
+      "done": false
     },
     {
       "id": 6,
-      "product": "hhhhh"
+      "task": "Swimming",
+      "done": true
     },
     {
       "id": 7,
-      "product": "yguihuhjhjk"
+      "task": "Working",
+      "done": false
+    },
+    {
+      "id": 8,
+      "task": "Job",
+      "done": true
     }
   ],
   "comments": [

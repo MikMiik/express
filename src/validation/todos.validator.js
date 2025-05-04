@@ -1,31 +1,29 @@
 const { checkSchema } = require("express-validator");
 const handlerValidationErrors = require("./handlerValidationError");
 
-exports.createProductValidator = [
+exports.createTodoValidator = [
   checkSchema({
-    title: {
+    task: {
       notEmpty: { errorMessage: "Trường này không được để trống" },
     },
-    price: {
-      isFloat: {
-        options: { min: 100, max: 5000 },
-        errorMessage: "Giá trong khoảng 100-5000",
-      },
+    done: {
+      optional: true,
+      isBoolean: { errorMessage: "Giá trị nhập vào phải là true hoặc false" },
+      toBoolean: true,
     },
   }),
   handlerValidationErrors,
 ];
 
-exports.updateProductValidator = [
+exports.updateTodoValidator = [
   checkSchema({
-    title: {
+    task: {
       notEmpty: { errorMessage: "Trường này không được để trống" },
     },
-    price: {
-      isFloat: {
-        options: { min: 100, max: 5000 },
-        errorMessage: "Giá trong khoảng 100-5000",
-      },
+    done: {
+      optional: true,
+      isBoolean: { errorMessage: "Giá trị nhập vào phải là true hoặc false" },
+      toBoolean: true,
     },
   }),
   handlerValidationErrors,
