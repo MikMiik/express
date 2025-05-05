@@ -71,19 +71,20 @@ const store = async (req, res) => {
 const update = async (req, res) => {
   try {
     const todos = await readDB("todos");
-    const todoUpdate = todos.findIndex((todo) => todo.id === +req.params.id);
-    if (todoUpdate === -1) {
+    const todoUpdate = todos.find((todo) => todo.id === +req.params.id);
+    console.log(todoUpdate);
+    console.log(req.body);
+    if (!todoUpdate) {
       return res.status(404).json({
         status: "Error",
         message: "Todo not found",
       });
     }
-    todos[todoUpdate].task = req.body.task ?? todos[todoUpdate].task;
-    todos[todoUpdate].done = req.body.done ?? false;
+    Object.assign(todoUpdate, req.body);
     await writeDB("todos", todos);
     res.status(200).json({
       status: "Success",
-      data: todos[todoUpdate],
+      data: todoUpdate,
     });
   } catch (error) {
     res.status(500).json({

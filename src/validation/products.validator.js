@@ -22,6 +22,7 @@ exports.updateProductValidator = [
       notEmpty: { errorMessage: "Trường này không được để trống" },
     },
     price: {
+      notEmpty: { errorMessage: "Trường này không được để trống" },
       isFloat: {
         options: { min: 100, max: 5000 },
         errorMessage: "Giá trong khoảng 100-5000",

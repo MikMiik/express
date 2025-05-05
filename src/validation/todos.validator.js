@@ -10,6 +10,11 @@ exports.createTodoValidator = [
       optional: true,
       isBoolean: { errorMessage: "Giá trị nhập vào phải là true hoặc false" },
       toBoolean: true,
+      customSanitizer: {
+        options: (value) => {
+          return value === undefined ? false : value;
+        },
+      },
     },
   }),
   handlerValidationErrors,

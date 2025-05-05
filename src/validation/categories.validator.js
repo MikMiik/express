@@ -9,7 +9,7 @@ exports.createCategoryValidator = [
       //     options: (value) => value.toLowerCase(),
       //   },
 
-      // Cách trên làm thay đổi luôn cách viết của người nhập
+      // Cách trên làm thay đổi cách viết của người nhập
 
       custom: {
         options: (value) => {

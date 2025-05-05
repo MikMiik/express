@@ -68,21 +68,20 @@ const store = async (req, res) => {
 const update = async (req, res) => {
   try {
     const products = await readDB("products");
-    const productUpdate = products.findIndex(
+    const productUpdate = products.find(
       (product) => product.id === +req.params.id
     );
-    if (productUpdate === -1) {
+    if (!productUpdate) {
       return res.status(404).json({
         status: "Error",
         message: "Product not found",
       });
     }
-    products[productUpdate].title =
-      req.body.title ?? products[productUpdate].title;
+    Object.assign(productUpdate, req.body);
     await writeDB("products", products);
     res.status(200).json({
       status: "Success",
-      data: products[productUpdate],
+      data: productUpdate,
     });
   } catch (error) {
     res.status(500).json({

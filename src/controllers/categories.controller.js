@@ -70,23 +70,20 @@ const store = async (req, res) => {
 const update = async (req, res) => {
   try {
     const categories = await readDB("categories");
-    const categoryUpdate = categories.findIndex(
+    const categoryUpdate = categories.find(
       (category) => category.id === +req.params.id
     );
-    if (categoryUpdate === -1) {
+    if (!categoryUpdate) {
       return res.status(404).json({
         status: "Error",
         message: "Category not found",
       });
     }
-    categories[categoryUpdate].type =
-      req.body.type ?? categories[categoryUpdate].type;
-    categories[categoryUpdate].description =
-      req.body.description ?? categories[categoryUpdate].description;
+    Object.assign(categoryUpdate, req.body);
     await writeDB("categories", categories);
     res.status(200).json({
       status: "Success",
-      data: categories[categoryUpdate],
+      data: categoryUpdate,
     });
   } catch (error) {
     res.status(500).json({
