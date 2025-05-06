@@ -30,17 +30,22 @@
     {
       "id": 2,
       "title": "Product update",
-      "price": 2000
+      "price": 199
     },
     {
       "id": 3,
       "title": "Product update",
-      "price": 2002
+      "price": 199
     },
     {
       "id": 4,
       "title": "Old product",
       "price": 1000
+    },
+    {
+      "id": 5,
+      "title": "",
+      "price": 1002
     }
   ],
   "todos": [

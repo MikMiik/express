@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   createTodoValidator,
   updateTodoValidator,
-} = require("../validation/todos.validator");
+} = require("@/validation/todos.validator");
 
 const {
   index,

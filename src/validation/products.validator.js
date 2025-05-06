@@ -19,10 +19,10 @@ exports.createProductValidator = [
 exports.updateProductValidator = [
   checkSchema({
     title: {
-      notEmpty: { errorMessage: "Trường này không được để trống" },
+      optional: true,
     },
     price: {
-      notEmpty: { errorMessage: "Trường này không được để trống" },
+      optional: true,
       isFloat: {
         options: { min: 100, max: 5000 },
         errorMessage: "Giá trong khoảng 100-5000",

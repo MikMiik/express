@@ -11,7 +11,6 @@ const handlerValidationErrors = (req, res, next) => {
       field: error.path,
       message: error.msg,
     }));
-
   res.status(422).json({
     errors: formatted,
   });
