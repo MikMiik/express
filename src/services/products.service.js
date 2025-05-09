@@ -20,19 +20,32 @@ const store = async (data) => {
     title: data.title,
     price: data.price,
   };
-  products.push(newProduct);
-  await writeDB(RESOURCE, products);
+  // products.push(newProduct);
+  const newProducts = [...products, newProduct]
+  await writeDB(RESOURCE, newProducts);
   return newProduct;
 };
 
 const update = async (id, data) => {
   const products = await index(RESOURCE);
-  const productUpdate = products.find((product) => product.id === +id);
+  let productIndex = -1
+  const productUpdate = products.find((product, index) => {
+    if(product.id === +id) {
+      productIndex = index
+      return true;
+    }
+    return false
+  });
 
-  if (!productUpdate) return;
-  Object.assign(productUpdate, data);
-  await writeDB(RESOURCE, products);
-  return productUpdate;
+  if (productIndex === -1 || !productUpdate) return;
+  const updatedItem = {...productUpdate,...data}
+  const newProducts = [
+    ...products.slice(0, productIndex),
+    updatedItem,
+    ...products.slice(productIndex + 1)
+  ]
+  await writeDB(RESOURCE, newProducts);
+  return updatedItem;
 };
 
 const destroy = async (id) => {
@@ -40,8 +53,8 @@ const destroy = async (id) => {
   const productDelete = products.findIndex((product) => product.id === +id);
 
   if (productDelete === -1) return;
-  products.splice(productDelete, 1);
-  await writeDB(RESOURCE, products);
+  const newProducts = products.filter((_, index)=> index !== productDelete)
+  await writeDB(RESOURCE, newProducts);
   return true;
 };
 

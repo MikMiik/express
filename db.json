@@ -30,7 +30,8 @@
     {
       "id": 2,
       "title": "Product update",
-      "price": 199
+      "price": "200",
+      "titile": "Pro"
     },
     {
       "id": 3,
@@ -41,11 +42,6 @@
       "id": 4,
       "title": "Old product",
       "price": 1000
-    },
-    {
-      "id": 5,
-      "title": "",
-      "price": 1002
     }
   ],
   "todos": [

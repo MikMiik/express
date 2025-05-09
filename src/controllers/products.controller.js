@@ -20,9 +20,9 @@ const store = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const productUpdate = await ProductsService.update(req.params.id, req.body);
-  if (!productUpdate) throwError(404, "Product not found");
-  response.success(res, 200, productUpdate);
+  const updatedItem = await ProductsService.update(req.params.id, req.body);
+  if (!updatedItem) throwError(404, "Product not found");
+  response.success(res, 200, updatedItem);
 };
 
 const destroy = async (req, res) => {
