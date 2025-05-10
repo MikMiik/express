@@ -5,19 +5,19 @@ const {
 } = require("../validation/comments.validator.js");
 
 const {
-  index,
-  show,
-  store,
-  update,
-  destroy,
+  getAllComments,
+  getCommentById,
+  createComment,
+  updateComment,
+  deleteComment,
 } = require("../controllers/comments.controller");
 const router = express.Router();
 
-router.get("/", index);
-router.get("/:id", show);
-router.post("/", createCommentValidator, store);
-router.put("/:id", updateCommentValidator, update);
-router.patch("/:id", updateCommentValidator, update);
-router.delete("/:id", destroy);
+router.get("/", getAllComments);
+router.get("/:id", getCommentById);
+router.post("/", createCommentValidator, createComment);
+router.put("/:id", updateCommentValidator, updateComment);
+router.patch("/:id", updateCommentValidator, updateComment);
+router.delete("/:id", deleteComment);
 
 module.exports = router;

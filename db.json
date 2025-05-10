@@ -35,13 +35,18 @@
     },
     {
       "id": 3,
-      "title": "Product update",
-      "price": 199
+      "title": "Product",
+      "price": 198
     },
     {
       "id": 4,
       "title": "Old product",
       "price": 1000
+    },
+    {
+      "id": 5,
+      "title": "New product",
+      "price": 1002
     }
   ],
   "todos": [
@@ -98,39 +103,37 @@
       "content": "comment 1"
     },
     {
-      "id": 2,
-      "post_id": 2,
-      "content": "sssssssssss"
-    },
-    {
       "id": 4,
-      "post_id": 4,
-      "content": "sssssssssss"
+      "post_id": 2,
+      "content": "New comment"
     },
     {
       "id": 5,
-      "post_id": 5,
+      "post_id": 2,
       "comment": "yguihuhjhj"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "post 1"
     },
     {
-      "id": 6,
-      "post_id": 6,
-      "comment": "yg"
+      "id": 2,
+      "title": "post update",
+      "titile": "Pro"
     },
     {
-      "id": 7,
-      "post_id": 7,
-      "comment": "yg"
+      "id": 3,
+      "title": "None"
     },
     {
-      "id": 8,
-      "post_id": 8,
-      "comment": "yg"
+      "id": 4,
+      "title": "Old post"
     },
     {
-      "id": 9,
-      "post_id": 9,
-      "comment": "yg"
+      "id": 5,
+      "title": "New post"
     }
   ]
 }

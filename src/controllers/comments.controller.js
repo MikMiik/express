@@ -1,79 +1,34 @@
-const { readDB, writeDB } = require("@/utils/files.util");
+const commentService = require("@/services/comments.service");
+const throwError = require("@/utils/throwError");
+const response = require("@/utils/response");
 
-const index = async (req, res) => {
-  const comments = await readDB("comments");
-  res.json({
-    status: "success",
-    comments,
-  });
+const getAllComments = async (req, res) => {
+  const comments = await commentService.getAllComments("comments");
+  if (!comments) throwError(404, "Comment not found");
+  response.success(res, 200, comments);
 };
 
-const show = async (req, res) => {
-  const comments = await readDB("comments");
-  const comment = comments.find((comment) => comment.id === +req.params.id);
-  if (!comment) {
-    res.json({
-      status: "error",
-      message: "Not found",
-    });
-    return;
-  }
-  res.json({
-    status: "success",
-    data: comment,
-  });
+const getCommentById = async (req, res) => {
+  const comment = await commentService.getCommentById(req.params.id);
+  if (!comment) throwError(404, "Comment not found");
+  response.success(res, 200, comment);
 };
 
-const store = async (req, res) => {
-  const comments = await readDB("comments");
-  const newcomment = {
-    id: comments.length ? comments[comments.length - 1].id + 1 : 1,
-    post_id: comments.length ? comments[comments.length - 1].id + 1 : 1,
-    comment: req.body.content,
-  };
-  comments.push(newcomment);
-  await writeDB("comments", comments);
-  res.json({
-    status: "success",
-    data: newcomment,
-  });
+const createComment = async (req, res) => {
+  const newComment = await commentService.createComment(req.body);
+  response.success(res, 201, newComment);
 };
 
-const update = async (req, res) => {
-  const comments = await readDB("comments");
-  const commentPut = comments.findIndex(
-    (comment) => comment.id === +req.params.id
-  );
-  if (commentPut === -1) {
-    res.json({
-      status: "error",
-      message: "Not found",
-    });
-    return;
-  }
-  comments[commentPut].content = req.body.content;
-  await writeDB("comments", comments);
-  res.status(200).json({
-    status: "success",
-    message: "comment updated successfully",
-  });
+const updateComment = async (req, res) => {
+  const updatedItem = await commentService.updateComment(req.params.id, req.body);
+  if (!updatedItem) throwError(404, "Comment not found");
+  response.success(res, 200, updatedItem);
 };
 
-const destroy = async (req, res) => {
-  const comments = await readDB("comments");
-  const commentDelete = comments.findIndex(
-    (comment) => comment.id === +req.params.id
-  );
-  if (commentDelete === -1) {
-    res.json({
-      status: "error",
-      message: "Not found",
-    });
-    return;
-  }
-  comments.splice(commentDelete, 1);
-  await writeDB("comments", comments);
+const deleteComment = async (req, res) => {
+  const result = await commentService.deleteComment(req.params.id);
+  if (!result) throwError(404, "Comment not found");
   res.status(200).send();
 };
 
-module.exports = { index, show, store, update, destroy };
+module.exports = { getAllComments, getCommentById, createComment, updateComment, deleteComment };

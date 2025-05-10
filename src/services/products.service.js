@@ -16,7 +16,7 @@ const show = async (id) => {
 const store = async (data) => {
   const products = await index(RESOURCE);
   const newProduct = {
-    id: products.length ? products[products.length - 1].id + 1 : 1,
+    id: (products.at(-1)?? 0) + 1,
     title: data.title,
     price: data.price,
   };
