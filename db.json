@@ -110,30 +110,34 @@
     {
       "id": 5,
       "post_id": 2,
-      "comment": "yguihuhjhj"
+      "content": "yguihuhjhj"
     }
   ],
   "posts": [
     {
       "id": 1,
-      "title": "post 1"
+      "title": "post 1",
+      "content": "About post 1"
     },
     {
       "id": 2,
       "title": "post update",
-      "titile": "Pro"
+      "content": "About post 2"
     },
     {
       "id": 3,
-      "title": "None"
+      "title": "None",
+      "content": "About post 3"
     },
     {
       "id": 4,
-      "title": "Old post"
+      "title": "Old post",
+      "content": "About post 3"
     },
     {
       "id": 5,
-      "title": "New post"
+      "title": "New post",
+      "content": "About post 5"
     }
   ]
 }
