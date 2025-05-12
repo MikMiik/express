@@ -15,33 +15,34 @@ const getPostById = async (id) => {
 
 const createPost = async (data) => {
   const posts = await getAllPosts(RESOURCE);
-  const newpost = {
-    id: (posts.at(-1)?? 0) + 1,
-    title: data.title,
+  const nextID = (posts.at(-1)?.id ?? 0) + 1;
+  const newPost = {
+    id: nextID,
+    ...data,
   };
-  const newposts = [...posts, newpost]
-  await writeDB(RESOURCE, newposts);
-  return newpost;
+  const newPosts = [...posts, newPost];
+  await writeDB(RESOURCE, newPosts);
+  return newPost;
 };
 
 const updatePost = async (id, data) => {
   const posts = await getAllPosts(RESOURCE);
-  let postIndex = -1
+  let postIndex = -1;
   const postUpdate = posts.find((post, index) => {
-    if(post.id === +id) {
-      postIndex = index
+    if (post.id === +id) {
+      postIndex = index;
       return true;
     }
-    return false
+    return false;
   });
 
   if (postIndex === -1 || !postUpdate) return;
-  const updatedItem = {...postUpdate,...data}
+  const updatedItem = { ...postUpdate, ...data };
   const newposts = [
     ...posts.slice(0, postIndex),
     updatedItem,
-    ...posts.slice(postIndex + 1)
-  ]
+    ...posts.slice(postIndex + 1),
+  ];
   await writeDB(RESOURCE, newposts);
   return updatedItem;
 };
@@ -51,7 +52,7 @@ const deletePost = async (id) => {
   const postDelete = posts.findIndex((post) => post.id === +id);
 
   if (postDelete === -1) return;
-  const newposts = posts.filter((_, index)=> index !== postDelete)
+  const newposts = posts.filter((_, index) => index !== postDelete);
   await writeDB(RESOURCE, newposts);
   return true;
 };
