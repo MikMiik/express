@@ -3,8 +3,12 @@ const { success } = require("@/utils/response");
 const throwError = require("@/utils/throwError");
 
 const getUsers = async (req, res) => {
-  const users = await usersModel.getUsers();
-  success(res, 200, users);
+  const { users, pagination } = await usersModel.getUsers(req.query);
+  const data = {
+    users: users,
+    pagination,
+  };
+  success(res, 200, data);
 };
 
 const getUser = async (req, res) => {

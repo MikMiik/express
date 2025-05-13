@@ -1,3 +1,4 @@
+const db = require("@/configs/db");
 const { readDB, writeDB } = require("../utils/files.util");
 
 const RESOURCE = "posts";
