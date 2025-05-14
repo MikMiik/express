@@ -4,8 +4,10 @@ const handlerValidationErrors = require("./handlerValidationError");
 exports.createCommentValidator = [
   checkSchema({
     content: {
-      notEmpty: true,
-      errorMessage: "Trường này không được để trống",
+      exists: { errorMessage: "Content is required" },
+      notEmpty: {
+        errorMessage: "Content is not empty.",
+      },
     },
   }),
   handlerValidationErrors,
@@ -15,12 +17,9 @@ exports.updateCommentValidator = [
   checkSchema({
     content: {
       optional: true,
-      notEmpty: true,
-      isLength: {
-        options: { min: 5, max: 100 },
-        errorMessage: "Trong khoảng 5-10",
+      notEmpty: {
+        errorMessage: "Content is not empty.",
       },
-      errorMessage: "Trường này không được để trống",
     },
   }),
   handlerValidationErrors,
