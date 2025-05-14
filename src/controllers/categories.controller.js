@@ -1,4 +1,4 @@
-const { readDB, writeDB } = require("@/utils/files.util");
+const { readDB, writeDB } = require("@/utils/jsonDb");
 
 const index = async (req, res) => {
   try {

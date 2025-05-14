@@ -1,118 +1,40 @@
-const { readDB, writeDB } = require("@/utils/files.util");
+const todosService = require("@/services/todos.service");
+const response = require("@/utils/response");
+const throw404 = require("@/utils/throw404");
 
-const index = async (req, res) => {
-  try {
-    const todos = await readDB("todos");
-    if (!todos) {
-      return res.status(404).json({
-        status: "Error",
-        message: "Todo not found",
-      });
-    }
-    res.status(200).json({
-      status: "Success",
-      data: todos,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "Error",
-      message: "Router not found",
-    });
-  }
+const getAllTodos = async (req, res) => {
+  const todos = await todosService.getAllTodos("todos");
+  if (!todos) throw404();
+  response.success(res, 200, todos);
 };
 
-const show = async (req, res) => {
-  try {
-    const todos = await readDB("todos");
-    const todo = todos.find((todo) => todo.id === +req.params.id);
-    if (!todo) {
-      return res.status(404).json({
-        status: "Error",
-        message: "Todo not found",
-      });
-    }
-    res.status(200).json({
-      status: "Success",
-      data: todo,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "Error",
-      message: "Router not found",
-    });
-  }
+const getTodoById = async (req, res) => {
+  const todo = await todosService.getTodoById(req.params.id);
+  if (!todo) throw404();
+  response.success(res, 200, todo);
 };
 
-const store = async (req, res) => {
-  try {
-    const todos = await readDB("todos");
-    let newTodo;
-    if (req.body.task) {
-      newTodo = {
-        id: todos.length ? todos[todos.length - 1].id + 1 : 1,
-        task: req.body.task,
-        done: req.body.done ?? false,
-      };
-    } else req.send("No task added");
-    todos.push(newTodo);
-    await writeDB("todos", todos);
-    res.status(201).json({
-      status: "Success",
-      data: newTodo,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "Error",
-      message: "Router not found",
-    });
-  }
+const createTodo = async (req, res) => {
+  const newTodo = await todosService.createTodo(req.body);
+  response.success(res, 201, newTodo);
 };
 
-const update = async (req, res) => {
-  try {
-    const todos = await readDB("todos");
-    const todoUpdate = todos.find((todo) => todo.id === +req.params.id);
-    console.log(todoUpdate);
-    console.log(req.body);
-    if (!todoUpdate) {
-      return res.status(404).json({
-        status: "Error",
-        message: "Todo not found",
-      });
-    }
-    Object.assign(todoUpdate, req.body);
-    await writeDB("todos", todos);
-    res.status(200).json({
-      status: "Success",
-      data: todoUpdate,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "Error",
-      message: "Router not found",
-    });
-  }
+const updateTodo = async (req, res) => {
+  const updatedItem = await todosService.updateTodo(req.params.id, req.body);
+  if (!updatedItem) throw404();
+  response.success(res, 200, updatedItem);
 };
 
-const destroy = async (req, res) => {
-  try {
-    const todos = await readDB("todos");
-    const todoDelete = todos.findIndex((todo) => todo.id === +req.params.id);
-    if (todoDelete === -1) {
-      return res.status(404).json({
-        status: "Error",
-        message: "Todo not found",
-      });
-    }
-    todos.splice(todoDelete, 1);
-    await writeDB("todos", todos);
-    res.status(200).send();
-  } catch (error) {
-    res.status(500).json({
-      status: "Error",
-      message: "Router not found",
-    });
-  }
+const deleteTodo = async (req, res) => {
+  const result = await todosService.deleteTodo(req.params.id);
+  if (!result) throw404();
+  res.status(200).send();
 };
 
-module.exports = { index, show, store, update, destroy };
+module.exports = {
+  getAllTodos,
+  getTodoById,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+};

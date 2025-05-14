@@ -6,18 +6,18 @@ const {
 } = require("@/validation/todos.validator");
 
 const {
-  index,
-  show,
-  store,
-  update,
-  destroy,
+  getAllTodos,
+  getTodoById,
+  createTodo,
+  updateTodo,
+  deleteTodo,
 } = require("../controllers/todos.controller");
 
-router.get("/", index);
-router.get("/:id", show);
-router.post("/", createTodoValidator, store);
-router.put("/:id", updateTodoValidator, update);
-router.patch("/:id", updateTodoValidator, update);
-router.delete("/:id", destroy);
+router.get("/", getAllTodos);
+router.get("/:id", getTodoById);
+router.post("/", createTodoValidator, createTodo);
+router.put("/:id", updateTodoValidator, updateTodo);
+router.patch("/:id", updateTodoValidator, updateTodo);
+router.delete("/:id", deleteTodo);
 
 module.exports = router;

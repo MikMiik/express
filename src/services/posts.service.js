@@ -1,5 +1,5 @@
 const db = require("@/configs/db");
-const { readDB, writeDB } = require("../utils/files.util");
+const { readDB, writeDB } = require("../utils/jsonDb");
 
 const RESOURCE = "posts";
 
@@ -39,12 +39,12 @@ const updatePost = async (id, data) => {
 
   if (postIndex === -1 || !postUpdate) return;
   const updatedItem = { ...postUpdate, ...data };
-  const newposts = [
+  const newPosts = [
     ...posts.slice(0, postIndex),
     updatedItem,
     ...posts.slice(postIndex + 1),
   ];
-  await writeDB(RESOURCE, newposts);
+  await writeDB(RESOURCE, newPosts);
   return updatedItem;
 };
 
@@ -53,8 +53,8 @@ const deletePost = async (id) => {
   const postDelete = posts.findIndex((post) => post.id === +id);
 
   if (postDelete === -1) return;
-  const newposts = posts.filter((_, index) => index !== postDelete);
-  await writeDB(RESOURCE, newposts);
+  const newPosts = posts.filter((_, index) => index !== postDelete);
+  await writeDB(RESOURCE, newPosts);
   return true;
 };
 

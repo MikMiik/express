@@ -1,4 +1,4 @@
-const { readDB, writeDB } = require("../utils/files.util");
+const { readDB, writeDB } = require("../utils/jsonDb");
 
 const RESOURCE = "products";
 
@@ -16,34 +16,34 @@ const show = async (id) => {
 const store = async (data) => {
   const products = await index(RESOURCE);
   const newProduct = {
-    id: (products.at(-1)?? 0) + 1,
+    id: (products.at(-1) ?? 0) + 1,
     title: data.title,
     price: data.price,
   };
   // products.push(newProduct);
-  const newProducts = [...products, newProduct]
+  const newProducts = [...products, newProduct];
   await writeDB(RESOURCE, newProducts);
   return newProduct;
 };
 
 const update = async (id, data) => {
   const products = await index(RESOURCE);
-  let productIndex = -1
+  let productIndex = -1;
   const productUpdate = products.find((product, index) => {
-    if(product.id === +id) {
-      productIndex = index
+    if (product.id === +id) {
+      productIndex = index;
       return true;
     }
-    return false
+    return false;
   });
 
   if (productIndex === -1 || !productUpdate) return;
-  const updatedItem = {...productUpdate,...data}
+  const updatedItem = { ...productUpdate, ...data };
   const newProducts = [
     ...products.slice(0, productIndex),
     updatedItem,
-    ...products.slice(productIndex + 1)
-  ]
+    ...products.slice(productIndex + 1),
+  ];
   await writeDB(RESOURCE, newProducts);
   return updatedItem;
 };
@@ -53,7 +53,7 @@ const destroy = async (id) => {
   const productDelete = products.findIndex((product) => product.id === +id);
 
   if (productDelete === -1) return;
-  const newProducts = products.filter((_, index)=> index !== productDelete)
+  const newProducts = products.filter((_, index) => index !== productDelete);
   await writeDB(RESOURCE, newProducts);
   return true;
 };

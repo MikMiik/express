@@ -1,6 +1,8 @@
 function success(res, status = 200, data, message) {
+  if (status === 204) return res.status(status).send();
+
   return res.status(status).json({
-    status: "Success",
+    success: true,
     data,
     message: message,
   });
@@ -8,7 +10,7 @@ function success(res, status = 200, data, message) {
 
 function error(res, status, message, errors) {
   return res.status(status).json({
-    status: "Error",
+    success: false,
     message,
     errors,
   });
