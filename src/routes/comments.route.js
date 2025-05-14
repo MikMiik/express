@@ -2,7 +2,7 @@ const express = require("express");
 const {
   createCommentValidator,
   updateCommentValidator,
-} = require("../validation/comments.validator.js");
+} = require("../validators/comments.validator.js");
 
 const {
   getAllComments,

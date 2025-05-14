@@ -2,7 +2,7 @@ const express = require("express");
 const {
   createProductValidator,
   updateProductValidator,
-} = require("../validation/products.validator.js");
+} = require("../validators/products.validator.js");
 
 const {
   index,

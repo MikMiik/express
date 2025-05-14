@@ -38,14 +38,14 @@ const updatePost = async (id, data) => {
   });
 
   if (postIndex === -1 || !postUpdate) return;
-  const updatedItem = { ...postUpdate, ...data };
+  const updatedPost = { ...postUpdate, ...data };
   const newPosts = [
     ...posts.slice(0, postIndex),
-    updatedItem,
+    updatedPost,
     ...posts.slice(postIndex + 1),
   ];
   await writeDB(RESOURCE, newPosts);
-  return updatedItem;
+  return updatedPost;
 };
 
 const deletePost = async (id) => {

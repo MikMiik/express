@@ -3,19 +3,24 @@ const { readDB, writeDB } = require("../utils/jsonDb");
 
 const RESOURCE = "comments";
 
-const getAllPosts = async (RESOURCE) => {
+const getAllComments = async (RESOURCE) => {
   const comments = await readDB(RESOURCE);
   return comments;
 };
 
-const getPostById = async (id) => {
-  const comments = await getAllPosts(RESOURCE);
+const getCommentById = async (id) => {
+  const comments = await getAllComments(RESOURCE);
   const comment = comments.find((comment) => comment.id === +id);
   return comment;
 };
 
-const createPost = async (data) => {
-  const comments = await getAllPosts(RESOURCE);
+const getCommentsByPostId = async (postId) => {
+  const comments = await getAllComments(RESOURCE);
+  return comments.filter((comment) => comment.post_id === +postId);
+};
+
+const createComment = async (data) => {
+  const comments = await getAllComments(RESOURCE);
   const nextID = (comments.at(-1)?.id ?? 0) + 1;
   const newComment = {
     id: nextID,
@@ -26,8 +31,8 @@ const createPost = async (data) => {
   return newComment;
 };
 
-const updatePost = async (id, data) => {
-  const comments = await getAllPosts(RESOURCE);
+const updateComment = async (id, data) => {
+  const comments = await getAllComments(RESOURCE);
   let commentIndex = -1;
   const commentUpdate = comments.find((comment, index) => {
     if (comment.id === +id) {
@@ -48,8 +53,8 @@ const updatePost = async (id, data) => {
   return updatedItem;
 };
 
-const deletePost = async (id) => {
-  const comments = await getAllPosts(RESOURCE);
+const deleteComment = async (id) => {
+  const comments = await getAllComments(RESOURCE);
   const commentDeleteIndex = comments.findIndex(
     (comment) => comment.id === +id
   );
@@ -63,9 +68,10 @@ const deletePost = async (id) => {
 };
 
 module.exports = {
-  getAllPosts,
-  getPostById,
-  createPost,
-  updatePost,
-  deletePost,
+  getAllComments,
+  getCommentById,
+  getCommentsByPostId,
+  createComment,
+  updateComment,
+  deleteComment,
 };

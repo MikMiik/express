@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   createCategoryValidator,
   updateCategoryValidator,
-} = require("../validation/categories.validator");
+} = require("../validators/categories.validator");
 
 const {
   index,
