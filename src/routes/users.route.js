@@ -1,12 +1,16 @@
 const express = require("express");
-const usersController = require("@/controllers/users.controller");
 const router = express.Router();
 
+const attachResourceLoaders = require("@/utils/attachResourceLoaders");
+const usersController = require("@/controllers/users.controller");
+
+attachResourceLoaders(router, ["user"]);
+
 router.get("/", usersController.getList);
-router.get("/:id", usersController.getOne);
+router.get("/:user", usersController.getOne);
 router.post("/", usersController.create);
-router.put("/:id", usersController.update);
-router.patch("/:id", usersController.update);
-router.delete("/:id", usersController.remove);
+router.put("/:user", usersController.update);
+router.patch("/:user", usersController.update);
+router.delete("/:user", usersController.remove);
 
 module.exports = router;
