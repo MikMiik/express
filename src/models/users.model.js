@@ -1,28 +1,65 @@
 const db = require("@/configs/db");
+const { buildInsertQuery } = require("@/utils/queryBuilder");
 
-exports.getUsers = async ({ page = 1, limit = 10 } = {}) => {
-  const offset = (page - 1) * 10;
-  const [users] = await db.query(
-    `select * from users ORDER BY id ASC limit ${limit} OFFSET ${offset};`
-  );
-  const [usersCount] = await db.query(
-    "select count(*) as users_count from users"
-  );
-  const users_count = usersCount[0].users_count;
-  const last_page = Math.ceil(users_count / limit);
-  const pagination = {
-    current_page: +page,
-    per_page: +limit,
-    total: users_count,
-    last_page,
+exports.findAll = async () =>
+  // { page = 1, limit = 10 } = {}
+  {
+    // const offset = (page - 1) * 10;
+    // const [users] = await db.query(
+    //   `select * from users ORDER BY id ASC limit ${limit} OFFSET ${offset};`
+    // );
+    // const [usersCount] = await db.query(
+    //   "select count(*) as users_count from users"
+    // );
+    // const users_count = usersCount[0].users_count;
+    // const last_page = Math.ceil(users_count / limit);
+    // const pagination = {
+    //   current_page: +page,
+    //   per_page: +limit,
+    //   total: users_count,
+    //   last_page,
+    // };
+    // return { users, pagination };
+    const [users] = await db.query("select * from users");
+    return users;
   };
-  return { users, pagination };
-};
 
-exports.getUser = async (id) => {
-  const [user] = await db.query(
-    "SELECT * FROM `users` WHERE id = ? or username = ?",
+exports.findById = async (id) => {
+  const [users] = await db.query(
+    "select * from users where id = ? or username = ?",
     [id, id]
   );
-  return user[0];
+  return users[0];
+};
+
+exports.create = async (data) => {
+  const { columns, placeholders, values } = buildInsertQuery(data);
+  const query = `insert into \`users\` (${columns}) values (${placeholders});`;
+  const [{ insertId }] = await db.query(query, values);
+
+  return {
+    id: insertId,
+    ...data,
+  };
+};
+
+exports.update = async (id, data) => {
+  const { setClause, values } = buildUpdateQuery(data);
+
+  values.push(id);
+
+  const query = `UPDATE users SET ${setClause} WHERE id = ?;`;
+  await db.query(query, values);
+
+  return {
+    id,
+    ...data,
+  };
+};
+
+exports.remove = async (id) => {
+  const [{ affectedRows }] = await db.query(`delete from users where id = ?`, [
+    id,
+  ]);
+  return affectedRows > 0;
 };

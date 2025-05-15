@@ -1,53 +1,35 @@
-const usersModel = require("@/models/users.model");
-const { success } = require("@/utils/response");
-const throwError = require("@/utils/throwError");
+const usersService = require("@/services/users.service");
+const response = require("@/utils/response");
+const throw404 = require("@/utils/throw404");
 
-const getUsers = async (req, res) => {
-  const { users, pagination } = await usersModel.getUsers(req.query);
-  const data = {
-    users: users,
-    pagination,
-  };
-  success(res, 200, data);
+exports.getList = async (req, res) => {
+  const users = await usersService.getAll();
+  response.success(res, 200, users);
 };
 
-const getUser = async (req, res) => {
-  const user = await usersModel.getUser(req.params.id);
-  if (!user) throwError(404, "User not found");
-  success(res, 200, user);
+exports.getOne = async (req, res) => {
+  const user = await usersService.getById(req.params.id);
+  if (!user) throw404();
+  response.success(res, 200, user);
 };
 
-const createUser = async (data) => {
-  const { columns, placeholders, values } = buildInsertQuery(data);
-
-  const query = `INSERT INTO users (${columns}) VALUES (${placeholders});`;
-  const [{ insertId }] = await db.query(query, values);
-
-  return {
-    id: insertId,
-    ...data,
-  };
+exports.create = async (req, res) => {
+  const user = await usersService.create(req.body);
+  response.success(res, 201, user);
 };
 
-const updateUser = async (id, data) => {
-  const { setClause, values } = buildUpdateQuery(data);
+exports.update = async (req, res) => {
+  const existingUser = await usersService.getById(req.params.id);
+  if (!existingUser) throw404();
 
-  values.push(id);
-
-  const query = `UPDATE users SET ${setClause} WHERE id = ?;`;
-  await db.query(query, values);
-
-  return {
-    id,
-    ...data,
-  };
+  const user = await usersService.update(req.params.id, req.body);
+  response.success(res, 200, user);
 };
 
-const deleteUser = async (id) => {
-  const [{ affectedRows }] = await db.query(`delete from users where id = ?`, [
-    id,
-  ]);
-  return affectedRows > 0;
-};
+exports.remove = async (req, res) => {
+  const existingUser = await usersService.getById(req.params.id);
+  if (!existingUser) throw404();
 
-module.exports = { getUsers, getUser, createUser, updateUser, deleteUser };
+  await usersService.remove(req.params.id);
+  response.success(res, 204);
+};
