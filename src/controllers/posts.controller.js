@@ -25,7 +25,6 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   const updatedPost = await postsService.update(req.post.id, req.body);
-  if (!updatedPost) throw404();
   response.success(res, 200, updatedPost);
 };
 

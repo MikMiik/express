@@ -1,8 +1,10 @@
 const commentsService = require("@/services/comments.service");
 const response = require("@/utils/response");
+const throw404 = require("@/utils/throw404");
 
 exports.getList = async (req, res) => {
   const comments = await commentsService.getAll();
+  if (!comments) throw404();
   response.success(res, 200, comments);
 };
 
