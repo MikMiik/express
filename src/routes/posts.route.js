@@ -1,23 +1,29 @@
 const express = require("express");
+const router = express.Router();
 
 const postsController = require("@/controllers/posts.controller");
 const postsValidator = require("@/validators/posts.validator");
-const router = express.Router();
+const attachResourceLoaders = require("@/utils/attachResourceLoaders");
 
+attachResourceLoaders(router, ["post"]);
 // Posts
-router.get("/", postsController.getAllPosts);
-router.get("/:id", postsController.getPostById);
-router.post(
-  "/",
-  postsValidator.createPostValidator,
-  postsController.createPost
+router.get("/", postsController.getList);
+router.get("/:post", postsController.getOne);
+router.post("/", postsValidator.createPostValidator, postsController.create);
+router.put(
+  "/:post",
+  postsValidator.updatePostValidator,
+  postsController.update
 );
-router.put("/:id", postsController.updatePost);
-router.patch("/:id", postsController.updatePost);
-router.delete("/:id", postsController.deletePost);
+router.patch(
+  "/:post",
+  postsValidator.updatePostValidator,
+  postsController.update
+);
+router.delete("/:post", postsController.remove);
 
 // Posts comments
-router.get("/:id/comments", postsController.getPostComments);
-router.post("/:id/comments", postsController.createPostComments);
+router.get("/:post/comments", postsController.getPostComments);
+router.post("/:post/comments", postsController.createPostComments);
 
 module.exports = router;

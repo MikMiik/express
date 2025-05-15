@@ -1,67 +1,30 @@
-const db = require("@/configs/db");
-const { readDB, writeDB } = require("../utils/jsonDb");
+const postsModel = require("@/models/posts.model");
 
-const RESOURCE = "posts";
+class PostsService {
+  async getAll() {
+    const posts = await postsModel.findAll();
+    return posts;
+  }
 
-const getAllPosts = async (RESOURCE) => {
-  const posts = await readDB(RESOURCE);
-  return posts;
-};
+  async getById(id) {
+    const post = await postsModel.findById(id);
+    return post;
+  }
 
-const getPostById = async (id) => {
-  const posts = await getAllPosts(RESOURCE);
-  const post = posts.find((post) => post.id === +id);
-  return post;
-};
+  async create(data) {
+    const post = await postsModel.create(data);
+    return post;
+  }
 
-const createPost = async (data) => {
-  const posts = await getAllPosts(RESOURCE);
-  const nextID = (posts.at(-1)?.id ?? 0) + 1;
-  const newPost = {
-    id: nextID,
-    ...data,
-  };
-  const newPosts = [...posts, newPost];
-  await writeDB(RESOURCE, newPosts);
-  return newPost;
-};
+  async update(id, data) {
+    const post = await postsModel.update(id, data);
+    return post;
+  }
 
-const updatePost = async (id, data) => {
-  const posts = await getAllPosts(RESOURCE);
-  let postIndex = -1;
-  const postUpdate = posts.find((post, index) => {
-    if (post.id === +id) {
-      postIndex = index;
-      return true;
-    }
-    return false;
-  });
+  async remove(id) {
+    const result = await postsModel.remove(id);
+    return result;
+  }
+}
 
-  if (postIndex === -1 || !postUpdate) return;
-  const updatedPost = { ...postUpdate, ...data };
-  const newPosts = [
-    ...posts.slice(0, postIndex),
-    updatedPost,
-    ...posts.slice(postIndex + 1),
-  ];
-  await writeDB(RESOURCE, newPosts);
-  return updatedPost;
-};
-
-const deletePost = async (id) => {
-  const posts = await getAllPosts(RESOURCE);
-  const postDelete = posts.findIndex((post) => post.id === +id);
-
-  if (postDelete === -1) return;
-  const newPosts = posts.filter((_, index) => index !== postDelete);
-  await writeDB(RESOURCE, newPosts);
-  return true;
-};
-
-module.exports = {
-  getAllPosts,
-  getPostById,
-  createPost,
-  updatePost,
-  deletePost,
-};
+module.exports = new PostsService();

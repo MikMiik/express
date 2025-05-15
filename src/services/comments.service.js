@@ -1,77 +1,40 @@
-const db = require("@/configs/db");
-const { readDB, writeDB } = require("../utils/jsonDb");
+const commentsModel = require("@/models/comments.model");
 
-const RESOURCE = "comments";
+class CommentsService {
+  async getAll() {
+    const comments = await commentsModel.findAll();
+    return comments;
+  }
 
-const getAllComments = async (RESOURCE) => {
-  const comments = await readDB(RESOURCE);
-  return comments;
-};
+  async getById(id) {
+    const comment = await commentsModel.findById(id);
+    return comment;
+  }
 
-const getCommentById = async (id) => {
-  const comments = await getAllComments(RESOURCE);
-  const comment = comments.find((comment) => comment.id === +id);
-  return comment;
-};
+  async getByPostId(postId) {
+    const comments = await this.getAll();
+    return comments.filter((comment) => comment.post_id === +postId);
+  }
 
-const getCommentsByPostId = async (postId) => {
-  const comments = await getAllComments(RESOURCE);
-  return comments.filter((comment) => comment.post_id === +postId);
-};
+  async getByUserId(userId) {
+    const comments = await this.getAll();
+    return comments.filter((comment) => comment.user_id === +userId);
+  }
 
-const createComment = async (data) => {
-  const comments = await getAllComments(RESOURCE);
-  const nextID = (comments.at(-1)?.id ?? 0) + 1;
-  const newComment = {
-    id: nextID,
-    ...data,
-  };
-  const newComments = [...comments, newComment];
-  await writeDB(RESOURCE, newComments);
-  return newComment;
-};
+  async create(data) {
+    const comment = await commentsModel.create(data);
+    return comment;
+  }
 
-const updateComment = async (id, data) => {
-  const comments = await getAllComments(RESOURCE);
-  let commentIndex = -1;
-  const commentUpdate = comments.find((comment, index) => {
-    if (comment.id === +id) {
-      commentIndex = index;
-      return true;
-    }
-    return false;
-  });
+  async update(id, data) {
+    const comment = await commentsModel.update(id, data);
+    return comment;
+  }
 
-  if (commentIndex === -1 || !commentUpdate) return;
-  const updatedItem = { ...commentUpdate, ...data };
-  const newComments = [
-    ...comments.slice(0, commentIndex),
-    updatedItem,
-    ...comments.slice(commentIndex + 1),
-  ];
-  await writeDB(RESOURCE, newComments);
-  return updatedItem;
-};
+  async remove(id) {
+    const result = await commentsModel.remove(id);
+    return result;
+  }
+}
 
-const deleteComment = async (id) => {
-  const comments = await getAllComments(RESOURCE);
-  const commentDeleteIndex = comments.findIndex(
-    (comment) => comment.id === +id
-  );
-
-  if (commentDeleteIndex === -1) return;
-  const newComments = comments.filter(
-    (_, index) => index !== commentDeleteIndex
-  );
-  await writeDB(RESOURCE, newComments);
-  return true;
-};
-
-module.exports = {
-  getAllComments,
-  getCommentById,
-  getCommentsByPostId,
-  createComment,
-  updateComment,
-  deleteComment,
-};
+module.exports = new CommentsService();

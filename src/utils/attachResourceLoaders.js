@@ -3,6 +3,8 @@ const throw404 = require("./throw404");
 
 const services = {
   user: require("@/services/users.service"),
+  post: require("@/services/posts.service"),
+  comment: require("@/services/comments.service"),
 };
 
 function attachResourceLoaders(router, params) {

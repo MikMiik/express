@@ -1,20 +1,29 @@
 const express = require("express");
-const commentsValidator = require("../validators/comments.validator.js");
-
-const {
-  getAllComments,
-  getCommentById,
-  createComment,
-  updateComment,
-  deleteComment,
-} = require("../controllers/comments.controller");
 const router = express.Router();
 
-router.get("/", getAllComments);
-router.get("/:id", getCommentById);
-router.post("/", commentsValidator.createCommentValidator, createComment);
-router.put("/:id", commentsValidator.updateCommentValidator, updateComment);
-router.patch("/:id", commentsValidator.updateCommentValidator, updateComment);
-router.delete("/:id", deleteComment);
+const commentsValidator = require("../validators/comments.validator.js");
+const commentsController = require("@/controllers/comments.controller");
+const attachResourceLoaders = require("@/utils/attachResourceLoaders.js");
+
+attachResourceLoaders(router, ["comment"]);
+
+router.get("/", commentsController.getList);
+router.get("/:comment", commentsController.getOne);
+router.post(
+  "/",
+  commentsValidator.createCommentValidator,
+  commentsController.create
+);
+router.put(
+  "/:comment",
+  commentsValidator.updateCommentValidator,
+  commentsController.update
+);
+router.patch(
+  "/:comment",
+  commentsValidator.updateCommentValidator,
+  commentsController.update
+);
+router.delete("/:comment", commentsController.remove);
 
 module.exports = router;

@@ -1,19 +1,19 @@
 const db = require("@/configs/db");
 const { buildInsertQuery, buildUpdateQuery } = require("@/utils/queryBuilder");
 
-const table = "`posts`";
+const table = "`comments`";
 
 exports.findAll = async () => {
-  const [posts] = await db.query(`SELECT * FROM ${table}`);
-  return posts;
+  const [comments] = await db.query(`SELECT * FROM ${table}`);
+  return comments;
 };
 
 exports.findById = async (id) => {
-  const [posts] = await db.query(
-    `SELECT * FROM ${table} WHERE id = ? OR slug= ?`,
-    [id, id]
-  );
-  return posts[0];
+  const [comments] = await db.query(`SELECT * FROM ${table} WHERE id = ?`, [
+    id,
+    id,
+  ]);
+  return comments[0];
 };
 
 exports.create = async (data) => {
