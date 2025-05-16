@@ -3,9 +3,17 @@ const { buildInsertQuery, buildUpdateQuery } = require("@/utils/queryBuilder");
 
 const table = "`posts`";
 
-exports.findAll = async () => {
-  const [posts] = await db.query(`SELECT * FROM ${table}`);
-  return posts;
+exports.findAll = async (limit = 10, offset = 10) => {
+  {
+    const [posts] = await db.query(
+      `SELECT * FROM ${table} ORDER BY created_at DESC LIMIT ? OFFSET ?;`,
+      [limit, offset]
+    );
+    const [[{ posts_count }]] = await db.query(
+      `SELECT count(*) AS users_count FROM ${table}`
+    );
+    return { posts, posts_count };
+  }
 };
 
 exports.findById = async (id) => {
@@ -18,7 +26,7 @@ exports.findById = async (id) => {
 
 exports.create = async (data) => {
   const { columns, placeholders, values } = buildInsertQuery(data);
-  const query = `INSERT into ${table} (${columns}) VALUES (${placeholders});`;
+  const query = `INSERT INTO ${table} (${columns}) VALUES (${placeholders});`;
   const [{ insertId }] = await db.query(query, values);
 
   return {

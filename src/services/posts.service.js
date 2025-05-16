@@ -1,9 +1,16 @@
 const postsModel = require("@/models/posts.model");
+const { paginate } = require("@/utils/paginate");
 
 class PostsService {
-  async getAll() {
-    const posts = await postsModel.findAll();
-    return posts;
+  async getAll({ page = 1, limit = 10 } = {}) {
+    const {
+      data: { posts, posts_count },
+      pagination,
+    } = await paginate(postsModel.findAll, page, limit);
+    return {
+      data: posts,
+      ...pagination(posts_count),
+    };
   }
 
   async getById(id) {

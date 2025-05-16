@@ -5,14 +5,14 @@ const table = "`users`";
 
 exports.findAll = async (limit = 10, offset = 10) => {
   {
-    const [users] = await db.query(
+    const [rows] = await db.query(
       `SELECT * FROM ${table} ORDER BY created_at DESC LIMIT ? OFFSET ?;`,
       [limit, offset]
     );
-    const [[{ users_count }]] = await db.query(
-      `SELECT count(*) AS users_count FROM ${table}`
+    const [[{ count }]] = await db.query(
+      `SELECT count(*) AS count FROM ${table}`
     );
-    return { users, users_count };
+    return { rows, count };
   }
 };
 

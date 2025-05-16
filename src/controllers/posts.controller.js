@@ -4,7 +4,7 @@ const response = require("@/utils/response");
 const throw404 = require("@/utils/throw404");
 
 exports.getList = async (req, res) => {
-  const posts = await postsService.getAll("posts");
+  const posts = await postsService.getAll(req.query);
   if (!posts) throw404();
   response.success(res, 200, posts);
 };
