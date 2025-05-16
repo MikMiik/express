@@ -3,7 +3,8 @@ const { paginate } = require("@/utils/paginate");
 
 class UsersService {
   async getAll({ page = 1, limit = 10 } = {}) {
-    return paginate(usersModel.findAll, page, limit, "users");
+    const users = paginate(usersModel.findAll, page, limit, "users");
+    return users;
   }
 
   async getById(id) {

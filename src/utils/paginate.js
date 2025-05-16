@@ -1,21 +1,29 @@
 const throwError = require("./throwError");
 
-exports.paginate = async (findAll = async () => {}, page, limit, itemsName) => {
+exports.paginate = async (
+  findAll = async () => {},
+  page = 10,
+  limit = 10,
+  itemsName = "items"
+) => {
   page = page <= 0 ? 1 : page;
   limit = limit <= 0 ? 10 : limit;
-  if (itemsName && typeof itemsName !== "string") {
+
+  if (typeof itemsName !== "string") {
     throwError(400, "Validation failed for parameter 'itemsName'", {
       parameter: "itemsName",
       expected_type: "string",
       location: "paginate function",
     });
   }
-  const items = itemsName ? itemsName : "items";
-  const total_items = itemsName ? `total_${itemsName}` : "total_items";
+
+  const total_items =
+    itemsName !== "items" ? `total_${itemsName}` : "total_items";
   const offset = (page - 1) * 10;
   const { rows, count } = await findAll(+limit, offset);
+
   return {
-    [items]: rows,
+    [itemsName]: rows,
     pagination: {
       current_page: +page,
       per_page: +limit,
