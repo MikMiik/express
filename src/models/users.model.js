@@ -3,28 +3,20 @@ const { buildInsertQuery, buildUpdateQuery } = require("@/utils/queryBuilder");
 
 const table = "`users`";
 
-exports.findAll = async () =>
-  // { page = 1, limit = 10 } = {}
+exports.findAll = async (limit = 10, offset = 10) => {
   {
-    // const offset = (page - 1) * 10;
-    // const [users] = await db.query(
-    //   `select * from users ORDER BY id ASC limit ${limit} OFFSET ${offset};`
-    // );
-    // const [usersCount] = await db.query(
-    //   "select count(*) as users_count from users"
-    // );
-    // const users_count = usersCount[0].users_count;
-    // const last_page = Math.ceil(users_count / limit);
-    // const pagination = {
-    //   current_page: +page,
-    //   per_page: +limit,
-    //   total: users_count,
-    //   last_page,
-    // };
-    // return { users, pagination };
-    const [users] = await db.query(`SELECT * FROM ${table}`);
-    return users;
-  };
+    const [users] = await db.query(
+      `SELECT * FROM ${table} ORDER BY created_at DESC LIMIT ? OFFSET ?;`,
+      [limit, offset]
+    );
+    const [[{ users_count }]] = await db.query(
+      `SELECT count(*) AS users_count FROM ${table}`
+    );
+    return { users, users_count };
+  }
+  // const [users] = await db.query(`SELECT * FROM ${table}`);
+  // return users;
+};
 
 exports.findById = async (id) => {
   const [users] = await db.query(
