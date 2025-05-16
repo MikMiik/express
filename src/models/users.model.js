@@ -14,8 +14,6 @@ exports.findAll = async (limit = 10, offset = 10) => {
     );
     return { users, users_count };
   }
-  // const [users] = await db.query(`SELECT * FROM ${table}`);
-  // return users;
 };
 
 exports.findById = async (id) => {

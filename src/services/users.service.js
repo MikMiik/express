@@ -1,21 +1,16 @@
 const usersModel = require("@/models/users.model");
+const { paginate } = require("@/utils/paginate");
 
 class UsersService {
   async getAll({ page = 1, limit = 10 } = {}) {
-    page = page <= 0 ? 1 : page;
-    limit = limit <= 0 ? 10 : limit;
-    const offset = (page - 1) * 10;
-    const { users, users_count } = await usersModel.findAll(+limit, offset);
+    const {
+      data: { users, users_count },
+      pagination,
+    } = await paginate(usersModel.findAll, page, limit);
     return {
       data: users,
-      pagination: {
-        current_page: +page,
-        per_page: +limit,
-        total_users: users_count,
-        total_page: Math.ceil(users_count / limit),
-      },
+      ...pagination(users_count),
     };
-    // return users;
   }
 
   async getById(id) {
