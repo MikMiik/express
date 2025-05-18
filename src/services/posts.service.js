@@ -3,7 +3,7 @@ const { paginate } = require("@/utils/paginate");
 
 class PostsService {
   async getAll({ page = 1, limit = 10 } = {}) {
-    const posts = paginate(postsModel.findAll, page, limit, "posts");
+    const posts = await paginate(postsModel.findAll, page, limit, "posts");
     return posts;
   }
 

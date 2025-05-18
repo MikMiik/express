@@ -1,8 +1,19 @@
 const commentsModel = require("@/models/comments.model");
+const { paginate } = require("@/utils/paginate");
 
 class CommentsService {
-  async getAll() {
-    const comments = await commentsModel.findAll();
+  async getAll({ page = 1, limit = 10 } = {}) {
+    const comments = await paginate(
+      commentsModel.findAll,
+      page,
+      limit,
+      "comments"
+    );
+    return comments;
+  }
+
+  async getAllNoPagination(id) {
+    const comments = await commentsModel.findAllNoPagination(id);
     return comments;
   }
 
@@ -12,12 +23,12 @@ class CommentsService {
   }
 
   async getByPostId(postId) {
-    const comments = await this.getAll();
+    const comments = await this.getAllNoPagination();
     return comments.filter((comment) => comment.post_id === +postId);
   }
 
   async getByUserId(userId) {
-    const comments = await this.getAll();
+    const { comments } = await this.getAll();
     return comments.filter((comment) => comment.user_id === +userId);
   }
 

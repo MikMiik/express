@@ -34,6 +34,7 @@ exports.remove = async (req, res) => {
 };
 
 exports.getPostComments = async (req, res) => {
+  console.log(req.post);
   const comments = await commentsService.getByPostId(req.post.id);
   response.success(res, 200, comments);
 };

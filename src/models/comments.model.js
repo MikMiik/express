@@ -15,6 +15,17 @@ exports.findAll = async (limit = 10, offset = 10) => {
   );
   return { rows, count };
 };
+exports.findAllNoPagination = async () => {
+  const [comments] = await db.query(`SELECT * FROM ${table}`);
+  return comments;
+};
+
+exports.findById = async (id) => {
+  const [comments] = await db.query(`SELECT * FROM ${table} WHERE id = ?`, [
+    id,
+  ]);
+  return comments[0];
+};
 
 exports.create = async (data) => {
   const { columns, placeholders, values } = buildInsertQuery(data);

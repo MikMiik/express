@@ -3,7 +3,7 @@ const { paginate } = require("@/utils/paginate");
 
 class UsersService {
   async getAll({ page = 1, limit = 10 } = {}) {
-    const users = paginate(usersModel.findAll, page, limit, "users");
+    const users = await paginate(usersModel.findAll, page, limit, "users");
     return users;
   }
 
