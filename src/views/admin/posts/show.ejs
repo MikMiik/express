@@ -6,11 +6,13 @@
   </head>
 
   <body>
+    <%- include('../partials/header') %>
     <h1>Post Title</h1>
     <p><%= post.title %></p>
     <h1>Post Description</h1>
     <p><%= post.description %></p>
     <h1>Post Content</h1>
     <p><%= post.content %></p>
+    <%- include('../partials/footer') %>
   </body>
 </html>

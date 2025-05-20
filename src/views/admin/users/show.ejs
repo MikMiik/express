@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <body>
+    <%- include('../partials/userHeader', {username: user.name}) %>
+    <img src="<%= user.avatar %>" alt="" />
+    <h3>User Name</h3>
+    <p><%= user.name %></p>
+    <h3>User Birthday</h3>
+    <p><%= birthday %></p>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

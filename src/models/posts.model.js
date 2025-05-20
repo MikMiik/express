@@ -28,7 +28,10 @@ exports.create = async (data) => {
   const { columns, placeholders, values } = buildInsertQuery(data);
   const query = `INSERT INTO ${table} (${columns}) VALUES (${placeholders});`;
   const [{ insertId }] = await db.query(query, values);
-
+  // const title = data.title || data.description || "";
+  // const slug = slugify(title, { lower: true, strict: true });
+  // console.log(slug);
+  // await db.query(`INSERT INTO ${table} (slug) VALUES (?)`, [slug]);
   return {
     id: insertId,
     ...data,

@@ -1,11 +1,16 @@
+const slugify = require("slugify");
+
 exports.buildInsertQuery = (data) => {
-  const fields = Object.keys(data);
+  const title = data.title || data.description || "";
+  const slug = title ? slugify(title, { lower: true, strict: true }) : null;
+  const finalData = slug ? { ...data, slug } : { ...data };
+  const fields = Object.keys(finalData);
   // tạo 1 mảng gồm các keys
   const columns = fields.map((field) => `\`${field}\``).join(", ");
   // đưa mảng keys về chuỗi các `keys` và ngăn cách bởi dấu phẩy
   const placeholders = fields.map(() => "?").join(", ");
   // đưa mảng keys về chuỗi các dấu ? và ngăn cách bởi dấu phẩy
-  const values = fields.map((field) => data[field]);
+  const values = fields.map((field) => finalData[field]);
   // mảng các value của mỗi field
 
   return { columns, placeholders, values };
@@ -28,9 +33,12 @@ VD:
     }
 */
 exports.buildUpdateQuery = (data) => {
-  const fields = Object.keys(data);
+  const title = data.title || data.description || "";
+  const slug = title ? slugify(title, { lower: true, strict: true }) : null;
+  const finalData = slug ? { ...data, slug } : { ...data };
+  const fields = Object.keys(finalData);
   const setClause = fields.map((field) => `\`${field}\` = ?`).join(", ");
-  const values = fields.map((field) => data[field]);
+  const values = fields.map((field) => finalData[field]);
 
   return { setClause, values };
 };
