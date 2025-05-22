@@ -1,5 +1,7 @@
 require("module-alias/register");
 const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+
 const cors = require("cors");
 const app = express();
 const port = 3000;
@@ -14,8 +16,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // ViewEngine
+app.use(expressLayouts);
 app.set("view engine", "ejs");
 app.set("views", "./src/views");
+app.set("layout", "./admin/layouts/default");
 
 // Router
 app.use("/admin", adminRouter);

@@ -1,20 +1,426 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
+<main>
+  <div class="content-header">
+    <h1>Users</h1>
+    <a href="create-product.html" class="btn-primary">
+      <i class="fas fa-plus"></i> Add New User
+    </a>
+  </div>
 
-  <body>
-    <%- include('../partials/header', {username: users[0].name}) %>
-    <h1>Users List</h1>
-    <ul>
-      <% for (user of users) { %>
-      <li>
-        <a href="/admin/users/<%=user.id%>"> <%= user.name %> </a>
-      </li>
-      <% } %>
-    </ul>
-    <%-include('../partials/footer') %>
-  </body>
-</html>
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <form id="filterForm" class="filter-form" novalidate>
+      <div class="form-group">
+        <label for="filterName">User Name</label>
+        <input
+          type="text"
+          id="filterName"
+          class="form-control"
+          placeholder="Search users..."
+        />
+        <!-- <span class="error-text" id="filterNameError"
+          >Please enter a valid user name.</span
+        > -->
+      </div>
+
+      <div class="form-group" style="display: flex; align-items: flex-end">
+        <button type="submit" class="btn-primary">
+          <i class="fas fa-filter"></i> Filter
+        </button>
+        <button
+          type="button"
+          id="resetFilters"
+          class="btn-secondary"
+          style="margin-left: 10px"
+        >
+          <i class="fas fa-times"></i> Reset
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Products Table -->
+  <div class="table-container">
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Birthday</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Product rows -->
+        <tr data-id="1">
+          <td>
+            <div style="display: flex; align-items: center">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Product"
+                class="product-image"
+              />
+              <div style="margin-left: 15px">
+                <div class="product-name">Wireless Headphones</div>
+                <div class="product-category">SKU: P100125</div>
+              </div>
+            </div>
+          </td>
+          <td>Electronics</td>
+          <td class="product-price">$199.99</td>
+          <td>75 units</td>
+          <td>
+            <span class="badge badge-success">In Stock</span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <a
+                href="product-detail.html"
+                class="action-btn view"
+                title="View"
+              >
+                <i class="fas fa-eye"></i>
+              </a>
+              <a href="#" class="action-btn edit" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a
+                href="#"
+                class="action-btn delete delete-product"
+                title="Delete"
+                data-id="1"
+                data-name="Wireless Headphones"
+              >
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+
+        <!-- <tr data-id="2">
+          <td>
+            <div style="display: flex; align-items: center">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Product"
+                class="product-image"
+              />
+              <div style="margin-left: 15px">
+                <div class="product-name">Smart Watch</div>
+                <div class="product-category">SKU: P100126</div>
+              </div>
+            </div>
+          </td>
+          <td>Electronics</td>
+          <td class="product-price">$299.99</td>
+          <td>45 units</td>
+          <td>
+            <span class="badge badge-success">In Stock</span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <a
+                href="product-detail.html"
+                class="action-btn view"
+                title="View"
+              >
+                <i class="fas fa-eye"></i>
+              </a>
+              <a href="#" class="action-btn edit" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a
+                href="#"
+                class="action-btn delete delete-product"
+                title="Delete"
+                data-id="2"
+                data-name="Smart Watch"
+              >
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+
+        <tr data-id="3">
+          <td>
+            <div style="display: flex; align-items: center">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Product"
+                class="product-image"
+              />
+              <div style="margin-left: 15px">
+                <div class="product-name">Denim Jacket</div>
+                <div class="product-category">SKU: P100127</div>
+              </div>
+            </div>
+          </td>
+          <td>Clothing</td>
+          <td class="product-price">$89.99</td>
+          <td>12 units</td>
+          <td>
+            <span class="badge badge-warning">Low Stock</span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <a
+                href="product-detail.html"
+                class="action-btn view"
+                title="View"
+              >
+                <i class="fas fa-eye"></i>
+              </a>
+              <a href="#" class="action-btn edit" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a
+                href="#"
+                class="action-btn delete delete-product"
+                title="Delete"
+                data-id="3"
+                data-name="Denim Jacket"
+              >
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+
+        <tr data-id="4">
+          <td>
+            <div style="display: flex; align-items: center">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Product"
+                class="product-image"
+              />
+              <div style="margin-left: 15px">
+                <div class="product-name">Organic Coffee</div>
+                <div class="product-category">SKU: P100128</div>
+              </div>
+            </div>
+          </td>
+          <td>Food</td>
+          <td class="product-price">$24.99</td>
+          <td>0 units</td>
+          <td>
+            <span class="badge badge-danger">Out of Stock</span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <a
+                href="product-detail.html"
+                class="action-btn view"
+                title="View"
+              >
+                <i class="fas fa-eye"></i>
+              </a>
+              <a href="#" class="action-btn edit" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a
+                href="#"
+                class="action-btn delete delete-product"
+                title="Delete"
+                data-id="4"
+                data-name="Organic Coffee"
+              >
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+
+        <tr data-id="5">
+          <td>
+            <div style="display: flex; align-items: center">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Product"
+                class="product-image"
+              />
+              <div style="margin-left: 15px">
+                <div class="product-name">Design Patterns</div>
+                <div class="product-category">SKU: P100129</div>
+              </div>
+            </div>
+          </td>
+          <td>Books</td>
+          <td class="product-price">$49.99</td>
+          <td>28 units</td>
+          <td>
+            <span class="badge badge-success">In Stock</span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <a
+                href="product-detail.html"
+                class="action-btn view"
+                title="View"
+              >
+                <i class="fas fa-eye"></i>
+              </a>
+              <a href="#" class="action-btn edit" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a
+                href="#"
+                class="action-btn delete delete-product"
+                title="Delete"
+                data-id="5"
+                data-name="Design Patterns"
+              >
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+
+        <tr data-id="6">
+          <td>
+            <div style="display: flex; align-items: center">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Product"
+                class="product-image"
+              />
+              <div style="margin-left: 15px">
+                <div class="product-name">Desk Lamp</div>
+                <div class="product-category">SKU: P100130</div>
+              </div>
+            </div>
+          </td>
+          <td>Electronics</td>
+          <td class="product-price">$39.99</td>
+          <td>54 units</td>
+          <td>
+            <span class="badge badge-success">In Stock</span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <a
+                href="product-detail.html"
+                class="action-btn view"
+                title="View"
+              >
+                <i class="fas fa-eye"></i>
+              </a>
+              <a href="#" class="action-btn edit" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a
+                href="#"
+                class="action-btn delete delete-product"
+                title="Delete"
+                data-id="6"
+                data-name="Desk Lamp"
+              >
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <div class="pagination-info">Showing 1-6 of 56 products</div>
+      <ul class="pagination">
+        <li><a href="#" data-page="1" class="active">1</a></li>
+        <li><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" id="confirmDeleteModal">
+  <div class="modal-content">
+    <h3 class="modal-title">Confirm Delete</h3>
+    <div class="modal-body">
+      Are you sure you want to delete "<span id="deleteProductName"></span>"?
+      This action cannot be undone.
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancelDelete" class="btn-secondary">
+        Cancel
+      </button>
+      <button type="button" id="confirmDelete" class="btn-danger">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/validation.js"></script>
+<script src="/assets/js/products.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Initialize form validation
+    if (typeof initFormValidation === "function") {
+      initFormValidation("filterForm");
+    }
+
+    // Update existing form submission handler in products.js
+    const originalFilterFormHandler =
+      document.getElementById("filterForm").onsubmit;
+
+    // Override form submission handler
+    document
+      .getElementById("filterForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Validate form first
+        if (validateForm("filterForm")) {
+          // Proceed with original filter submission logic
+          const name = document.getElementById("filterName").value;
+          const category = document.getElementById("filterCategory").value;
+          const status = document.getElementById("filterStatus").value;
+
+          console.log("Filtering with:", {
+            name,
+            category,
+            status,
+          });
+
+          // For demo: show loading state
+          document.querySelector(".table-container").classList.add("loading");
+
+          // Simulate API call with timeout
+          setTimeout(() => {
+            // In a real app, this would update the table with filtered results
+            document
+              .querySelector(".table-container")
+              .classList.remove("loading");
+          }, 500);
+        }
+      });
+
+    // Validate the alphanumeric nature of the product name field
+    document
+      .getElementById("filterName")
+      .addEventListener("keyup", function () {
+        const input = this;
+        const value = input.value.trim();
+
+        // Only validate if there's a value (the field is not required)
+        if (value !== "" && !/^[a-zA-Z0-9\s]+$/.test(value)) {
+          document.getElementById("filterNameError").style.display = "block";
+          document.getElementById("filterNameError").textContent =
+            "Product name can only contain letters, numbers, and spaces.";
+          input.classList.add("error");
+        } else {
+          document.getElementById("filterNameError").style.display = "none";
+          input.classList.remove("error");
+        }
+      });
+  });
+</script>
