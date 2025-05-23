@@ -1,20 +1,9 @@
 const commentsModel = require("@/models/comments.model");
-const { paginate } = require("@/utils/paginate");
-
 class CommentsService {
-  async getAll({ page = 1, limit = 10 } = {}) {
-    const comments = await paginate(
-      commentsModel.findAll,
-      page,
-      limit,
-      "comments"
-    );
-    return comments;
-  }
-
-  async getAllNoPagination(id) {
-    const comments = await commentsModel.findAllNoPagination(id);
-    return comments;
+  async getAll(page, limit) {
+    const items = await commentsModel.findAll(page, limit);
+    const total = await commentsModel.count();
+    return { items, total };
   }
 
   async getById(id) {

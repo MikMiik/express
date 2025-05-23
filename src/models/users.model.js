@@ -1,24 +1,27 @@
 const db = require("@/configs/db");
 const { buildInsertQuery, buildUpdateQuery } = require("@/utils/queryBuilder");
-const {
-  querySortedWithPagination,
-} = require("@/utils/querySortedWithPagination");
 
 const table = "`users`";
 
-exports.findAll = async (limit = 10, offset = 10) => {
-  const { rows, count } = await querySortedWithPagination(
-    table,
-    limit,
-    offset,
-    "created_at"
+exports.findAll = async (page, limit) => {
+  const offset = (page - 1) * limit;
+  const [users] = await db.query(
+    `SELECT * FROM ${table} ORDER BY created_at desc limit ? offset ?`,
+    [limit, offset]
   );
-  return { rows, count };
+  return users;
+};
+
+exports.count = async () => {
+  const [[{ total }]] = await db.query(
+    `select count(*) as total from ${table}`
+  );
+  return total;
 };
 
 exports.findById = async (id) => {
   const [users] = await db.query(
-    `SELECT * FROM ${table} WHERE id = ? OR username = ?`,
+    `SELECT * FROM ${table} WHERE id = ? OR name = ?`,
     [id, id]
   );
   return users[0];

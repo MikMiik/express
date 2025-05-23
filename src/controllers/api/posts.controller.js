@@ -4,9 +4,9 @@ const response = require("@/utils/response");
 const throw404 = require("@/utils/throw404");
 
 exports.getList = async (req, res) => {
-  const posts = await postsService.getAll(req.query);
-  if (!posts) throw404();
-  response.success(res, 200, posts);
+  const result = await postsService.getAll(req.page, req.limit);
+  if (!result) throw404();
+  res.paginate(result);
 };
 
 exports.getOne = async (req, res) => {
@@ -15,33 +15,33 @@ exports.getOne = async (req, res) => {
     ...req.post,
     comments,
   };
-  response.success(res, 200, data);
+  res.success(200, data);
 };
 
 exports.create = async (req, res) => {
-  const newPost = await postsService.create(req.body);
-  response.success(res, 201, newPost);
+  const post = await postsService.create(req.body);
+  res.success(201, post);
 };
 
 exports.update = async (req, res) => {
-  const updatedPost = await postsService.update(req.post.id, req.body);
-  response.success(res, 200, updatedPost);
+  const post = await postsService.update(req.post.id, req.body);
+  res.success(200, post);
 };
 
 exports.remove = async (req, res) => {
   await postsService.remove(req.post.id);
-  response.success(res, 204);
+  res.success(204);
 };
 
 exports.getPostComments = async (req, res) => {
   const comments = await commentsService.getByPostId(req.post.id);
-  response.success(res, 200, comments);
+  res.success(200, comments);
 };
 
 exports.createPostComments = async (req, res) => {
-  const newComment = await commentsService.create({
+  const comment = await commentsService.create({
     post_id: req.post.id,
     content: req.body.content,
   });
-  response.success(res, 201, newComment);
+  res.success(200, comment);
 };

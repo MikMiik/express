@@ -9,11 +9,15 @@ const router = require("@/routes/api/index");
 const adminRouter = require("@/routes/admin/index");
 const notFoundHandler = require("@/middlewares/notFoundHandler");
 const errorHandler = require("@/middlewares/errorHandler");
+const responseEnhancer = require("@/middlewares/responseEnhancer");
+const handlePagination = require("@/middlewares/handlePagination");
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
+app.use(handlePagination);
+app.use(responseEnhancer);
 
 // ViewEngine
 app.use(expressLayouts);

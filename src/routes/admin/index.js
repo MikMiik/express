@@ -9,6 +9,6 @@ const router = express.Router();
 router.use("/", dashboardRouter);
 router.use("/posts", postsRouter);
 router.use("/users", usersRouter);
-router.use("/", authRouter);
+// router.use("/", authRouter);
 
 module.exports = router;

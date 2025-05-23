@@ -16,4 +16,16 @@ function error(res, status, message, errors) {
   });
 }
 
-module.exports = { success, error };
+function paginate(res, items, total, page, limit) {
+  success(res, 200, {
+    items,
+    pagination: {
+      current_page: page,
+      per_page: limit,
+      total,
+      last_page: Math.ceil(total / limit),
+    },
+  });
+}
+
+module.exports = { success, error, paginate };
