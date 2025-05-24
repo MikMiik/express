@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | Admin Dashboard</title>
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      .error-text {
+        color: #f44336;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .form-control.error {
+        border-color: #f44336;
+      }
+
+      .password-requirements {
+        margin-top: 5px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        font-size: 12px;
+      }
+
+      .password-requirements h4 {
+        margin-top: 0;
+        margin-bottom: 5px;
+        font-size: 13px;
+      }
+
+      .requirement {
+        display: flex;
+        align-items: center;
+        margin-bottom: 3px;
+        color: #666;
+      }
+
+      .requirement i {
+        margin-right: 5px;
+        font-size: 10px;
+      }
+
+      .requirement.valid {
+        color: #4caf50;
+      }
+
+      .requirement.valid i {
+        color: #4caf50;
+      }
+    </style>
+  </head>
+
+  <div class="register-container">
+    <div class="logo">
+      <h1>Admin Dashboard</h1>
+    </div>
+
+    <form id="registerForm" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <input
+            type="text"
+            id="firstname"
+            class="form-control"
+            placeholder="Enter first name"
+            data-validate="name"
+            required
+          />
+          <span class="error-text" id="firstnameError"
+            >Please enter a valid first name.</span
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="lastname">Last Name</label>
+          <input
+            type="text"
+            id="lastname"
+            class="form-control"
+            placeholder="Enter last name"
+            data-validate="name"
+            required
+          />
+          <span class="error-text" id="lastnameError"
+            >Please enter a valid last name.</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          placeholder="Enter your email"
+          required
+        />
+        <span class="error-text" id="emailError"
+          >Please enter a valid email address.</span
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          placeholder="Choose a password"
+          data-validate="password"
+          required
+        />
+        <span class="error-text" id="passwordError"
+          >Password must meet the requirements below.</span
+        >
+        <div class="password-requirements">
+          <h4>Password Requirements:</h4>
+          <div class="requirement" id="lengthReq">
+            <i class="fas fa-circle"></i> At least 8 characters
+          </div>
+          <div class="requirement" id="uppercaseReq">
+            <i class="fas fa-circle"></i> At least one uppercase letter
+          </div>
+          <div class="requirement" id="lowercaseReq">
+            <i class="fas fa-circle"></i> At least one lowercase letter
+          </div>
+          <div class="requirement" id="numberReq">
+            <i class="fas fa-circle"></i> At least one number
+          </div>
+          <div class="requirement" id="specialReq">
+            <i class="fas fa-circle"></i> At least one special character
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          class="form-control"
+          placeholder="Confirm password"
+          required
+        />
+        <span class="error-text" id="confirmPasswordError"
+          >Passwords do not match.</span
+        >
+      </div>
+
+      <div class="terms">
+        <input type="checkbox" id="terms" required />
+        <label for="terms"
+          >I agree to the Terms of Service and Privacy Policy</label
+        >
+        <span
+          class="error-text"
+          id="termsError"
+          style="display: block; margin-left: 20px"
+          >You must agree to the terms to continue.</span
+        >
+      </div>
+
+      <button type="submit" class="btn">Create Account</button>
+
+      <div class="footer">
+        <p>Already have an account? <a href="login">Login</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script src="assets/js/validation.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Initialize form validation
+      if (typeof initFormValidation === "function") {
+        initFormValidation("registerForm");
+      }
+
+      const passwordInput = document.getElementById("password");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+      const termsCheckbox = document.getElementById("terms");
+      const termsError = document.getElementById("termsError");
+
+      // Password requirements elements
+      const lengthReq = document.getElementById("lengthReq");
+      const uppercaseReq = document.getElementById("uppercaseReq");
+      const lowercaseReq = document.getElementById("lowercaseReq");
+      const numberReq = document.getElementById("numberReq");
+      const specialReq = document.getElementById("specialReq");
+
+      // Check password requirements in real-time
+      passwordInput.addEventListener("keyup", function () {
+        const password = this.value;
+
+        // Length requirement (at least 8 characters)
+        if (password.length >= 8) {
+          lengthReq.classList.add("valid");
+          lengthReq.querySelector("i").className = "fas fa-check-circle";
+        } else {
+          lengthReq.classList.remove("valid");
+          lengthReq.querySelector("i").className = "fas fa-circle";
+        }
+
+        // Uppercase letter requirement
+        if (/[A-Z]/.test(password)) {
+          uppercaseReq.classList.add("valid");
+          uppercaseReq.querySelector("i").className = "fas fa-check-circle";
+        } else {
+          uppercaseReq.classList.remove("valid");
+          uppercaseReq.querySelector("i").className = "fas fa-circle";
+        }
+
+        // Lowercase letter requirement
+        if (/[a-z]/.test(password)) {
+          lowercaseReq.classList.add("valid");
+          lowercaseReq.querySelector("i").className = "fas fa-check-circle";
+        } else {
+          lowercaseReq.classList.remove("valid");
+          lowercaseReq.querySelector("i").className = "fas fa-circle";
+        }
+
+        // Number requirement
+        if (/[0-9]/.test(password)) {
+          numberReq.classList.add("valid");
+          numberReq.querySelector("i").className = "fas fa-check-circle";
+        } else {
+          numberReq.classList.remove("valid");
+          numberReq.querySelector("i").className = "fas fa-circle";
+        }
+
+        // Special character requirement
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+          specialReq.classList.add("valid");
+          specialReq.querySelector("i").className = "fas fa-check-circle";
+        } else {
+          specialReq.classList.remove("valid");
+          specialReq.querySelector("i").className = "fas fa-circle";
+        }
+      });
+
+      // Check password match when confirm password is changed
+      confirmPasswordInput.addEventListener("keyup", function () {
+        if (this.value !== passwordInput.value) {
+          document.getElementById("confirmPasswordError").style.display =
+            "block";
+        } else {
+          document.getElementById("confirmPasswordError").style.display =
+            "none";
+        }
+      });
+
+      // Handle terms checkbox
+      termsCheckbox.addEventListener("change", function () {
+        if (this.checked) {
+          termsError.style.display = "none";
+        } else {
+          termsError.style.display = "block";
+        }
+      });
+
+      // Initially hide terms error
+      termsError.style.display = "none";
+
+      // Handle form submission
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Validate terms checkbox
+          if (!termsCheckbox.checked) {
+            termsError.style.display = "block";
+            return;
+          }
+
+          // Use the validation.js utility for validating the form
+          if (
+            validateForm("registerForm") &&
+            isValidPassword(passwordInput.value) &&
+            passwordInput.value === confirmPasswordInput.value
+          ) {
+            // In a real app, you would send an AJAX request to your server
+            // For demo: redirect to login page
+            window.location.href = "login";
+          }
+        });
+
+      function isValidPassword(password) {
+        const lengthValid = password.length >= 8;
+        const uppercaseValid = /[A-Z]/.test(password);
+        const lowercaseValid = /[a-z]/.test(password);
+        const numberValid = /[0-9]/.test(password);
+        const specialValid = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+        return (
+          lengthValid &&
+          uppercaseValid &&
+          lowercaseValid &&
+          numberValid &&
+          specialValid
+        );
+      }
+    });
+  </script>
+</html>

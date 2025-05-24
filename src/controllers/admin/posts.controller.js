@@ -1,7 +1,7 @@
 const postsService = require("@/services/posts.service");
 
 exports.index = async (req, res) => {
-  const { items, total } = await postsService.getAll(req.page, req.limit);
+  const { items, total } = await postsService.getAll();
   res.render("admin/posts/index", {
     posts: items,
     total,
