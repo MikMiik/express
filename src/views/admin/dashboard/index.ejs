@@ -1,15 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <h1>Home</h1>
-    <ul>
-        <% for (user of users) { %>
-        <li><%= user.name %></li>
-        <% } %>
-    </ul>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <!-- Main Content -->
+
+  <div class="dashboard-header">
+    <h1>Dashboard Overview</h1>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Total Sales</h3>
+      <p class="stat-value">$24,780</p>
+      <p class="trend up">
+        <i class="fas fa-arrow-up"></i> 12.5% from last month
+      </p>
+      <div class="stat-icon">
+        <i class="fas fa-dollar-sign"></i>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <h3>New Customers</h3>
+      <p class="stat-value">578</p>
+      <p class="trend up">
+        <i class="fas fa-arrow-up"></i> 8.2% from last month
+      </p>
+      <div class="stat-icon">
+        <i class="fas fa-user-plus"></i>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <h3>Active Products</h3>
+      <p class="stat-value">1,247</p>
+      <p class="trend up">
+        <i class="fas fa-arrow-up"></i> 4.3% from last month
+      </p>
+      <div class="stat-icon">
+        <i class="fas fa-box"></i>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <h3>Bounce Rate</h3>
+      <p class="stat-value">42.8%</p>
+      <p class="trend down">
+        <i class="fas fa-arrow-down"></i> 2.7% from last month
+      </p>
+      <div class="stat-icon">
+        <i class="fas fa-chart-pie"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Sales Overview</h3>
+      <div class="chart-container">
+        <canvas id="salesChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Weekly Visitors</h3>
+      <div class="chart-container">
+        <canvas id="visitorsChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Sales Distribution</h3>
+      <div class="chart-container">
+        <canvas id="salesDistributionChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Revenue (Actual vs Projected)</h3>
+      <div class="chart-container">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/common.js"></script>
 </html>

@@ -1,14 +1,15 @@
 const usersService = require("@/services/users.service");
 
 exports.index = async (req, res) => {
-  const { users } = await usersService.getAll(req.query);
+  const { items, total } = await usersService.getAll();
   res.render("admin/users/index", {
-    users,
+    users: items,
+    total,
   });
 };
 
 exports.show = async (req, res) => {
-  const user = await usersService.getById(req.params.id);
+  const user = await usersService.getById(req.user.id);
   res.render("admin/users/show", {
     user,
   });

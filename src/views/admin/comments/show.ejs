@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comment Details | Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+  </head>
+
+  <!-- Main Content -->
+
+  <div class="content-header">
+    <h1>Comment Detail</h1>
+    <div>
+      <a href="comments.html" class="btn btn-secondary" id="backButton">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+      <a href="#" class="btn btn-primary" id="editButton">
+        <i class="fas fa-edit"></i> Edit
+      </a>
+    </div>
+  </div>
+
+  <!-- Comment Details Container -->
+  <div class="card">
+    <div class="card-header">
+      <h3 id="itemTitle">Loading...</h3>
+    </div>
+    <div class="card-body">
+      <div id="itemContent">
+        <!-- Will be populated with JavaScript -->
+        <div class="loading-spinner">Loading details...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comment Actions -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Actions</h3>
+    </div>
+    <div class="card-body">
+      <div class="action-buttons-container">
+        <button id="approveButton" class="btn btn-success">
+          <i class="fas fa-check"></i> Approve
+        </button>
+        <button id="rejectButton" class="btn btn-danger">
+          <i class="fas fa-ban"></i> Reject
+        </button>
+        <button id="replyButton" class="btn btn-primary">
+          <i class="fas fa-reply"></i> Reply
+        </button>
+        <button id="deleteButton" class="btn btn-danger">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity History -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Activity History</h3>
+    </div>
+    <div class="card-body">
+      <ul class="activity-list" id="activityList">
+        <!-- Will be populated with JavaScript -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Reply Modal -->
+  <div class="modal" id="replyModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Reply to Comment</h3>
+      <div class="modal-body">
+        <form id="replyForm">
+          <div class="form-group">
+            <label for="replyText">Your Reply</label>
+            <textarea
+              id="replyText"
+              class="form-control"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="replyAs">Reply As</label>
+            <select id="replyAs" class="form-control">
+              <option value="admin">Administrator</option>
+              <option value="moderator">Moderator</option>
+              <option value="author">Post Author</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="notifyUser" checked />
+              <label for="notifyUser">Notify user by email</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="cancelReply"
+          class="btn btn-secondary"
+          data-cancel
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="submitReply"
+          class="btn btn-primary"
+          data-confirm
+        >
+          Send Reply
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Dialog -->
+  <div class="modal" id="confirmDeleteModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Confirm Delete</h3>
+      <div class="modal-body">
+        Are you sure you want to delete this comment? This action cannot be
+        undone.
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="cancelDelete"
+          class="btn btn-secondary"
+          data-cancel
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="confirmDelete"
+          class="btn btn-danger"
+          data-confirm
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get comment ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const commentId = urlParams.get("id");
+
+      // Set edit button URL
+      const editButton = document.getElementById("editButton");
+      editButton.href = `edit-comment.html?id=${commentId}`;
+
+      // Load comment details
+      loadCommentDetails(commentId);
+
+      // Load activity history
+      loadActivityHistory(commentId);
+
+      // Setup action buttons
+      setupActionButtons(commentId);
+    });
+
+    // Load comment details
+    function loadCommentDetails(commentId) {
+      // In a real application, this would fetch data from an API
+      // For demonstration, we'll use mock data
+
+      // Mock comment data
+      let commentData;
+
+      // Different mock data based on comment ID
+      switch (commentId) {
+        case "1":
+          commentData = {
+            id: commentId,
+            content:
+              "Great article! These tips have really helped me improve my productivity.",
+            author: "Sarah Johnson",
+            email: "sarah.johnson@example.com",
+            ip: "192.168.1.100",
+            date: "2023-07-16T14:30:00",
+            status: "approved",
+            post: {
+              id: 1,
+              title: "10 Tips for Better Productivity",
+            },
+            replies: [],
+          };
+          break;
+        case "4":
+          commentData = {
+            id: commentId,
+            content:
+              "Check out my website at http://spamlink.com for more productivity hacks!",
+            author: "Unknown User",
+            email: "spam@example.com",
+            ip: "192.168.1.104",
+            date: "2023-07-18T09:15:00",
+            status: "rejected",
+            post: {
+              id: 1,
+              title: "10 Tips for Better Productivity",
+            },
+            replies: [],
+          };
+          break;
+        case "5":
+          commentData = {
+            id: commentId,
+            content:
+              "Morning meditation has changed my life. I'd add that to the list of habits.",
+            author: "Jennifer Lopez",
+            email: "jennifer@example.com",
+            ip: "192.168.1.105",
+            date: "2023-07-18T10:45:00",
+            status: "pending",
+            post: {
+              id: 3,
+              title: "5 Morning Habits of Successful People",
+            },
+            replies: [],
+          };
+          break;
+        default:
+          commentData = {
+            id: commentId,
+            content:
+              "I disagree with point #3. In my experience, starting with the most difficult task first is more effective.",
+            author: "Michael Brown",
+            email: "michael.brown@example.com",
+            ip: "192.168.1.102",
+            date: "2023-07-17T10:15:00",
+            status: "approved",
+            post: {
+              id: 1,
+              title: "10 Tips for Better Productivity",
+            },
+            replies: [
+              {
+                id: 101,
+                content:
+                  "Thanks for your input, Michael. Different approaches work for different people, and that's why we present multiple strategies.",
+                author: "Admin",
+                date: "2023-07-17T11:30:00",
+              },
+            ],
+          };
+      }
+
+      // Update page title and header
+      document.title = `Comment by ${commentData.author} | Admin Dashboard`;
+      document.getElementById(
+        "itemTitle"
+      ).textContent = `Comment by ${commentData.author}`;
+
+      // Get status badge class
+      let statusBadgeClass = "badge-warning";
+      if (commentData.status === "approved") {
+        statusBadgeClass = "badge-success";
+      } else if (commentData.status === "rejected") {
+        statusBadgeClass = "badge-danger";
+      }
+
+      // Format date with time
+      const formattedDate = formatDate(commentData.date, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      // Create comment detail HTML
+      const commentHTML = `
+                    <div class="detail-section">
+                        <h3>Comment Information</h3>
+                        <table class="detail-table">
+                            <tr>
+                                <td><strong>Status:</strong></td>
+                                <td><span class="badge ${statusBadgeClass}">${
+        commentData.status.charAt(0).toUpperCase() + commentData.status.slice(1)
+      }</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Author:</strong></td>
+                                <td>${commentData.author}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email:</strong></td>
+                                <td><a href="mailto:${commentData.email}">${
+        commentData.email
+      }</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>IP Address:</strong></td>
+                                <td>${commentData.ip}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date:</strong></td>
+                                <td>${formattedDate}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Post:</strong></td>
+                                <td><a href="post-detail.html?id=${
+                                  commentData.post.id
+                                }">${commentData.post.title}</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3>Comment Content</h3>
+                        <div class="comment-content">
+                            ${commentData.content}
+                        </div>
+                    </div>
+                    
+                    ${
+                      commentData.replies.length > 0
+                        ? `
+                    <div class="detail-section">
+                        <h3>Replies (${commentData.replies.length})</h3>
+                        <div class="replies-container">
+                            ${commentData.replies
+                              .map(
+                                (reply) => `
+                            <div class="reply">
+                                <div class="reply-header">
+                                    <strong>${
+                                      reply.author
+                                    }</strong> <span class="reply-date">${formatDate(
+                                  reply.date,
+                                  {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  }
+                                )}</span>
+                                </div>
+                                <div class="reply-content">
+                                    ${reply.content}
+                                </div>
+                            </div>
+                            `
+                              )
+                              .join("")}
+                        </div>
+                    </div>
+                    `
+                        : ""
+                    }
+                `;
+
+      document.getElementById("itemContent").innerHTML = commentHTML;
+
+      // Update action buttons based on status
+      updateActionButtons(commentData.status);
+    }
+
+    // Update action buttons based on comment status
+    function updateActionButtons(status) {
+      const approveButton = document.getElementById("approveButton");
+      const rejectButton = document.getElementById("rejectButton");
+
+      if (status === "approved") {
+        approveButton.disabled = true;
+        rejectButton.disabled = false;
+      } else if (status === "rejected") {
+        approveButton.disabled = false;
+        rejectButton.disabled = true;
+      } else {
+        approveButton.disabled = false;
+        rejectButton.disabled = false;
+      }
+    }
+
+    // Setup action buttons
+    function setupActionButtons(commentId) {
+      // Approve button
+      document
+        .getElementById("approveButton")
+        .addEventListener("click", function () {
+          // In a real app, this would be an API call
+          console.log(`Approving comment with ID: ${commentId}`);
+
+          // Show success message
+          showMessage("actionSuccess", "Comment approved successfully", 3000);
+
+          // Update UI
+          updateActionButtons("approved");
+        });
+
+      // Reject button
+      document
+        .getElementById("rejectButton")
+        .addEventListener("click", function () {
+          // In a real app, this would be an API call
+          console.log(`Rejecting comment with ID: ${commentId}`);
+
+          // Show success message
+          showMessage("actionSuccess", "Comment rejected successfully", 3000);
+
+          // Update UI
+          updateActionButtons("rejected");
+        });
+
+      // Reply button - show modal
+      document
+        .getElementById("replyButton")
+        .addEventListener("click", async function () {
+          // Show reply modal
+          const result = await showModal("replyModal");
+
+          if (result) {
+            const replyText = document.getElementById("replyText").value;
+            const replyAs = document.getElementById("replyAs").value;
+            const notifyUser = document.getElementById("notifyUser").checked;
+
+            // In a real app, this would be an API call
+            console.log(`Replying to comment ${commentId} as ${replyAs}:`, {
+              text: replyText,
+              notifyUser,
+            });
+
+            // Show success message
+            showMessage("actionSuccess", "Reply sent successfully", 3000);
+
+            // Reload comment details to show the new reply
+            loadCommentDetails(commentId);
+          }
+        });
+
+      // Delete button
+      document
+        .getElementById("deleteButton")
+        .addEventListener("click", async function () {
+          // Show confirmation dialog
+          const result = await showConfirmDialog("confirmDeleteModal", {
+            title: "Confirm Delete",
+            message:
+              "Are you sure you want to delete this comment? This action cannot be undone.",
+          });
+
+          if (result) {
+            // In a real app, this would be an API call
+            console.log(`Deleting comment with ID: ${commentId}`);
+
+            // Redirect back to comments list
+            window.location.href = "comments.html";
+          }
+        });
+    }
+
+    // Load activity history
+    function loadActivityHistory(commentId) {
+      // In a real application, this would fetch data from an API
+      // For demonstration, we'll use mock data
+
+      const activityData = [
+        {
+          action: "Comment Submitted",
+          date: "2023-07-16 14:30",
+          user: "Sarah Johnson",
+        },
+        {
+          action: "Comment Approved",
+          date: "2023-07-16 15:45",
+          user: "Admin",
+        },
+        {
+          action: "Reply Added",
+          date: "2023-07-17 11:30",
+          user: "Admin",
+        },
+      ];
+
+      // Generate HTML for activity list
+      const activityHTML = activityData
+        .map(
+          (activity) => `
+                    <li style="padding: 15px 0; border-bottom: 1px solid #eee;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <i class="fas fa-history" style="color: #3a86ff; margin-right: 10px;"></i>
+                                <strong>${activity.action}</strong> by ${
+            activity.user
+          }
+                            </div>
+                            <div style="color: #666;">
+                                ${formatDate(activity.date, {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                            </div>
+                        </div>
+                    </li>
+                `
+        )
+        .join("");
+
+      document.getElementById("activityList").innerHTML = activityHTML;
+    }
+
+    // Show modal dialog (for reply)
+    async function showModal(modalId) {
+      return new Promise((resolve) => {
+        const modal = document.getElementById(modalId);
+        modal.style.display = "block";
+
+        const submitBtn = modal.querySelector("[data-confirm]");
+        const cancelBtn = modal.querySelector("[data-cancel]");
+
+        function cleanup() {
+          modal.style.display = "none";
+          submitBtn.removeEventListener("click", handleSubmit);
+          cancelBtn.removeEventListener("click", handleCancel);
+        }
+
+        function handleSubmit() {
+          cleanup();
+          resolve(true);
+        }
+
+        function handleCancel() {
+          cleanup();
+          resolve(false);
+        }
+
+        submitBtn.addEventListener("click", handleSubmit);
+        cancelBtn.addEventListener("click", handleCancel);
+      });
+    }
+  </script>
+
+  <style>
+    /* Additional styles for the detail page */
+    .detail-section {
+      margin-bottom: 30px;
+    }
+
+    .detail-section h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .detail-table td {
+      padding: 10px 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .detail-table td:first-child {
+      width: 150px;
+      color: #666;
+    }
+
+    .activity-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .loading-spinner {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+
+    .action-buttons-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    .comment-content {
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .replies-container {
+      margin-top: 15px;
+    }
+
+    .reply {
+      padding: 15px;
+      background-color: #f0f7ff;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .reply-header {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .reply-date {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .reply-content {
+      line-height: 1.6;
+    }
+  </style>
+</html>

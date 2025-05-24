@@ -3,20 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Details | Admin Dashboard</title>
+    <title>Product Details | Admin Dashboard</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="assets/css/common.css" />
   </head>
 
   <!-- Main Content -->
   <main class="content-wrapper">
     <div class="content-header">
-      <h1>User Detail</h1>
+      <h1>Product Detail</h1>
       <div>
-        <a href="users.html" class="btn btn-secondary" id="backButton">
+        <a href="products.html" class="btn btn-secondary" id="backButton">
           <i class="fas fa-arrow-left"></i> Back
         </a>
         <a href="#" class="btn btn-primary" id="editButton">
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <!-- User Details Container -->
+    <!-- Item Details Container -->
     <div class="card">
       <div class="card-header">
         <h3 id="itemTitle">Loading...</h3>
@@ -55,139 +55,120 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Get user ID from URL
+      // Get item ID from URL
       const urlParams = new URLSearchParams(window.location.search);
-      const userId = urlParams.get("id");
+      const itemId = urlParams.get("id");
 
       // Set edit button URL
       const editButton = document.getElementById("editButton");
-      editButton.href = `edit-user.html?id=${userId}`;
+      editButton.href = `edit-product.html?id=${itemId}`;
 
-      // Load user details
-      loadUserDetails(userId);
+      // Load product details
+      loadProductDetails(itemId);
 
       // Load activity history
-      loadActivityHistory(userId);
+      loadActivityHistory(itemId);
     });
 
-    // Load user details
-    function loadUserDetails(userId) {
+    // Load product details
+    function loadProductDetails(itemId) {
       // In a real application, this would fetch data from an API
       // For demonstration, we'll use mock data
 
-      // Mock user data
-      const userData = {
-        id: userId,
-        name: "John Doe",
-        username: "johndoe",
-        email: "john.doe@example.com",
-        role: "Administrator",
+      // Mock product data
+      const itemData = {
+        id: itemId,
+        name: "Wireless Headphones",
+        sku: "P100125",
+        price: 199.99,
+        stock: 75,
+        category: "Electronics",
         status: "Active",
-        lastLogin: "Today, 09:45 AM",
-        dateCreated: "2023-05-15",
-        phone: "+1 (555) 123-4567",
-        address: "123 Main St, City, Country",
+        description:
+          "High-quality wireless headphones with noise cancellation and long battery life.",
+        image: "https://via.placeholder.com/300",
+        dateAdded: "2023-03-10",
+        tags: ["electronics", "audio", "wireless"],
       };
 
       // Update page title and header
-      document.title = `User: ${userData.name} | Admin Dashboard`;
-      document.getElementById("itemTitle").textContent = userData.name;
+      document.title = `Product: ${itemData.name} | Admin Dashboard`;
+      document.getElementById("itemTitle").textContent = itemData.name;
 
-      // Create user detail HTML
-      const userHTML = `
-                    <div class="detail-header" style="display: flex; align-items: center; margin-bottom: 20px;">
-                        <div class="avatar" style="width: 64px; height: 64px; font-size: 24px;">
-                            ${userData.name
-                              .split(" ")
-                              .map((n) => n[0])
+      // Create product detail HTML
+      const productHTML = `
+                    <div class="detail-header" style="display: flex; margin-bottom: 20px;">
+                        <div style="flex: 0 0 300px;">
+                            <img src="${itemData.image}" alt="${
+        itemData.name
+      }" style="width: 100%; border-radius: 8px;">
+                        </div>
+                        <div style="margin-left: 20px; flex: 1;">
+                            <h2 style="margin: 0;">${itemData.name}</h2>
+                            <p style="margin: 5px 0; color: #666;">SKU: ${
+                              itemData.sku
+                            }</p>
+                            <div style="margin: 15px 0;">
+                                <span class="badge badge-success">${
+                                  itemData.status
+                                }</span>
+                                <span class="badge" style="background-color: rgba(58, 134, 255, 0.1); color: #3a86ff;">${
+                                  itemData.category
+                                }</span>
+                            </div>
+                            <h3 class="item-value" style="font-size: 24px; margin: 15px 0;">${formatCurrency(
+                              itemData.price
+                            )}</h3>
+                            <p><strong>Stock:</strong> ${
+                              itemData.stock
+                            } units</p>
+                            <p><strong>Date Added:</strong> ${formatDate(
+                              itemData.dateAdded
+                            )}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3>Product Description</h3>
+                        <p>${itemData.description}</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3>Product Tags</h3>
+                        <div>
+                            ${itemData.tags
+                              .map(
+                                (tag) => `
+                                <span class="badge" style="background-color: #eee; color: #555; margin-right: 5px;">${tag}</span>
+                            `
+                              )
                               .join("")}
                         </div>
-                        <div style="margin-left: 20px;">
-                            <h2 style="margin: 0;">${userData.name}</h2>
-                            <p style="margin: 5px 0; color: #666;">@${
-                              userData.username
-                            }</p>
-                            <span class="badge badge-success">${
-                              userData.status
-                            }</span>
-                            <span class="badge" style="background-color: rgba(58, 134, 255, 0.1); color: #3a86ff;">${
-                              userData.role
-                            }</span>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h3>Contact Information</h3>
-                        <table class="detail-table">
-                            <tr>
-                                <td><strong>Email:</strong></td>
-                                <td>${userData.email}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Phone:</strong></td>
-                                <td>${userData.phone}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Address:</strong></td>
-                                <td>${userData.address}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h3>Account Information</h3>
-                        <table class="detail-table">
-                            <tr>
-                                <td><strong>Username:</strong></td>
-                                <td>${userData.username}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Role:</strong></td>
-                                <td>${userData.role}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Status:</strong></td>
-                                <td>${userData.status}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Date Created:</strong></td>
-                                <td>${formatDate(userData.dateCreated)}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Last Login:</strong></td>
-                                <td>${userData.lastLogin}</td>
-                            </tr>
-                        </table>
                     </div>
                 `;
 
-      document.getElementById("itemContent").innerHTML = userHTML;
+      document.getElementById("itemContent").innerHTML = productHTML;
     }
 
     // Load activity history
-    function loadActivityHistory(userId) {
+    function loadActivityHistory(itemId) {
       // In a real application, this would fetch data from an API
       // For demonstration, we'll use mock data
 
       const activityData = [
         {
-          action: "Account Created",
+          action: "Created",
           date: "2023-05-15 14:30",
           user: "Admin",
         },
         {
-          action: "Profile Updated",
+          action: "Updated",
           date: "2023-06-20 10:15",
           user: "John Doe",
         },
         {
-          action: "Role changed to Administrator",
+          action: "Status changed to Active",
           date: "2023-06-25 09:45",
-          user: "Admin",
-        },
-        {
-          action: "Last Login",
-          date: "2023-07-18 09:45",
           user: "John Doe",
         },
       ];

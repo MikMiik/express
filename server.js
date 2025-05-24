@@ -11,6 +11,7 @@ const notFoundHandler = require("@/middlewares/notFoundHandler");
 const errorHandler = require("@/middlewares/errorHandler");
 const responseEnhancer = require("@/middlewares/responseEnhancer");
 const handlePagination = require("@/middlewares/handlePagination");
+const handleSidebar = require("@/middlewares/admin/handleSidebar");
 
 // Middleware
 app.use(cors());
@@ -26,7 +27,7 @@ app.set("views", "./src/views");
 app.set("layout", "./admin/layouts/default");
 
 // Router
-app.use("/admin", adminRouter);
+app.use("/admin", handleSidebar, adminRouter);
 app.use("/api/v1", router);
 
 // ErrorHandle

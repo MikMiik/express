@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Settings | Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+  </head>
+
+  <!-- Main Content -->
+  <main class="content-wrapper">
+    <div class="content-header">
+      <h1>Account Settings</h1>
+    </div>
+
+    <!-- Success Message -->
+    <div
+      id="successMessage"
+      class="message message-success"
+      style="display: none"
+    >
+      <i class="fas fa-check-circle"></i>
+      <span data-message-text
+        >Account settings have been saved successfully.</span
+      >
+    </div>
+
+    <!-- Account Settings Form -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Personal Information</h3>
+      </div>
+      <div class="card-body">
+        <form id="personalInfoForm">
+          <div class="form-section">
+            <div class="avatar-upload">
+              <div class="avatar-preview">
+                <div
+                  class="avatar"
+                  style="width: 100px; height: 100px; font-size: 36px"
+                >
+                  JD
+                </div>
+              </div>
+              <div class="avatar-edit">
+                <label for="avatarUpload" class="btn btn-primary btn-sm">
+                  <i class="fas fa-upload"></i> Change Avatar
+                </label>
+                <input
+                  type="file"
+                  id="avatarUpload"
+                  style="display: none"
+                  accept="image/*"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fullName">Full Name*</label>
+              <input
+                type="text"
+                id="fullName"
+                class="form-control"
+                value="John Doe"
+                required
+              />
+              <span class="error-text" id="fullNameError"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address*</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                value="john.doe@example.com"
+                required
+              />
+              <span class="error-text" id="emailError"></span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                class="form-control"
+                value="+1 (555) 123-4567"
+              />
+              <span class="error-text" id="phoneError"></span>
+            </div>
+            <div class="form-buttons">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Changes
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px">
+      <div class="card-header">
+        <h3>Change Password</h3>
+      </div>
+      <div class="card-body">
+        <form id="passwordForm">
+          <div class="form-section">
+            <div class="form-group">
+              <label for="currentPassword">Current Password*</label>
+              <input
+                type="password"
+                id="currentPassword"
+                class="form-control"
+                required
+              />
+              <span class="error-text" id="currentPasswordError"></span>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">New Password*</label>
+              <input
+                type="password"
+                id="newPassword"
+                class="form-control"
+                required
+              />
+              <span class="error-text" id="newPasswordError"></span>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password*</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                class="form-control"
+                required
+              />
+              <span class="error-text" id="confirmPasswordError"></span>
+            </div>
+            <p class="form-help-text">
+              Password must be at least 8 characters and include uppercase,
+              lowercase, number, and special character.
+            </p>
+            <div class="form-buttons">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-key"></i> Update Password
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px">
+      <div class="card-header">
+        <h3>Notification Preferences</h3>
+      </div>
+      <div class="card-body">
+        <form id="notificationForm">
+          <div class="form-section">
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="emailNotifications" checked />
+                <label for="emailNotifications"
+                  >Receive email notifications</label
+                >
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="commentNotifications" checked />
+                <label for="commentNotifications"
+                  >Notify me about new comments</label
+                >
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="userNotifications" checked />
+                <label for="userNotifications"
+                  >Notify me about new user registrations</label
+                >
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="securityNotifications" checked />
+                <label for="securityNotifications"
+                  >Receive security alerts</label
+                >
+              </div>
+            </div>
+            <div class="form-buttons">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Preferences
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px">
+      <div class="card-header">
+        <h3>Two-Factor Authentication</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-section">
+          <div class="tfa-status">
+            <div class="status-badge">
+              <span class="badge badge-danger">Not Enabled</span>
+            </div>
+            <p>
+              Two-factor authentication adds an extra layer of security to your
+              account by requiring more than just a password to sign in.
+            </p>
+            <button id="enableTfaBtn" class="btn btn-primary">
+              <i class="fas fa-shield-alt"></i> Enable Two-Factor Authentication
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/common.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Initialize form validation
+      initFormValidation("personalInfoForm");
+      initFormValidation("passwordForm");
+      initFormValidation("notificationForm");
+
+      // Personal info form submission
+      document
+        .getElementById("personalInfoForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          if (validateForm("personalInfoForm")) {
+            // Show success message
+            showMessage(
+              "successMessage",
+              "Personal information has been updated successfully.",
+              3000
+            );
+          }
+        });
+
+      // Password form submission
+      document
+        .getElementById("passwordForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          if (validateForm("passwordForm")) {
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword =
+              document.getElementById("confirmPassword").value;
+
+            if (newPassword !== confirmPassword) {
+              showError(
+                document.getElementById("confirmPassword"),
+                "Passwords do not match."
+              );
+              return;
+            }
+
+            // Show success message
+            showMessage(
+              "successMessage",
+              "Password has been changed successfully.",
+              3000
+            );
+
+            // Clear password fields
+            document.getElementById("currentPassword").value = "";
+            document.getElementById("newPassword").value = "";
+            document.getElementById("confirmPassword").value = "";
+          }
+        });
+
+      // Notification preferences form submission
+      document
+        .getElementById("notificationForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Show success message
+          showMessage(
+            "successMessage",
+            "Notification preferences have been saved successfully.",
+            3000
+          );
+        });
+
+      // Handle 2FA button
+      document
+        .getElementById("enableTfaBtn")
+        .addEventListener("click", function () {
+          alert(
+            "This feature is not implemented in this demo. In a real application, this would start the two-factor authentication setup process."
+          );
+        });
+
+      // Handle avatar upload
+      document
+        .getElementById("avatarUpload")
+        .addEventListener("change", function (event) {
+          if (event.target.files && event.target.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+              // In a real app, this would upload the image to a server
+              // For the demo, we'll just show a success message
+              showMessage(
+                "successMessage",
+                "Avatar has been uploaded successfully.",
+                3000
+              );
+            };
+
+            reader.readAsDataURL(event.target.files[0]);
+          }
+        });
+    });
+  </script>
+
+  <style>
+    .avatar-upload {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .avatar-preview {
+      margin-right: 20px;
+    }
+
+    .avatar-edit {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-help-text {
+      color: #666;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .checkbox-group {
+      margin-bottom: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 8px;
+    }
+
+    .tfa-status {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .status-badge {
+      margin-bottom: 10px;
+    }
+
+    .status-badge .badge {
+      font-size: 14px;
+      padding: 5px 10px;
+    }
+  </style>
+</html>

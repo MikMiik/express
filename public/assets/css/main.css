@@ -82,3 +82,56 @@ body {
 .footer a:hover {
     text-decoration: underline;
 }
+
+/* Login styles */
+.login-container {
+    width: 400px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.remember-me input {
+    margin-right: 8px;
+}
+
+/* Register styles */
+.register-container {
+    width: 450px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.terms {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.terms input {
+    margin-right: 8px;
+    margin-top: 3px;
+}
+
+.terms label {
+    font-size: 13px;
+    color: #666;
+}

@@ -4,8 +4,8 @@ const paginationConfig = require("@/configs/pagination");
 function handlePagination(req, res, next) {
   const { default_page, default_limit, max_limit } = paginationConfig;
 
-  const page = +req.query.page || default_page;
-  let limit = +req.query.limit || default_limit;
+  const page = +req.query.page > 0 ? +req.query.page : default_page;
+  let limit = +req.query.limit > 0 ? +req.query.limit : default_limit;
   let maxLimit = max_limit;
 
   if (limit > maxLimit) limit = maxLimit;

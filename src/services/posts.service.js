@@ -1,7 +1,7 @@
 const postsModel = require("@/models/posts.model");
 
 class PostsService {
-  async getAll(page, limit) {
+  async getAll(page = 1, limit = 10) {
     const items = await postsModel.findAll(page, limit);
     const total = await postsModel.count();
     return { items, total };

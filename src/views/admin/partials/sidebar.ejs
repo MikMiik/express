@@ -1,41 +1,33 @@
-<!-- Sidebar -->
 <aside class="sidebar">
   <div class="sidebar-logo">
     <h1>Admin Dashboard</h1>
   </div>
 
   <nav class="sidebar-menu">
-    <a href="#" class="menu-item active">
-      <i class="fas fa-home"></i>
-      Dashboard
-    </a>
-    <a href="products.html" class="menu-item">
-      <i class="fas fa-shopping-cart"></i>
-      Products
-    </a>
-    <a href="#" class="menu-item">
-      <i class="fas fa-users"></i>
-      Customers
-    </a>
-    <a href="#" class="menu-item">
-      <i class="fas fa-chart-bar"></i>
-      Analytics
-    </a>
-    <a href="#" class="menu-item">
-      <i class="fas fa-cog"></i>
-      Settings
-    </a>
-    <a href="login.html" class="menu-item">
-      <i class="fas fa-sign-out-alt"></i>
-      Logout
+    <% for (let item of sidebarItems) {%>
+    <a
+      href="/admin<%= item.path %>"
+      class="menu-item <%= item.path === path ? 'active' : '' %>"
+    >
+      <i class="fas <%= item.icon %>"></i>
+      <%= item.title %> <% } %>
     </a>
   </nav>
 
-  <div class="user-profile">
+  <div class="user-profile" id="userProfileDropdown">
     <div class="avatar">JD</div>
     <div class="user-info">
       <p>John Doe</p>
       <small>Administrator</small>
+    </div>
+    <i class="fas fa-chevron-down dropdown-icon"></i>
+    <div class="user-dropdown">
+      <a href="account-settings" class="dropdown-item">
+        <i class="fas fa-user-cog"></i> Account Settings
+      </a>
+      <a href="login" class="dropdown-item">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
     </div>
   </div>
 </aside>

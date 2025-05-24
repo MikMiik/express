@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post Topics | Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+  </head>
+
+  <!-- Main Content -->
+  <main class="content-wrapper">
+    <div class="content-header">
+      <h1>Post Topics</h1>
+      <button class="btn btn-primary" id="addTopicBtn">
+        <i class="fas fa-plus"></i> Add New
+      </button>
+    </div>
+
+    <!-- Topic List -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Topics</h3>
+      </div>
+      <div class="card-body">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Description</th>
+                <th>Posts</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-id="1">
+                <td>
+                  <div class="topic-name">
+                    <i class="fas fa-landmark topic-icon"></i>
+                    Business
+                  </div>
+                </td>
+                <td>business</td>
+                <td>Business strategies and entrepreneurship</td>
+                <td>
+                  <span class="badge badge-primary">12</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-topic"
+                      data-id="1"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-topic"
+                      data-id="1"
+                      data-name="Business"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="2">
+                <td>
+                  <div class="topic-name">
+                    <i class="fas fa-laptop-code topic-icon"></i>
+                    Technology
+                  </div>
+                </td>
+                <td>technology</td>
+                <td>Tech news and innovations</td>
+                <td>
+                  <span class="badge badge-primary">24</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-topic"
+                      data-id="2"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-topic"
+                      data-id="2"
+                      data-name="Technology"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="3">
+                <td>
+                  <div class="topic-name">
+                    <i class="fas fa-heartbeat topic-icon"></i>
+                    Health
+                  </div>
+                </td>
+                <td>health</td>
+                <td>Health tips and wellness articles</td>
+                <td>
+                  <span class="badge badge-primary">18</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-topic"
+                      data-id="3"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-topic"
+                      data-id="3"
+                      data-name="Health"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="4">
+                <td>
+                  <div class="topic-name">
+                    <i class="fas fa-brain topic-icon"></i>
+                    Productivity
+                  </div>
+                </td>
+                <td>productivity</td>
+                <td>Productivity hacks and time management</td>
+                <td>
+                  <span class="badge badge-primary">15</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-topic"
+                      data-id="4"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-topic"
+                      data-id="4"
+                      data-name="Productivity"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="5">
+                <td>
+                  <div class="topic-name">
+                    <i class="fas fa-plane topic-icon"></i>
+                    Travel
+                  </div>
+                </td>
+                <td>travel</td>
+                <td>Travel guides and destination reviews</td>
+                <td>
+                  <span class="badge badge-primary">8</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-topic"
+                      data-id="5"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-topic"
+                      data-id="5"
+                      data-name="Travel"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icon Library Reference -->
+    <div class="card" style="margin-top: 20px">
+      <div class="card-header">
+        <h3>Available Topic Icons</h3>
+      </div>
+      <div class="card-body">
+        <div class="icon-grid">
+          <div class="icon-item" data-icon="fa-landmark">
+            <i class="fas fa-landmark"></i>
+            <span>Business</span>
+          </div>
+          <div class="icon-item" data-icon="fa-laptop-code">
+            <i class="fas fa-laptop-code"></i>
+            <span>Technology</span>
+          </div>
+          <div class="icon-item" data-icon="fa-heartbeat">
+            <i class="fas fa-heartbeat"></i>
+            <span>Health</span>
+          </div>
+          <div class="icon-item" data-icon="fa-brain">
+            <i class="fas fa-brain"></i>
+            <span>Productivity</span>
+          </div>
+          <div class="icon-item" data-icon="fa-plane">
+            <i class="fas fa-plane"></i>
+            <span>Travel</span>
+          </div>
+          <div class="icon-item" data-icon="fa-book-open">
+            <i class="fas fa-book-open"></i>
+            <span>Education</span>
+          </div>
+          <div class="icon-item" data-icon="fa-utensils">
+            <i class="fas fa-utensils"></i>
+            <span>Food</span>
+          </div>
+          <div class="icon-item" data-icon="fa-dumbbell">
+            <i class="fas fa-dumbbell"></i>
+            <span>Fitness</span>
+          </div>
+          <div class="icon-item" data-icon="fa-palette">
+            <i class="fas fa-palette"></i>
+            <span>Arts</span>
+          </div>
+          <div class="icon-item" data-icon="fa-film">
+            <i class="fas fa-film"></i>
+            <span>Entertainment</span>
+          </div>
+          <div class="icon-item" data-icon="fa-chart-line">
+            <i class="fas fa-chart-line"></i>
+            <span>Finance</span>
+          </div>
+          <div class="icon-item" data-icon="fa-globe">
+            <i class="fas fa-globe"></i>
+            <span>World</span>
+          </div>
+        </div>
+        <p class="help-text">
+          <i class="fas fa-info-circle"></i> Click on an icon to select it when
+          creating or editing a topic.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add/Edit Topic Modal -->
+  <div class="modal" id="topicModal">
+    <div class="modal-content">
+      <h3 class="modal-title" id="modalTitle">Add New Topic</h3>
+      <div class="modal-body">
+        <form id="topicForm">
+          <input type="hidden" id="topicId" value="" />
+          <div class="form-group">
+            <label for="topicName">Topic Name*</label>
+            <input type="text" id="topicName" class="form-control" required />
+            <span class="error-text" id="topicNameError"></span>
+          </div>
+          <div class="form-group">
+            <label for="topicSlug">Slug*</label>
+            <input type="text" id="topicSlug" class="form-control" required />
+            <span class="error-text" id="topicSlugError"></span>
+          </div>
+          <div class="form-group">
+            <label for="topicDescription">Description</label>
+            <textarea
+              id="topicDescription"
+              class="form-control"
+              rows="3"
+            ></textarea>
+            <span class="error-text" id="topicDescriptionError"></span>
+          </div>
+          <div class="form-group">
+            <label for="topicIcon">Icon*</label>
+            <div class="form-row">
+              <div class="form-group" style="flex: 0 0 auto">
+                <div class="selected-icon" id="selectedIcon">
+                  <i class="fas fa-landmark"></i>
+                </div>
+              </div>
+              <div class="form-group" style="flex: 1">
+                <input
+                  type="text"
+                  id="topicIcon"
+                  class="form-control"
+                  value="fa-landmark"
+                  readonly
+                />
+                <span class="error-text" id="topicIconError"></span>
+                <small class="form-text"
+                  >Click an icon from the library below to select it.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Icon Selection</label>
+            <div class="icon-selector">
+              <div
+                class="icon-grid"
+                style="max-height: 150px; overflow-y: auto"
+              >
+                <div class="icon-item active" data-icon="fa-landmark">
+                  <i class="fas fa-landmark"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-laptop-code">
+                  <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-heartbeat">
+                  <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-brain">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-plane">
+                  <i class="fas fa-plane"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-book-open">
+                  <i class="fas fa-book-open"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-utensils">
+                  <i class="fas fa-utensils"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-dumbbell">
+                  <i class="fas fa-dumbbell"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-palette">
+                  <i class="fas fa-palette"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-film">
+                  <i class="fas fa-film"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-chart-line">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-globe">
+                  <i class="fas fa-globe"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="cancelTopic"
+          class="btn btn-secondary"
+          data-cancel
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="saveTopic"
+          class="btn btn-primary"
+          data-confirm
+        >
+          Save Topic
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Dialog -->
+  <div class="modal" id="confirmDeleteModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Confirm Delete</h3>
+      <div class="modal-body">
+        Are you sure you want to delete the topic "<span
+          id="deleteTopicName"
+        ></span
+        >"? This will not delete the posts in this topic, but they will need to
+        be re-categorized.
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="cancelDelete"
+          class="btn btn-secondary"
+          data-cancel
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="confirmDelete"
+          class="btn btn-danger"
+          data-confirm
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Initialize form validation
+      initFormValidation("topicForm");
+
+      // Add Topic button
+      document
+        .getElementById("addTopicBtn")
+        .addEventListener("click", function () {
+          openTopicModal();
+        });
+
+      // Handle auto slug generation
+      document
+        .getElementById("topicName")
+        .addEventListener("blur", function () {
+          const slugInput = document.getElementById("topicSlug");
+          // Only auto-generate if slug is empty
+          if (!slugInput.value.trim()) {
+            // Convert name to slug
+            const slug = this.value
+              .trim()
+              .toLowerCase()
+              .replace(/[^a-z0-9\s]/g, "") // Remove special chars
+              .replace(/\s+/g, "-"); // Replace spaces with hyphens
+
+            slugInput.value = slug;
+          }
+        });
+
+      // Icon selection in form
+      const iconItems = document.querySelectorAll(".icon-selector .icon-item");
+      iconItems.forEach((item) => {
+        item.addEventListener("click", function () {
+          // Remove active class from all icons
+          iconItems.forEach((i) => i.classList.remove("active"));
+
+          // Add active class to clicked icon
+          this.classList.add("active");
+
+          // Update the icon input value
+          const iconName = this.getAttribute("data-icon");
+          document.getElementById("topicIcon").value = iconName;
+
+          // Update the selected icon preview
+          const iconClass = `fas ${iconName}`;
+          document.getElementById(
+            "selectedIcon"
+          ).innerHTML = `<i class="${iconClass}"></i>`;
+        });
+      });
+
+      // Edit Topic
+      const editButtons = document.querySelectorAll(".edit-topic");
+      editButtons.forEach((button) => {
+        button.addEventListener("click", function (e) {
+          e.preventDefault();
+          const topicId = this.getAttribute("data-id");
+          editTopic(topicId);
+        });
+      });
+
+      // Delete Topic
+      const deleteButtons = document.querySelectorAll(".delete-topic");
+      deleteButtons.forEach((button) => {
+        button.addEventListener("click", async function (e) {
+          e.preventDefault();
+          const topicId = this.getAttribute("data-id");
+          const topicName = this.getAttribute("data-name");
+
+          // Show confirmation dialog
+          document.getElementById("deleteTopicName").textContent = topicName;
+
+          const result = await showConfirmDialog("confirmDeleteModal");
+
+          if (result) {
+            // In a real app, this would be an API call
+            console.log(`Deleting topic with ID: ${topicId}`);
+
+            // Remove the topic from the table
+            const row = document.querySelector(`tr[data-id="${topicId}"]`);
+            if (row) {
+              row.remove();
+            }
+
+            // Show success message
+            showMessage(
+              "topicDeleted",
+              `Topic "${topicName}" has been deleted.`,
+              3000
+            );
+          }
+        });
+      });
+
+      // Save Topic
+      document
+        .getElementById("saveTopic")
+        .addEventListener("click", function () {
+          const form = document.getElementById("topicForm");
+
+          if (validateForm("topicForm")) {
+            const topicId = document.getElementById("topicId").value;
+            const topicName = document.getElementById("topicName").value;
+            const topicSlug = document.getElementById("topicSlug").value;
+            const topicDescription =
+              document.getElementById("topicDescription").value;
+            const topicIcon = document.getElementById("topicIcon").value;
+
+            // In a real app, this would be an API call
+            console.log("Saving topic:", {
+              id: topicId || "new",
+              name: topicName,
+              slug: topicSlug,
+              description: topicDescription,
+              icon: topicIcon,
+            });
+
+            // Close the modal
+            closeModal("topicModal");
+
+            // Show success message
+            if (topicId) {
+              showMessage(
+                "topicUpdated",
+                `Topic "${topicName}" has been updated.`,
+                3000
+              );
+
+              // Update the row in the table
+              updateTopicRow(
+                topicId,
+                topicName,
+                topicSlug,
+                topicDescription,
+                topicIcon
+              );
+            } else {
+              showMessage(
+                "topicCreated",
+                `Topic "${topicName}" has been created.`,
+                3000
+              );
+
+              // Add a new row to the table with a random ID
+              const newId = Math.floor(Math.random() * 1000) + 10;
+              addTopicRow(
+                newId,
+                topicName,
+                topicSlug,
+                topicDescription,
+                topicIcon
+              );
+            }
+          }
+        });
+
+      // Cancel Topic
+      document
+        .getElementById("cancelTopic")
+        .addEventListener("click", function () {
+          closeModal("topicModal");
+        });
+
+      // Function to open the topic modal
+      function openTopicModal(topic = null) {
+        const form = document.getElementById("topicForm");
+        const modalTitle = document.getElementById("modalTitle");
+
+        // Reset form
+        form.reset();
+        document.getElementById("topicId").value = "";
+
+        // Reset icon selector
+        document
+          .querySelectorAll(".icon-selector .icon-item")
+          .forEach((i) => i.classList.remove("active"));
+        document
+          .querySelector(`.icon-selector .icon-item[data-icon="fa-landmark"]`)
+          .classList.add("active");
+        document.getElementById("topicIcon").value = "fa-landmark";
+        document.getElementById("selectedIcon").innerHTML =
+          '<i class="fas fa-landmark"></i>';
+
+        if (topic) {
+          // Edit mode
+          modalTitle.textContent = "Edit Topic";
+
+          // Set form values based on the topic
+          document.getElementById("topicId").value = topic.id;
+          document.getElementById("topicName").value = topic.name;
+          document.getElementById("topicSlug").value = topic.slug;
+          document.getElementById("topicDescription").value = topic.description;
+          document.getElementById("topicIcon").value = topic.icon;
+
+          // Update selected icon
+          document
+            .querySelectorAll(".icon-selector .icon-item")
+            .forEach((i) => i.classList.remove("active"));
+          const iconItem = document.querySelector(
+            `.icon-selector .icon-item[data-icon="${topic.icon}"]`
+          );
+          if (iconItem) {
+            iconItem.classList.add("active");
+          }
+
+          document.getElementById(
+            "selectedIcon"
+          ).innerHTML = `<i class="fas ${topic.icon}"></i>`;
+        } else {
+          // Add mode
+          modalTitle.textContent = "Add New Topic";
+        }
+
+        // Show modal
+        const modal = document.getElementById("topicModal");
+        modal.classList.add("show");
+      }
+
+      // Function to close the modal
+      function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove("show");
+      }
+
+      // Local version of showConfirmDialog for this page
+      async function showConfirmDialog(modalId) {
+        return new Promise((resolve) => {
+          const modal = document.getElementById(modalId);
+          const confirmBtn = modal.querySelector("[data-confirm]");
+          const cancelBtn = modal.querySelector("[data-cancel]");
+
+          function onConfirm() {
+            cleanup();
+            resolve(true);
+          }
+
+          function onCancel() {
+            cleanup();
+            resolve(false);
+          }
+
+          function cleanup() {
+            modal.classList.remove("show");
+            confirmBtn.removeEventListener("click", onConfirm);
+            cancelBtn.removeEventListener("click", onCancel);
+          }
+
+          confirmBtn.addEventListener("click", onConfirm);
+          cancelBtn.addEventListener("click", onCancel);
+
+          modal.classList.add("show");
+        });
+      }
+
+      // Function to edit a topic
+      function editTopic(topicId) {
+        // In a real app, this would be an API call to get topic details
+        // For now, we'll just get the data from the table
+        const row = document.querySelector(`tr[data-id="${topicId}"]`);
+        if (row) {
+          const name = row.querySelector(".topic-name").textContent.trim();
+          const slug = row.querySelector("td:nth-child(2)").textContent;
+          const description = row.querySelector("td:nth-child(3)").textContent;
+
+          // Extract icon class
+          const iconElement = row.querySelector(".topic-icon");
+          const iconClasses = iconElement.className.split(" ");
+          const iconClass = iconClasses.find((cls) => cls.startsWith("fa-"));
+
+          const topic = {
+            id: topicId,
+            name: name,
+            slug: slug,
+            description: description,
+            icon: iconClass,
+          };
+
+          openTopicModal(topic);
+        }
+      }
+
+      // Function to add a new topic row to the table
+      function addTopicRow(id, name, slug, description, icon) {
+        const tbody = document.querySelector(".data-table tbody");
+        const newRow = document.createElement("tr");
+        newRow.setAttribute("data-id", id);
+
+        newRow.innerHTML = `
+                        <td>
+                            <div class="topic-name">
+                                <i class="fas ${icon} topic-icon"></i>
+                                ${name}
+                            </div>
+                        </td>
+                        <td>${slug}</td>
+                        <td>${description}</td>
+                        <td><span class="badge badge-primary">0</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="#" class="action-btn edit edit-topic" data-id="${id}" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="#" class="action-btn delete delete-topic" data-id="${id}" data-name="${name}" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    `;
+
+        tbody.appendChild(newRow);
+
+        // Add event listeners to new buttons
+        const editButton = newRow.querySelector(".edit-topic");
+        editButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          editTopic(id);
+        });
+
+        const deleteButton = newRow.querySelector(".delete-topic");
+        deleteButton.addEventListener("click", async function (e) {
+          e.preventDefault();
+
+          // Show confirmation dialog
+          document.getElementById("deleteTopicName").textContent = name;
+
+          const result = await showConfirmDialog("confirmDeleteModal");
+
+          if (result) {
+            // In a real app, this would be an API call
+            console.log(`Deleting topic with ID: ${id}`);
+
+            // Remove the topic from the table
+            newRow.remove();
+
+            // Show success message
+            showMessage(
+              "topicDeleted",
+              `Topic "${name}" has been deleted.`,
+              3000
+            );
+          }
+        });
+      }
+
+      // Function to update an existing topic row
+      function updateTopicRow(id, name, slug, description, icon) {
+        const row = document.querySelector(`tr[data-id="${id}"]`);
+        if (row) {
+          row.innerHTML = `
+                            <td>
+                                <div class="topic-name">
+                                    <i class="fas ${icon} topic-icon"></i>
+                                    ${name}
+                                </div>
+                            </td>
+                            <td>${slug}</td>
+                            <td>${description}</td>
+                            <td>${
+                              row.querySelector("td:nth-child(4)").innerHTML
+                            }</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="#" class="action-btn edit edit-topic" data-id="${id}" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-topic" data-id="${id}" data-name="${name}" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        `;
+
+          // Add event listeners to updated buttons
+          const editButton = row.querySelector(".edit-topic");
+          editButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            editTopic(id);
+          });
+
+          const deleteButton = row.querySelector(".delete-topic");
+          deleteButton.addEventListener("click", async function (e) {
+            e.preventDefault();
+
+            // Show confirmation dialog
+            document.getElementById("deleteTopicName").textContent = name;
+
+            const result = await showConfirmDialog("confirmDeleteModal");
+
+            if (result) {
+              // In a real app, this would be an API call
+              console.log(`Deleting topic with ID: ${id}`);
+
+              // Remove the topic from the table
+              row.remove();
+
+              // Show success message
+              showMessage(
+                "topicDeleted",
+                `Topic "${name}" has been deleted.`,
+                3000
+              );
+            }
+          });
+        }
+      }
+    });
+  </script>
+
+  <style>
+    /* Topic page specific styles */
+    .topic-name {
+      display: flex;
+      align-items: center;
+    }
+
+    .topic-icon {
+      margin-right: 10px;
+      font-size: 18px;
+      color: #3a86ff;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .icon-item:hover {
+      background-color: #e9ecef;
+    }
+
+    .icon-item.active {
+      background-color: rgba(58, 134, 255, 0.1);
+      color: #3a86ff;
+      border: 1px solid rgba(58, 134, 255, 0.2);
+    }
+
+    .icon-item i {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .icon-item span {
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .icon-selector .icon-item {
+      padding: 10px;
+    }
+
+    .icon-selector .icon-item i {
+      margin-bottom: 0;
+    }
+
+    .icon-selector .icon-item span {
+      display: none;
+    }
+
+    .selected-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .selected-icon i {
+      font-size: 20px;
+      color: #3a86ff;
+    }
+
+    .help-text {
+      margin-top: 15px;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .help-text i {
+      color: #3a86ff;
+      margin-right: 5px;
+    }
+
+    /* Modal positioning fixes */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      overflow: auto;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+      overflow: hidden;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      padding: 20px;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 15px 20px;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+</html>

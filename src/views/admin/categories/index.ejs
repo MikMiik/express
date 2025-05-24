@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Categories | Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+  </head>
+
+  <!-- Main Content -->
+  <main class="content-wrapper">
+    <div class="content-header">
+      <h1>Product Categories</h1>
+      <button class="btn btn-primary" id="addCategoryBtn">
+        <i class="fas fa-plus"></i> Add New
+      </button>
+    </div>
+
+    <!-- Category List -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Categories</h3>
+      </div>
+      <div class="card-body">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Description</th>
+                <th>Products</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-id="1">
+                <td>
+                  <div class="category-name">
+                    <i class="fas fa-laptop category-icon"></i>
+                    Electronics
+                  </div>
+                </td>
+                <td>electronics</td>
+                <td>All electronic devices and accessories</td>
+                <td>
+                  <span class="badge badge-primary">34</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-category"
+                      data-id="1"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-category"
+                      data-id="1"
+                      data-name="Electronics"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="2">
+                <td>
+                  <div class="category-name">
+                    <i class="fas fa-tshirt category-icon"></i>
+                    Clothing
+                  </div>
+                </td>
+                <td>clothing</td>
+                <td>Apparel and fashion accessories</td>
+                <td>
+                  <span class="badge badge-primary">28</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-category"
+                      data-id="2"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-category"
+                      data-id="2"
+                      data-name="Clothing"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="3">
+                <td>
+                  <div class="category-name">
+                    <i class="fas fa-utensils category-icon"></i>
+                    Food
+                  </div>
+                </td>
+                <td>food</td>
+                <td>Food items and beverages</td>
+                <td>
+                  <span class="badge badge-primary">42</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-category"
+                      data-id="3"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-category"
+                      data-id="3"
+                      data-name="Food"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="4">
+                <td>
+                  <div class="category-name">
+                    <i class="fas fa-book category-icon"></i>
+                    Books
+                  </div>
+                </td>
+                <td>books</td>
+                <td>Books, ebooks, and publications</td>
+                <td>
+                  <span class="badge badge-primary">17</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-category"
+                      data-id="4"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-category"
+                      data-id="4"
+                      data-name="Books"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="5">
+                <td>
+                  <div class="category-name">
+                    <i class="fas fa-couch category-icon"></i>
+                    Furniture
+                  </div>
+                </td>
+                <td>furniture</td>
+                <td>Home and office furniture</td>
+                <td>
+                  <span class="badge badge-primary">23</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-category"
+                      data-id="5"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-category"
+                      data-id="5"
+                      data-name="Furniture"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr data-id="6">
+                <td>
+                  <div class="category-name">
+                    <i class="fas fa-gamepad category-icon"></i>
+                    Gaming
+                  </div>
+                </td>
+                <td>gaming</td>
+                <td>Video games and gaming accessories</td>
+                <td>
+                  <span class="badge badge-primary">31</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <a
+                      href="#"
+                      class="action-btn edit edit-category"
+                      data-id="6"
+                      title="Edit"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="action-btn delete delete-category"
+                      data-id="6"
+                      data-name="Gaming"
+                      title="Delete"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icon Library Reference -->
+    <div class="card" style="margin-top: 20px">
+      <div class="card-header">
+        <h3>Available Category Icons</h3>
+      </div>
+      <div class="card-body">
+        <div class="icon-grid">
+          <div class="icon-item" data-icon="fa-laptop">
+            <i class="fas fa-laptop"></i>
+            <span>Electronics</span>
+          </div>
+          <div class="icon-item" data-icon="fa-tshirt">
+            <i class="fas fa-tshirt"></i>
+            <span>Clothing</span>
+          </div>
+          <div class="icon-item" data-icon="fa-utensils">
+            <i class="fas fa-utensils"></i>
+            <span>Food</span>
+          </div>
+          <div class="icon-item" data-icon="fa-book">
+            <i class="fas fa-book"></i>
+            <span>Books</span>
+          </div>
+          <div class="icon-item" data-icon="fa-couch">
+            <i class="fas fa-couch"></i>
+            <span>Furniture</span>
+          </div>
+          <div class="icon-item" data-icon="fa-gamepad">
+            <i class="fas fa-gamepad"></i>
+            <span>Gaming</span>
+          </div>
+          <div class="icon-item" data-icon="fa-car">
+            <i class="fas fa-car"></i>
+            <span>Automotive</span>
+          </div>
+          <div class="icon-item" data-icon="fa-heartbeat">
+            <i class="fas fa-heartbeat"></i>
+            <span>Health</span>
+          </div>
+          <div class="icon-item" data-icon="fa-gem">
+            <i class="fas fa-gem"></i>
+            <span>Jewelry</span>
+          </div>
+          <div class="icon-item" data-icon="fa-baby">
+            <i class="fas fa-baby"></i>
+            <span>Baby</span>
+          </div>
+          <div class="icon-item" data-icon="fa-home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </div>
+          <div class="icon-item" data-icon="fa-tools">
+            <i class="fas fa-tools"></i>
+            <span>Tools</span>
+          </div>
+        </div>
+        <p class="help-text">
+          <i class="fas fa-info-circle"></i> Click on an icon to select it when
+          creating or editing a category.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add/Edit Category Modal -->
+  <div class="modal" id="categoryModal">
+    <div class="modal-content">
+      <h3 class="modal-title" id="modalTitle">Add New Category</h3>
+      <div class="modal-body">
+        <form id="categoryForm">
+          <input type="hidden" id="categoryId" value="" />
+          <div class="form-group">
+            <label for="categoryName">Category Name*</label>
+            <input
+              type="text"
+              id="categoryName"
+              class="form-control"
+              required
+            />
+            <span class="error-text" id="categoryNameError"></span>
+          </div>
+          <div class="form-group">
+            <label for="categorySlug">Slug*</label>
+            <input
+              type="text"
+              id="categorySlug"
+              class="form-control"
+              required
+            />
+            <span class="error-text" id="categorySlugError"></span>
+          </div>
+          <div class="form-group">
+            <label for="categoryDescription">Description</label>
+            <textarea
+              id="categoryDescription"
+              class="form-control"
+              rows="3"
+            ></textarea>
+            <span class="error-text" id="categoryDescriptionError"></span>
+          </div>
+          <div class="form-group">
+            <label for="categoryIcon">Icon*</label>
+            <div class="form-row">
+              <div class="form-group" style="flex: 0 0 auto">
+                <div class="selected-icon" id="selectedIcon">
+                  <i class="fas fa-laptop"></i>
+                </div>
+              </div>
+              <div class="form-group" style="flex: 1">
+                <input
+                  type="text"
+                  id="categoryIcon"
+                  class="form-control"
+                  value="fa-laptop"
+                  readonly
+                />
+                <span class="error-text" id="categoryIconError"></span>
+                <small class="form-text"
+                  >Click an icon from the library below to select it.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Icon Selection</label>
+            <div class="icon-selector">
+              <div
+                class="icon-grid"
+                style="max-height: 150px; overflow-y: auto"
+              >
+                <div class="icon-item active" data-icon="fa-laptop">
+                  <i class="fas fa-laptop"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-tshirt">
+                  <i class="fas fa-tshirt"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-utensils">
+                  <i class="fas fa-utensils"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-book">
+                  <i class="fas fa-book"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-couch">
+                  <i class="fas fa-couch"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-gamepad">
+                  <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-car">
+                  <i class="fas fa-car"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-heartbeat">
+                  <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-gem">
+                  <i class="fas fa-gem"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-baby">
+                  <i class="fas fa-baby"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-home">
+                  <i class="fas fa-home"></i>
+                </div>
+                <div class="icon-item" data-icon="fa-tools">
+                  <i class="fas fa-tools"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="cancelCategory"
+          class="btn btn-secondary"
+          data-cancel
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="saveCategory"
+          class="btn btn-primary"
+          data-confirm
+        >
+          Save Category
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Dialog -->
+  <div class="modal" id="confirmDeleteModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Confirm Delete</h3>
+      <div class="modal-body">
+        Are you sure you want to delete the category "<span
+          id="deleteCategoryName"
+        ></span
+        >"? This will not delete the products in this category, but they will
+        need to be re-categorized.
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="cancelDelete"
+          class="btn btn-secondary"
+          data-cancel
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="confirmDelete"
+          class="btn btn-danger"
+          data-confirm
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Initialize form validation
+      initFormValidation("categoryForm");
+
+      // Add Category button
+      document
+        .getElementById("addCategoryBtn")
+        .addEventListener("click", function () {
+          openCategoryModal();
+        });
+
+      // Handle auto slug generation
+      document
+        .getElementById("categoryName")
+        .addEventListener("blur", function () {
+          const slugInput = document.getElementById("categorySlug");
+          // Only auto-generate if slug is empty
+          if (!slugInput.value.trim()) {
+            // Convert name to slug
+            const slug = this.value
+              .trim()
+              .toLowerCase()
+              .replace(/[^a-z0-9\s]/g, "") // Remove special chars
+              .replace(/\s+/g, "-"); // Replace spaces with hyphens
+
+            slugInput.value = slug;
+          }
+        });
+
+      // Icon selection in form
+      const iconItems = document.querySelectorAll(".icon-selector .icon-item");
+      iconItems.forEach((item) => {
+        item.addEventListener("click", function () {
+          // Remove active class from all icons
+          iconItems.forEach((i) => i.classList.remove("active"));
+
+          // Add active class to clicked icon
+          this.classList.add("active");
+
+          // Update the icon input value
+          const iconName = this.getAttribute("data-icon");
+          document.getElementById("categoryIcon").value = iconName;
+
+          // Update the selected icon preview
+          const iconClass = `fas ${iconName}`;
+          document.getElementById(
+            "selectedIcon"
+          ).innerHTML = `<i class="${iconClass}"></i>`;
+        });
+      });
+
+      // Edit Category
+      const editButtons = document.querySelectorAll(".edit-category");
+      editButtons.forEach((button) => {
+        button.addEventListener("click", function (e) {
+          e.preventDefault();
+          const categoryId = this.getAttribute("data-id");
+          editCategory(categoryId);
+        });
+      });
+
+      // Delete Category
+      const deleteButtons = document.querySelectorAll(".delete-category");
+      deleteButtons.forEach((button) => {
+        button.addEventListener("click", async function (e) {
+          e.preventDefault();
+          const categoryId = this.getAttribute("data-id");
+          const categoryName = this.getAttribute("data-name");
+
+          // Show confirmation dialog
+          document.getElementById("deleteCategoryName").textContent =
+            categoryName;
+
+          const result = await showConfirmDialog("confirmDeleteModal");
+
+          if (result) {
+            // In a real app, this would be an API call
+            console.log(`Deleting category with ID: ${categoryId}`);
+
+            // Remove the category from the table
+            const row = document.querySelector(`tr[data-id="${categoryId}"]`);
+            if (row) {
+              row.remove();
+            }
+
+            // Show success message
+            showMessage(
+              "categoryDeleted",
+              `Category "${categoryName}" has been deleted.`,
+              3000
+            );
+          }
+        });
+      });
+
+      // Save Category
+      document
+        .getElementById("saveCategory")
+        .addEventListener("click", function () {
+          const form = document.getElementById("categoryForm");
+
+          if (validateForm("categoryForm")) {
+            const categoryId = document.getElementById("categoryId").value;
+            const categoryName = document.getElementById("categoryName").value;
+            const categorySlug = document.getElementById("categorySlug").value;
+            const categoryDescription = document.getElementById(
+              "categoryDescription"
+            ).value;
+            const categoryIcon = document.getElementById("categoryIcon").value;
+
+            // In a real app, this would be an API call
+            console.log("Saving category:", {
+              id: categoryId || "new",
+              name: categoryName,
+              slug: categorySlug,
+              description: categoryDescription,
+              icon: categoryIcon,
+            });
+
+            // Close the modal
+            closeModal("categoryModal");
+
+            // Show success message
+            if (categoryId) {
+              showMessage(
+                "categoryUpdated",
+                `Category "${categoryName}" has been updated.`,
+                3000
+              );
+
+              // Update the row in the table
+              updateCategoryRow(
+                categoryId,
+                categoryName,
+                categorySlug,
+                categoryDescription,
+                categoryIcon
+              );
+            } else {
+              showMessage(
+                "categoryCreated",
+                `Category "${categoryName}" has been created.`,
+                3000
+              );
+
+              // Add a new row to the table with a random ID
+              const newId = Math.floor(Math.random() * 1000) + 10;
+              addCategoryRow(
+                newId,
+                categoryName,
+                categorySlug,
+                categoryDescription,
+                categoryIcon
+              );
+            }
+          }
+        });
+
+      // Cancel Category
+      document
+        .getElementById("cancelCategory")
+        .addEventListener("click", function () {
+          closeModal("categoryModal");
+        });
+
+      // Function to open the category modal
+      function openCategoryModal(category = null) {
+        const form = document.getElementById("categoryForm");
+        const modalTitle = document.getElementById("modalTitle");
+
+        // Reset form
+        form.reset();
+        document.getElementById("categoryId").value = "";
+
+        // Reset icon selector
+        document
+          .querySelectorAll(".icon-selector .icon-item")
+          .forEach((i) => i.classList.remove("active"));
+        document
+          .querySelector(`.icon-selector .icon-item[data-icon="fa-laptop"]`)
+          .classList.add("active");
+        document.getElementById("categoryIcon").value = "fa-laptop";
+        document.getElementById("selectedIcon").innerHTML =
+          '<i class="fas fa-laptop"></i>';
+
+        if (category) {
+          // Edit mode
+          modalTitle.textContent = "Edit Category";
+
+          // Set form values based on the category
+          document.getElementById("categoryId").value = category.id;
+          document.getElementById("categoryName").value = category.name;
+          document.getElementById("categorySlug").value = category.slug;
+          document.getElementById("categoryDescription").value =
+            category.description;
+          document.getElementById("categoryIcon").value = category.icon;
+
+          // Update selected icon
+          document
+            .querySelectorAll(".icon-selector .icon-item")
+            .forEach((i) => i.classList.remove("active"));
+          const iconItem = document.querySelector(
+            `.icon-selector .icon-item[data-icon="${category.icon}"]`
+          );
+          if (iconItem) {
+            iconItem.classList.add("active");
+          }
+
+          document.getElementById(
+            "selectedIcon"
+          ).innerHTML = `<i class="fas ${category.icon}"></i>`;
+        } else {
+          // Add mode
+          modalTitle.textContent = "Add New Category";
+        }
+
+        // Show modal
+        const modal = document.getElementById("categoryModal");
+        modal.classList.add("show");
+      }
+
+      // Function to close the modal
+      function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove("show");
+      }
+
+      // Function to edit a category
+      function editCategory(categoryId) {
+        // In a real app, this would be an API call to get category details
+        // For now, we'll just get the data from the table
+        const row = document.querySelector(`tr[data-id="${categoryId}"]`);
+        if (row) {
+          const name = row.querySelector(".category-name").textContent.trim();
+          const slug = row.querySelector("td:nth-child(2)").textContent;
+          const description = row.querySelector("td:nth-child(3)").textContent;
+
+          // Extract icon class
+          const iconElement = row.querySelector(".category-icon");
+          const iconClasses = iconElement.className.split(" ");
+          const iconClass = iconClasses.find((cls) => cls.startsWith("fa-"));
+
+          const category = {
+            id: categoryId,
+            name: name,
+            slug: slug,
+            description: description,
+            icon: iconClass,
+          };
+
+          openCategoryModal(category);
+        }
+      }
+
+      // Function to add a new category row to the table
+      function addCategoryRow(id, name, slug, description, icon) {
+        const tbody = document.querySelector(".data-table tbody");
+        const newRow = document.createElement("tr");
+        newRow.setAttribute("data-id", id);
+
+        newRow.innerHTML = `
+                        <td>
+                            <div class="category-name">
+                                <i class="fas ${icon} category-icon"></i>
+                                ${name}
+                            </div>
+                        </td>
+                        <td>${slug}</td>
+                        <td>${description}</td>
+                        <td><span class="badge badge-primary">0</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="#" class="action-btn edit edit-category" data-id="${id}" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="#" class="action-btn delete delete-category" data-id="${id}" data-name="${name}" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    `;
+
+        tbody.appendChild(newRow);
+
+        // Add event listeners to new buttons
+        const editButton = newRow.querySelector(".edit-category");
+        editButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          editCategory(id);
+        });
+
+        const deleteButton = newRow.querySelector(".delete-category");
+        deleteButton.addEventListener("click", async function (e) {
+          e.preventDefault();
+
+          // Show confirmation dialog
+          document.getElementById("deleteCategoryName").textContent = name;
+
+          const result = await showConfirmDialog("confirmDeleteModal");
+
+          if (result) {
+            // In a real app, this would be an API call
+            console.log(`Deleting category with ID: ${id}`);
+
+            // Remove the category from the table
+            newRow.remove();
+
+            // Show success message
+            showMessage(
+              "categoryDeleted",
+              `Category "${name}" has been deleted.`,
+              3000
+            );
+          }
+        });
+      }
+
+      // Function to update an existing category row
+      function updateCategoryRow(id, name, slug, description, icon) {
+        const row = document.querySelector(`tr[data-id="${id}"]`);
+        if (row) {
+          row.innerHTML = `
+                            <td>
+                                <div class="category-name">
+                                    <i class="fas ${icon} category-icon"></i>
+                                    ${name}
+                                </div>
+                            </td>
+                            <td>${slug}</td>
+                            <td>${description}</td>
+                            <td>${
+                              row.querySelector("td:nth-child(4)").innerHTML
+                            }</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="#" class="action-btn edit edit-category" data-id="${id}" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-category" data-id="${id}" data-name="${name}" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        `;
+
+          // Add event listeners to updated buttons
+          const editButton = row.querySelector(".edit-category");
+          editButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            editCategory(id);
+          });
+
+          const deleteButton = row.querySelector(".delete-category");
+          deleteButton.addEventListener("click", async function (e) {
+            e.preventDefault();
+
+            // Show confirmation dialog
+            document.getElementById("deleteCategoryName").textContent = name;
+
+            const result = await showConfirmDialog("confirmDeleteModal");
+
+            if (result) {
+              // In a real app, this would be an API call
+              console.log(`Deleting category with ID: ${id}`);
+
+              // Remove the category from the table
+              row.remove();
+
+              // Show success message
+              showMessage(
+                "categoryDeleted",
+                `Category "${name}" has been deleted.`,
+                3000
+              );
+            }
+          });
+        }
+      }
+
+      // Local version of showConfirmDialog for this page
+      async function showConfirmDialog(modalId) {
+        return new Promise((resolve) => {
+          const modal = document.getElementById(modalId);
+          const confirmBtn = modal.querySelector("[data-confirm]");
+          const cancelBtn = modal.querySelector("[data-cancel]");
+
+          function onConfirm() {
+            cleanup();
+            resolve(true);
+          }
+
+          function onCancel() {
+            cleanup();
+            resolve(false);
+          }
+
+          function cleanup() {
+            modal.classList.remove("show");
+            confirmBtn.removeEventListener("click", onConfirm);
+            cancelBtn.removeEventListener("click", onCancel);
+          }
+
+          confirmBtn.addEventListener("click", onConfirm);
+          cancelBtn.addEventListener("click", onCancel);
+
+          modal.classList.add("show");
+        });
+      }
+    });
+  </script>
+
+  <style>
+    /* Category page specific styles */
+    .category-name {
+      display: flex;
+      align-items: center;
+    }
+
+    .category-icon {
+      margin-right: 10px;
+      font-size: 18px;
+      color: #3a86ff;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .icon-item:hover {
+      background-color: #e9ecef;
+    }
+
+    .icon-item.active {
+      background-color: rgba(58, 134, 255, 0.1);
+      color: #3a86ff;
+      border: 1px solid rgba(58, 134, 255, 0.2);
+    }
+
+    .icon-item i {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .icon-item span {
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .icon-selector .icon-item {
+      padding: 10px;
+    }
+
+    .icon-selector .icon-item i {
+      margin-bottom: 0;
+    }
+
+    .icon-selector .icon-item span {
+      display: none;
+    }
+
+    .selected-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .selected-icon i {
+      font-size: 20px;
+      color: #3a86ff;
+    }
+
+    .help-text {
+      margin-top: 15px;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .help-text i {
+      color: #3a86ff;
+      margin-right: 5px;
+    }
+
+    /* Modal positioning fixes */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      overflow: auto;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+      overflow: hidden;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      padding: 20px;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 15px 20px;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+</html>

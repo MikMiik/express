@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Admin Dashboard</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="logo">
+        <h1>Admin Dashboard</h1>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder="Enter your email"
+            required
+          />
+          <span class="error-text" id="emailError"
+            >Please enter a valid email address.</span
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="Enter your password"
+            required
+          />
+          <span class="error-text" id="passwordError"
+            >Please enter your password.</span
+          >
+        </div>
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+          "
+        >
+          <div class="remember-me">
+            <input type="checkbox" id="remember" />
+            <label for="remember">Remember me</label>
+          </div>
+
+          <a
+            href="forgot-password.html"
+            style="color: #3a86ff; text-decoration: none; font-size: 14px"
+            >Forgot Password?</a
+          >
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+
+        <div class="footer">
+          <p>
+            Don't have an account?
+            <a href="register.html">Register</a>
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <script src="assets/js/validation.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize form validation
+        if (typeof initFormValidation === "function") {
+          initFormValidation("loginForm");
+        }
+
+        // Handle form submission
+        document
+          .getElementById("loginForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (validateForm("loginForm")) {
+              // In a real app, you would send an AJAX request to your server
+              // For demo: redirect to dashboard
+              window.location.href = "index.html";
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

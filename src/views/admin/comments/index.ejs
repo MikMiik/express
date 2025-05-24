@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Users | Admin Dashboard</title>
+    <title>Comments | Admin Dashboard</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -13,38 +13,52 @@
 
   <!-- Main Content -->
   <div class="content-header">
-    <h1>Users</h1>
-    <a href="create-user.html" class="btn btn-primary">
-      <i class="fas fa-plus"></i> Add New
-    </a>
+    <h1>Comments</h1>
+    <div>
+      <button
+        id="bulkApproveBtn"
+        class="btn btn-success"
+        style="margin-right: 10px"
+      >
+        <i class="fas fa-check"></i> Approve Selected
+      </button>
+      <button id="bulkRejectBtn" class="btn btn-danger">
+        <i class="fas fa-ban"></i> Reject Selected
+      </button>
+    </div>
   </div>
 
   <!-- Filter Bar -->
   <div class="filter-bar">
     <form id="filterForm" class="filter-form" novalidate>
       <div class="form-group">
-        <label for="filterName">Username</label>
+        <label for="filterText">Search</label>
         <input
           type="text"
-          id="filterName"
+          id="filterText"
           class="form-control"
-          placeholder="Search users..."
+          placeholder="Search comments..."
         />
-        <span class="error-text" id="filterNameError"
-          >Please enter a valid username.</span
+        <span class="error-text" id="filterTextError"
+          >Please enter valid search text.</span
         >
       </div>
 
       <div class="form-group">
-        <label for="filterRole">Role</label>
-        <select id="filterRole" class="form-control">
-          <option value="">All Roles</option>
-          <option value="admin">Administrator</option>
-          <option value="editor">Editor</option>
-          <option value="viewer">Viewer</option>
+        <label for="filterPost">Post</label>
+        <select id="filterPost" class="form-control">
+          <option value="">All Posts</option>
+          <option value="1">10 Tips for Better Productivity</option>
+          <option value="2">The Future of AI in Business</option>
+          <option value="3">5 Morning Habits of Successful People</option>
+          <option value="4">
+            How to Build a Successful E-commerce Business
+          </option>
+          <option value="5">The Complete Guide to Digital Marketing</option>
+          <option value="6">The Rise of Remote Work</option>
         </select>
-        <span class="error-text" id="filterRoleError"
-          >Please select a valid role.</span
+        <span class="error-text" id="filterPostError"
+          >Please select a valid post.</span
         >
       </div>
 
@@ -52,9 +66,9 @@
         <label for="filterStatus">Status</label>
         <select id="filterStatus" class="form-control">
           <option value="">All Statuses</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="approved">Approved</option>
           <option value="pending">Pending</option>
+          <option value="rejected">Rejected</option>
         </select>
         <span class="error-text" id="filterStatusError"
           >Please select a valid status.</span
@@ -82,43 +96,51 @@
     <table class="data-table">
       <thead>
         <tr>
-          <th>User</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Last Login</th>
+          <th style="width: 40px">
+            <input type="checkbox" id="selectAll" />
+          </th>
+          <th>Comment</th>
+          <th>Author</th>
+          <th>Post</th>
+          <th>Date</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <!-- User rows -->
+        <!-- Comment rows -->
         <tr data-id="1">
           <td>
-            <div style="display: flex; align-items: center">
-              <div class="avatar">JD</div>
-              <div style="margin-left: 15px">
-                <div class="item-title">John Doe</div>
-                <div class="item-subtitle">@johndoe</div>
+            <input type="checkbox" class="comment-checkbox" />
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <div class="item-title">
+                Great article! These tips have really helped me improve my
+                productivity.
+              </div>
+              <div class="item-subtitle" style="margin-top: 5px">
+                <a href="post-detail.html?id=1">View Post</a>
               </div>
             </div>
           </td>
-          <td>john.doe@example.com</td>
-          <td>Administrator</td>
-          <td>Today, 09:45 AM</td>
+          <td>Sarah Johnson</td>
+          <td>10 Tips for Better Productivity</td>
+          <td>Jul 16, 2023</td>
           <td>
-            <span class="badge badge-success">Active</span>
+            <span class="badge badge-success">Approved</span>
           </td>
           <td>
             <div class="action-buttons">
               <a
-                href="user-detail.html?id=1"
+                href="comment-detail.html?id=1"
                 class="action-btn view"
                 title="View"
               >
                 <i class="fas fa-eye"></i>
               </a>
               <a
-                href="edit-user.html?id=1"
+                href="edit-comment.html?id=1"
                 class="action-btn edit"
                 title="Edit"
               >
@@ -129,7 +151,7 @@
                 class="action-btn delete delete-item"
                 title="Delete"
                 data-id="1"
-                data-name="John Doe"
+                data-name="Comment from Sarah Johnson"
               >
                 <i class="fas fa-trash"></i>
               </a>
@@ -139,31 +161,36 @@
 
         <tr data-id="2">
           <td>
-            <div style="display: flex; align-items: center">
-              <div class="avatar">JS</div>
-              <div style="margin-left: 15px">
-                <div class="item-title">Jane Smith</div>
-                <div class="item-subtitle">@janesmith</div>
+            <input type="checkbox" class="comment-checkbox" />
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <div class="item-title">
+                I disagree with point #3. In my experience, starting with the
+                most difficult task first is more effective.
+              </div>
+              <div class="item-subtitle" style="margin-top: 5px">
+                <a href="post-detail.html?id=1">View Post</a>
               </div>
             </div>
           </td>
-          <td>jane.smith@example.com</td>
-          <td>Editor</td>
-          <td>Yesterday, 14:22 PM</td>
+          <td>Michael Brown</td>
+          <td>10 Tips for Better Productivity</td>
+          <td>Jul 17, 2023</td>
           <td>
-            <span class="badge badge-success">Active</span>
+            <span class="badge badge-success">Approved</span>
           </td>
           <td>
             <div class="action-buttons">
               <a
-                href="user-detail.html?id=2"
+                href="comment-detail.html?id=2"
                 class="action-btn view"
                 title="View"
               >
                 <i class="fas fa-eye"></i>
               </a>
               <a
-                href="edit-user.html?id=2"
+                href="edit-comment.html?id=2"
                 class="action-btn edit"
                 title="Edit"
               >
@@ -174,7 +201,7 @@
                 class="action-btn delete delete-item"
                 title="Delete"
                 data-id="2"
-                data-name="Jane Smith"
+                data-name="Comment from Michael Brown"
               >
                 <i class="fas fa-trash"></i>
               </a>
@@ -184,31 +211,36 @@
 
         <tr data-id="3">
           <td>
-            <div style="display: flex; align-items: center">
-              <div class="avatar">RJ</div>
-              <div style="margin-left: 15px">
-                <div class="item-title">Robert Johnson</div>
-                <div class="item-subtitle">@robertj</div>
+            <input type="checkbox" class="comment-checkbox" />
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <div class="item-title">
+                The AI revolution is already here. Companies need to adapt
+                quickly or get left behind.
+              </div>
+              <div class="item-subtitle" style="margin-top: 5px">
+                <a href="post-detail.html?id=2">View Post</a>
               </div>
             </div>
           </td>
-          <td>robert.j@example.com</td>
-          <td>Editor</td>
-          <td>2 days ago</td>
+          <td>David Wilson</td>
+          <td>The Future of AI in Business</td>
+          <td>Jul 12, 2023</td>
           <td>
-            <span class="badge badge-warning">Pending</span>
+            <span class="badge badge-success">Approved</span>
           </td>
           <td>
             <div class="action-buttons">
               <a
-                href="user-detail.html?id=3"
+                href="comment-detail.html?id=3"
                 class="action-btn view"
                 title="View"
               >
                 <i class="fas fa-eye"></i>
               </a>
               <a
-                href="edit-user.html?id=3"
+                href="edit-comment.html?id=3"
                 class="action-btn edit"
                 title="Edit"
               >
@@ -219,7 +251,7 @@
                 class="action-btn delete delete-item"
                 title="Delete"
                 data-id="3"
-                data-name="Robert Johnson"
+                data-name="Comment from David Wilson"
               >
                 <i class="fas fa-trash"></i>
               </a>
@@ -229,31 +261,36 @@
 
         <tr data-id="4">
           <td>
-            <div style="display: flex; align-items: center">
-              <div class="avatar">EB</div>
-              <div style="margin-left: 15px">
-                <div class="item-title">Emily Brown</div>
-                <div class="item-subtitle">@emilybrown</div>
+            <input type="checkbox" class="comment-checkbox" />
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <div class="item-title">
+                Check out my website at http://spamlink.com for more
+                productivity hacks!
+              </div>
+              <div class="item-subtitle" style="margin-top: 5px">
+                <a href="post-detail.html?id=1">View Post</a>
               </div>
             </div>
           </td>
-          <td>emily.brown@example.com</td>
-          <td>Viewer</td>
-          <td>Never</td>
+          <td>Unknown User</td>
+          <td>10 Tips for Better Productivity</td>
+          <td>Jul 18, 2023</td>
           <td>
-            <span class="badge badge-danger">Inactive</span>
+            <span class="badge badge-danger">Rejected</span>
           </td>
           <td>
             <div class="action-buttons">
               <a
-                href="user-detail.html?id=4"
+                href="comment-detail.html?id=4"
                 class="action-btn view"
                 title="View"
               >
                 <i class="fas fa-eye"></i>
               </a>
               <a
-                href="edit-user.html?id=4"
+                href="edit-comment.html?id=4"
                 class="action-btn edit"
                 title="Edit"
               >
@@ -264,7 +301,7 @@
                 class="action-btn delete delete-item"
                 title="Delete"
                 data-id="4"
-                data-name="Emily Brown"
+                data-name="Comment from Unknown User"
               >
                 <i class="fas fa-trash"></i>
               </a>
@@ -274,31 +311,36 @@
 
         <tr data-id="5">
           <td>
-            <div style="display: flex; align-items: center">
-              <div class="avatar">MT</div>
-              <div style="margin-left: 15px">
-                <div class="item-title">Michael Taylor</div>
-                <div class="item-subtitle">@michaelt</div>
+            <input type="checkbox" class="comment-checkbox" />
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <div class="item-title">
+                Morning meditation has changed my life. I'd add that to the list
+                of habits.
+              </div>
+              <div class="item-subtitle" style="margin-top: 5px">
+                <a href="post-detail.html?id=3">View Post</a>
               </div>
             </div>
           </td>
-          <td>michael.t@example.com</td>
-          <td>Administrator</td>
-          <td>Today, 10:12 AM</td>
+          <td>Jennifer Lopez</td>
+          <td>5 Morning Habits of Successful People</td>
+          <td>Jul 18, 2023</td>
           <td>
-            <span class="badge badge-success">Active</span>
+            <span class="badge badge-warning">Pending</span>
           </td>
           <td>
             <div class="action-buttons">
               <a
-                href="user-detail.html?id=5"
+                href="comment-detail.html?id=5"
                 class="action-btn view"
                 title="View"
               >
                 <i class="fas fa-eye"></i>
               </a>
               <a
-                href="edit-user.html?id=5"
+                href="edit-comment.html?id=5"
                 class="action-btn edit"
                 title="Edit"
               >
@@ -309,7 +351,7 @@
                 class="action-btn delete delete-item"
                 title="Delete"
                 data-id="5"
-                data-name="Michael Taylor"
+                data-name="Comment from Jennifer Lopez"
               >
                 <i class="fas fa-trash"></i>
               </a>
@@ -319,31 +361,36 @@
 
         <tr data-id="6">
           <td>
-            <div style="display: flex; align-items: center">
-              <div class="avatar">SL</div>
-              <div style="margin-left: 15px">
-                <div class="item-title">Sarah Lee</div>
-                <div class="item-subtitle">@sarahlee</div>
+            <input type="checkbox" class="comment-checkbox" />
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <div class="item-title">
+                Remote work has been a game-changer. No more commuting and
+                better work-life balance!
+              </div>
+              <div class="item-subtitle" style="margin-top: 5px">
+                <a href="post-detail.html?id=6">View Post</a>
               </div>
             </div>
           </td>
-          <td>sarah.lee@example.com</td>
-          <td>Viewer</td>
-          <td>1 week ago</td>
+          <td>Robert Taylor</td>
+          <td>The Rise of Remote Work</td>
+          <td>Jul 19, 2023</td>
           <td>
-            <span class="badge badge-success">Active</span>
+            <span class="badge badge-warning">Pending</span>
           </td>
           <td>
             <div class="action-buttons">
               <a
-                href="user-detail.html?id=6"
+                href="comment-detail.html?id=6"
                 class="action-btn view"
                 title="View"
               >
                 <i class="fas fa-eye"></i>
               </a>
               <a
-                href="edit-user.html?id=6"
+                href="edit-comment.html?id=6"
                 class="action-btn edit"
                 title="Edit"
               >
@@ -354,7 +401,7 @@
                 class="action-btn delete delete-item"
                 title="Delete"
                 data-id="6"
-                data-name="Sarah Lee"
+                data-name="Comment from Robert Taylor"
               >
                 <i class="fas fa-trash"></i>
               </a>
@@ -366,7 +413,7 @@
 
     <!-- Pagination -->
     <div class="pagination-container">
-      <div class="pagination-info">Showing 1-6 of 42 users</div>
+      <div class="pagination-info">Showing 1-6 of 24 comments</div>
       <ul class="pagination">
         <li class="active">
           <a href="#" data-page="1">1</a>
@@ -374,8 +421,6 @@
         <li><a href="#" data-page="2">2</a></li>
         <li><a href="#" data-page="3">3</a></li>
         <li><a href="#" data-page="4">4</a></li>
-        <li><a href="#" data-page="5">5</a></li>
-        <li><a href="#" data-page="6">6</a></li>
       </ul>
     </div>
   </div>
@@ -385,8 +430,8 @@
     <div class="modal-content">
       <h3 class="modal-title">Confirm Delete</h3>
       <div class="modal-body">
-        Are you sure you want to delete user "<span id="deleteItemName"></span
-        >"? This action cannot be undone.
+        Are you sure you want to delete "<span id="deleteItemName"></span>"?
+        This action cannot be undone.
       </div>
       <div class="modal-footer">
         <button
@@ -423,21 +468,21 @@
 
         if (validateForm("filterForm")) {
           // Get filter values
-          const name = document.getElementById("filterName").value;
-          const role = document.getElementById("filterRole").value;
+          const text = document.getElementById("filterText").value;
+          const post = document.getElementById("filterPost").value;
           const status = document.getElementById("filterStatus").value;
 
-          // Filter users (in a real application, this would likely be an API call)
+          // Filter comments (in a real application, this would likely be an API call)
           console.log("Filtering with:", {
-            name,
-            role,
+            text,
+            post,
             status,
           });
 
           // Show success message
           showMessage(
             "filterSuccess",
-            `Applied filters: Username="${name}", Role="${role}", Status="${status}"`,
+            `Applied filters: Text="${text}", Post="${post}", Status="${status}"`,
             3000
           );
         }
@@ -449,26 +494,6 @@
         .addEventListener("click", function () {
           resetForm("filterForm");
         });
-
-      // Validate alphanumeric input
-      document.getElementById("filterName").addEventListener(
-        "input",
-        debounce(function () {
-          const input = this;
-          const value = input.value.trim();
-
-          // Only validate if there's a value (the field is not required)
-          if (value !== "" && !/^[a-zA-Z0-9\s]+$/.test(value)) {
-            document.getElementById("filterNameError").style.display = "block";
-            document.getElementById("filterNameError").textContent =
-              "Username can only contain letters, numbers, and spaces.";
-            input.classList.add("error");
-          } else {
-            document.getElementById("filterNameError").style.display = "none";
-            input.classList.remove("error");
-          }
-        }, 300)
-      );
 
       // Setup pagination
       const paginationLinks = document.querySelectorAll(".pagination li a");
@@ -490,7 +515,7 @@
           // Update pagination info
           document.querySelector(".pagination-info").textContent = `Showing ${
             (page - 1) * 10 + 1
-          }-${Math.min(page * 10, 42)} of 42 users`;
+          }-${Math.min(page * 10, 24)} of 24 comments`;
         });
       });
 
@@ -513,10 +538,10 @@
           });
 
           if (result) {
-            // Delete the user (in a real application, this would likely be an API call)
-            console.log(`Deleting user with ID: ${itemId}`);
+            // Delete the comment (in a real application, this would likely be an API call)
+            console.log(`Deleting comment with ID: ${itemId}`);
 
-            // Remove user from table
+            // Remove comment from table
             const itemRow = document.querySelector(`tr[data-id="${itemId}"]`);
             if (itemRow) {
               itemRow.remove();
@@ -524,6 +549,100 @@
           }
         });
       });
+
+      // Setup select all checkbox
+      const selectAllCheckbox = document.getElementById("selectAll");
+      const commentCheckboxes = document.querySelectorAll(".comment-checkbox");
+
+      selectAllCheckbox.addEventListener("change", function () {
+        commentCheckboxes.forEach((checkbox) => {
+          checkbox.checked = this.checked;
+        });
+        updateBulkButtons();
+      });
+
+      commentCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", updateBulkButtons);
+      });
+
+      function updateBulkButtons() {
+        const checkedCount = document.querySelectorAll(
+          ".comment-checkbox:checked"
+        ).length;
+        const bulkApproveBtn = document.getElementById("bulkApproveBtn");
+        const bulkRejectBtn = document.getElementById("bulkRejectBtn");
+
+        bulkApproveBtn.disabled = checkedCount === 0;
+        bulkRejectBtn.disabled = checkedCount === 0;
+      }
+
+      // Setup bulk action buttons
+      document
+        .getElementById("bulkApproveBtn")
+        .addEventListener("click", function () {
+          processSelectedComments("approve");
+        });
+
+      document
+        .getElementById("bulkRejectBtn")
+        .addEventListener("click", function () {
+          processSelectedComments("reject");
+        });
+
+      function processSelectedComments(action) {
+        const selectedCheckboxes = document.querySelectorAll(
+          ".comment-checkbox:checked"
+        );
+        const count = selectedCheckboxes.length;
+
+        if (count === 0) return;
+
+        // Get selected comment IDs
+        const commentIds = Array.from(selectedCheckboxes).map((checkbox) => {
+          return checkbox.closest("tr").getAttribute("data-id");
+        });
+
+        // In a real app, this would be an API call
+        console.log(
+          `${
+            action === "approve" ? "Approving" : "Rejecting"
+          } comments with IDs:`,
+          commentIds
+        );
+
+        // Show feedback to user
+        showMessage(
+          "actionSuccess",
+          `${count} comment${count > 1 ? "s" : ""} ${
+            action === "approve" ? "approved" : "rejected"
+          } successfully`,
+          3000
+        );
+
+        // Update UI to reflect changes
+        selectedCheckboxes.forEach((checkbox) => {
+          const row = checkbox.closest("tr");
+          const statusCell = row.querySelector("td:nth-child(6) .badge");
+
+          if (action === "approve") {
+            statusCell.className = "badge badge-success";
+            statusCell.textContent = "Approved";
+          } else {
+            statusCell.className = "badge badge-danger";
+            statusCell.textContent = "Rejected";
+          }
+
+          // Uncheck the checkbox
+          checkbox.checked = false;
+        });
+
+        // Uncheck "select all" checkbox
+        document.getElementById("selectAll").checked = false;
+        updateBulkButtons();
+      }
+
+      // Initialize bulk buttons state
+      updateBulkButtons();
     });
   </script>
 </html>
