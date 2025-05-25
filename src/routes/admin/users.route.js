@@ -1,11 +1,11 @@
 const express = require("express");
 const usersController = require("@/controllers/admin/users.controller");
-const attachResourceLoaders = require("@/utils/attachResourceLoaders");
+const usersValidator = require("@/validators/admin/users.validator");
 const router = express.Router();
 
-attachResourceLoaders(router, ["user"]);
-
 router.get("/", usersController.index);
+router.post("/", usersValidator.createUser, usersController.store);
+router.get("/create", usersController.create);
 router.get("/:user", usersController.show);
 
 module.exports = router;

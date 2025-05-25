@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Post | Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+  </head>
+
+  <div class="app-container">
+    <!-- Main Content -->
+
+    <div class="content-header">
+      <h1>Edit Post</h1>
+      <a href="post-detail.html?id=1" class="btn btn-secondary" id="backButton">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+    </div>
+
+    <!-- Success Message -->
+    <div
+      id="successMessage"
+      class="message message-success"
+      style="display: none"
+    >
+      <i class="fas fa-check-circle"></i>
+      <span data-message-text>Post has been updated successfully.</span>
+    </div>
+
+    <!-- Edit Form for Posts -->
+    <form id="postForm" class="card">
+      <div class="card-header">
+        <h3>Post Information</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-section">
+          <h3>Basic Information</h3>
+          <div class="form-group">
+            <label for="postTitle">Post Title*</label>
+            <input
+              type="text"
+              id="postTitle"
+              name="postTitle"
+              class="form-control"
+              required
+              value="10 Tips for Better Productivity"
+            />
+            <span class="error-text" id="postTitleError"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="postSlug">Slug*</label>
+              <input
+                type="text"
+                id="postSlug"
+                name="postSlug"
+                class="form-control"
+                required
+                value="10-tips-for-better-productivity"
+              />
+              <span class="error-text" id="postSlugError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="postAuthor">Author*</label>
+              <select
+                id="postAuthor"
+                name="postAuthor"
+                class="form-control"
+                required
+              >
+                <option value="">Select Author</option>
+                <option value="admin" selected>Administrator</option>
+                <option value="editor">Editor</option>
+                <option value="guest">Guest</option>
+              </select>
+              <span class="error-text" id="postAuthorError"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="postTopic">Topic*</label>
+              <select
+                id="postTopic"
+                name="postTopic"
+                class="form-control"
+                required
+              >
+                <option value="">Select Topic</option>
+                <option value="productivity" selected>Productivity</option>
+                <option value="technology">Technology</option>
+                <option value="business">Business</option>
+                <option value="lifestyle">Lifestyle</option>
+              </select>
+              <span class="error-text" id="postTopicError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="postStatus">Status*</label>
+              <select
+                id="postStatus"
+                name="postStatus"
+                class="form-control"
+                required
+              >
+                <option value="">Select Status</option>
+                <option value="published" selected>Published</option>
+                <option value="draft">Draft</option>
+                <option value="scheduled">Scheduled</option>
+              </select>
+              <span class="error-text" id="postStatusError"></span>
+            </div>
+          </div>
+
+          <div
+            id="scheduledDateContainer"
+            class="form-group"
+            style="display: none"
+          >
+            <label for="postScheduledDate">Scheduled Date*</label>
+            <input
+              type="date"
+              id="postScheduledDate"
+              name="postScheduledDate"
+              class="form-control"
+            />
+            <span class="error-text" id="postScheduledDateError"></span>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Post Content</h3>
+          <div class="form-group">
+            <label for="postExcerpt">Excerpt*</label>
+            <textarea
+              id="postExcerpt"
+              name="postExcerpt"
+              class="form-control"
+              rows="2"
+              required
+            >
+Discover the top 10 habits that can dramatically improve your daily productivity and help you achieve more in less time.</textarea
+            >
+            <span class="error-text" id="postExcerptError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="postContent">Content*</label>
+            <textarea
+              id="postContent"
+              name="postContent"
+              class="form-control"
+              rows="10"
+              required
+            >
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea
+            >
+            <span class="error-text" id="postContentError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="postTags">Tags (comma separated)</label>
+            <input
+              type="text"
+              id="postTags"
+              name="postTags"
+              class="form-control"
+              value="productivity, work, time-management"
+            />
+            <span class="error-text" id="postTagsError"></span>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Featured Image</h3>
+          <div class="media-upload" id="postFeaturedImageUpload">
+            <input
+              type="file"
+              id="postFeaturedImage"
+              name="postFeaturedImage"
+              accept="image/*"
+            />
+            <div class="upload-content" style="display: none">
+              <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+              </div>
+              <div class="upload-text">
+                Drag & drop image or click to browse
+              </div>
+            </div>
+            <img
+              src="https://via.placeholder.com/800x400"
+              id="postFeaturedImagePreview"
+              class="media-preview"
+              style="display: block"
+            />
+          </div>
+          <span class="error-text" id="postFeaturedImageError"></span>
+        </div>
+
+        <div class="form-section">
+          <h3>SEO Settings</h3>
+          <div class="form-group">
+            <label for="postMetaTitle">Meta Title</label>
+            <input
+              type="text"
+              id="postMetaTitle"
+              name="postMetaTitle"
+              class="form-control"
+              placeholder="Enter meta title (for SEO)"
+              value="Top 10 Productivity Tips for Better Results"
+            />
+            <span class="error-text" id="postMetaTitleError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="postMetaDescription">Meta Description</label>
+            <textarea
+              id="postMetaDescription"
+              name="postMetaDescription"
+              class="form-control"
+              rows="2"
+              placeholder="Enter meta description (for SEO)"
+            >
+Learn the top 10 productivity habits that successful people use daily to maximize their efficiency and achieve greater results in less time.</textarea
+            >
+            <span class="error-text" id="postMetaDescriptionError"></span>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Publishing Options</h3>
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input
+                type="checkbox"
+                id="allowComments"
+                name="allowComments"
+                checked
+              />
+              <label for="allowComments">Allow comments on this post</label>
+            </div>
+            <div class="checkbox-group">
+              <input
+                type="checkbox"
+                id="featuredPost"
+                name="featuredPost"
+                checked
+              />
+              <label for="featuredPost">Mark as featured post</label>
+            </div>
+            <div class="checkbox-group">
+              <input
+                type="checkbox"
+                id="notifySubscribers"
+                name="notifySubscribers"
+              />
+              <label for="notifySubscribers"
+                >Notify subscribers about this update</label
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" class="btn btn-secondary" id="cancelBtn">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Initialize form validation
+      initFormValidation("postForm");
+
+      // Setup file upload
+      setupFileUpload(
+        "postFeaturedImage",
+        "postFeaturedImagePreview",
+        "postFeaturedImageUpload"
+      );
+
+      // Show/hide scheduled date based on status selection
+      document
+        .getElementById("postStatus")
+        .addEventListener("change", function () {
+          const scheduledDateContainer = document.getElementById(
+            "scheduledDateContainer"
+          );
+          if (this.value === "scheduled") {
+            scheduledDateContainer.style.display = "block";
+            document.getElementById("postScheduledDate").required = true;
+          } else {
+            scheduledDateContainer.style.display = "none";
+            document.getElementById("postScheduledDate").required = false;
+          }
+        });
+
+      // Handle form submission
+      document
+        .getElementById("postForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          if (validateForm("postForm")) {
+            // If status is scheduled, validate the schedule date
+            const status = document.getElementById("postStatus").value;
+            if (status === "scheduled") {
+              const scheduledDate =
+                document.getElementById("postScheduledDate").value;
+              if (!scheduledDate) {
+                showError(
+                  document.getElementById("postScheduledDate"),
+                  "Please select a scheduled date."
+                );
+                return;
+              }
+            }
+
+            // Show success message
+            showMessage(
+              "successMessage",
+              "Post has been updated successfully.",
+              3000
+            );
+
+            // Redirect after a delay - would typically include the ID from the URL
+            setTimeout(() => {
+              window.location.href = "post-detail.html?id=1";
+            }, 2000);
+          }
+        });
+
+      // Handle cancel button
+      document
+        .getElementById("cancelBtn")
+        .addEventListener("click", function () {
+          window.location.href = "post-detail.html?id=1";
+        });
+
+      // Auto-generate slug from title when editing title if slug was empty
+      document
+        .getElementById("postTitle")
+        .addEventListener("blur", function () {
+          const slugInput = document.getElementById("postSlug");
+          // Only auto-generate if slug is empty
+          if (!slugInput.value.trim()) {
+            // Convert title to slug
+            const slug = this.value
+              .trim()
+              .toLowerCase()
+              .replace(/[^a-z0-9\s]/g, "") // Remove special chars
+              .replace(/\s+/g, "-"); // Replace spaces with hyphens
+
+            slugInput.value = slug;
+          }
+        });
+    });
+  </script>
+
+  <style>
+    /* Additional styling for checkbox groups */
+    .checkbox-group {
+      margin-bottom: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 8px;
+    }
+  </style>
+</html>

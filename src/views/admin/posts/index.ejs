@@ -14,7 +14,7 @@
   <!-- Main Content -->
   <div class="content-header">
     <h1>Posts</h1>
-    <a href="create-post.html" class="btn btn-primary">
+    <a href="posts/create" class="btn btn-primary">
       <i class="fas fa-plus"></i> Add New
     </a>
   </div>
@@ -93,16 +93,13 @@
       </thead>
       <tbody>
         <!-- Post rows -->
-        <tr data-id="1">
+        <% for (post of posts) { %>
+        <tr data-id="<%= post.id %>">
           <td>
             <div style="display: flex; align-items: center">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="Post"
-                class="item-image"
-              />
+              <img src="<%= post.post_img %>" alt="Post" class="item-image" />
               <div style="margin-left: 15px">
-                <div class="item-title">10 Tips for Better Productivity</div>
+                <div class="item-title"><%= post.title %></div>
                 <div class="item-subtitle">15 comments • 1,250 views</div>
               </div>
             </div>
@@ -116,14 +113,14 @@
           <td>
             <div class="action-buttons">
               <a
-                href="post-detail.html?id=1"
+                href="posts/<%= post.id %>"
                 class="action-btn view"
                 title="View"
               >
                 <i class="fas fa-eye"></i>
               </a>
               <a
-                href="edit-post.html?id=1"
+                href="posts/<%= post.id %>/edit"
                 class="action-btn edit"
                 title="Edit"
               >
@@ -141,257 +138,7 @@
             </div>
           </td>
         </tr>
-
-        <tr data-id="2">
-          <td>
-            <div style="display: flex; align-items: center">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="Post"
-                class="item-image"
-              />
-              <div style="margin-left: 15px">
-                <div class="item-title">The Future of AI in Business</div>
-                <div class="item-subtitle">8 comments • 980 views</div>
-              </div>
-            </div>
-          </td>
-          <td>Jane Smith</td>
-          <td>Technology</td>
-          <td>Jul 10, 2023</td>
-          <td>
-            <span class="badge badge-success">Published</span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <a
-                href="post-detail.html?id=2"
-                class="action-btn view"
-                title="View"
-              >
-                <i class="fas fa-eye"></i>
-              </a>
-              <a
-                href="edit-post.html?id=2"
-                class="action-btn edit"
-                title="Edit"
-              >
-                <i class="fas fa-edit"></i>
-              </a>
-              <a
-                href="#"
-                class="action-btn delete delete-item"
-                title="Delete"
-                data-id="2"
-                data-name="The Future of AI in Business"
-              >
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
-
-        <tr data-id="3">
-          <td>
-            <div style="display: flex; align-items: center">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="Post"
-                class="item-image"
-              />
-              <div style="margin-left: 15px">
-                <div class="item-title">
-                  5 Morning Habits of Successful People
-                </div>
-                <div class="item-subtitle">22 comments • 2,456 views</div>
-              </div>
-            </div>
-          </td>
-          <td>Robert Johnson</td>
-          <td>Lifestyle</td>
-          <td>Jul 5, 2023</td>
-          <td>
-            <span class="badge badge-success">Published</span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <a
-                href="post-detail.html?id=3"
-                class="action-btn view"
-                title="View"
-              >
-                <i class="fas fa-eye"></i>
-              </a>
-              <a
-                href="edit-post.html?id=3"
-                class="action-btn edit"
-                title="Edit"
-              >
-                <i class="fas fa-edit"></i>
-              </a>
-              <a
-                href="#"
-                class="action-btn delete delete-item"
-                title="Delete"
-                data-id="3"
-                data-name="5 Morning Habits of Successful People"
-              >
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
-
-        <tr data-id="4">
-          <td>
-            <div style="display: flex; align-items: center">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="Post"
-                class="item-image"
-              />
-              <div style="margin-left: 15px">
-                <div class="item-title">
-                  How to Build a Successful E-commerce Business
-                </div>
-                <div class="item-subtitle">0 comments • 0 views</div>
-              </div>
-            </div>
-          </td>
-          <td>Emily Brown</td>
-          <td>Business</td>
-          <td>-</td>
-          <td>
-            <span class="badge badge-warning">Draft</span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <a
-                href="post-detail.html?id=4"
-                class="action-btn view"
-                title="View"
-              >
-                <i class="fas fa-eye"></i>
-              </a>
-              <a
-                href="edit-post.html?id=4"
-                class="action-btn edit"
-                title="Edit"
-              >
-                <i class="fas fa-edit"></i>
-              </a>
-              <a
-                href="#"
-                class="action-btn delete delete-item"
-                title="Delete"
-                data-id="4"
-                data-name="How to Build a Successful E-commerce Business"
-              >
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
-
-        <tr data-id="5">
-          <td>
-            <div style="display: flex; align-items: center">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="Post"
-                class="item-image"
-              />
-              <div style="margin-left: 15px">
-                <div class="item-title">
-                  The Complete Guide to Digital Marketing
-                </div>
-                <div class="item-subtitle">0 comments • 0 views</div>
-              </div>
-            </div>
-          </td>
-          <td>Michael Taylor</td>
-          <td>Business</td>
-          <td>Aug 15, 2023</td>
-          <td>
-            <span class="badge badge-info">Scheduled</span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <a
-                href="post-detail.html?id=5"
-                class="action-btn view"
-                title="View"
-              >
-                <i class="fas fa-eye"></i>
-              </a>
-              <a
-                href="edit-post.html?id=5"
-                class="action-btn edit"
-                title="Edit"
-              >
-                <i class="fas fa-edit"></i>
-              </a>
-              <a
-                href="#"
-                class="action-btn delete delete-item"
-                title="Delete"
-                data-id="5"
-                data-name="The Complete Guide to Digital Marketing"
-              >
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
-
-        <tr data-id="6">
-          <td>
-            <div style="display: flex; align-items: center">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="Post"
-                class="item-image"
-              />
-              <div style="margin-left: 15px">
-                <div class="item-title">The Rise of Remote Work</div>
-                <div class="item-subtitle">7 comments • 856 views</div>
-              </div>
-            </div>
-          </td>
-          <td>Sarah Lee</td>
-          <td>Technology</td>
-          <td>Jun 28, 2023</td>
-          <td>
-            <span class="badge badge-success">Published</span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <a
-                href="post-detail.html?id=6"
-                class="action-btn view"
-                title="View"
-              >
-                <i class="fas fa-eye"></i>
-              </a>
-              <a
-                href="edit-post.html?id=6"
-                class="action-btn edit"
-                title="Edit"
-              >
-                <i class="fas fa-edit"></i>
-              </a>
-              <a
-                href="#"
-                class="action-btn delete delete-item"
-                title="Delete"
-                data-id="6"
-                data-name="The Rise of Remote Work"
-              >
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
+        <% } %>
       </tbody>
     </table>
 

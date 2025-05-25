@@ -16,6 +16,7 @@ const handleSidebar = require("@/middlewares/admin/handleSidebar");
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded());
 app.use(express.static("public"));
 app.use(handlePagination);
 app.use(responseEnhancer);
