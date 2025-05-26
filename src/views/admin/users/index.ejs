@@ -112,14 +112,14 @@
           <td>
             <div class="action-buttons">
               <a
-                href="user-detail.html?id=1"
+                href="/admin/users/<%= user.id %>"
                 class="action-btn view"
                 title="View"
               >
                 <i class="fas fa-eye"></i>
               </a>
               <a
-                href="edit-user.html?id=1"
+                href="/admin/users/<%= user.id %>/edit"
                 class="action-btn edit"
                 title="Edit"
               >
@@ -260,7 +260,7 @@
           showMessage(
             "filterSuccess",
             `Applied filters: Username="${name}", Role="${role}", Status="${status}"`,
-            3000
+            3000,
           );
         }
       });
@@ -289,7 +289,7 @@
             document.getElementById("filterNameError").style.display = "none";
             input.classList.remove("error");
           }
-        }, 300)
+        }, 300),
       );
 
       // Setup pagination
@@ -300,7 +300,7 @@
 
           // Remove active class from all links
           paginationLinks.forEach((l) =>
-            l.parentElement.classList.remove("active")
+            l.parentElement.classList.remove("active"),
           );
 
           // Add active class to clicked link

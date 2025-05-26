@@ -15,7 +15,7 @@
 
   <div class="content-header">
     <h1>Create New User</h1>
-    <a href="users.html" class="btn btn-secondary">
+    <a href="/admin/users" class="btn btn-secondary">
       <i class="fas fa-arrow-left"></i> Back to Users
     </a>
   </div>
@@ -31,13 +31,7 @@
   </div>
 
   <!-- Create User Form -->
-  <form
-    id="createUserForm"
-    class="card"
-    method="POST"
-    action="/admin/users"
-    enctype="multipart/form-data"
-  >
+  <form id="createUserForm" class="card" method="POST" action="/admin/users">
     <div class="card-header">
       <h3>User Information</h3>
     </div>
@@ -54,7 +48,9 @@
             class="form-control"
           />
           <% if (errors?.name) {%>
-          <span class="error-text" id="userNameError"><%= errors?.name %></span>
+          <span class="custom-error-text" id="userNameError">
+            <%= errors?.name %>
+          </span>
           <% } %>
           <label for="userAvatar">Avatar</label>
           <input
@@ -76,7 +72,7 @@
               class="form-control"
             />
             <% if (errors?.email) {%>
-            <span class="error-text" id="userEmailError">
+            <span class="custom-error-text" id="userEmailError">
               <%= errors?.email %>
             </span>
             <% } %>
@@ -94,7 +90,7 @@
             />
 
             <% if (errors?.phone) {%>
-            <span class="error-text" id="userPhoneError">
+            <span class="custom-error-text" id="userPhoneError">
               <%= errors?.phone %>
             </span>
             <% } %>
@@ -108,8 +104,12 @@
             name="address"
             class="form-control"
             rows="2"
-          ></textarea>
-          <span class="error-text" id="userAddressError"></span>
+          ><%= old?.address%></textarea>
+          <% if (errors?.address) {%>
+          <span class="custom-error-text" id="userAddressError">
+            <%= errors?.address %>
+          </span>
+          <% } %>
         </div>
       </div>
 
@@ -118,36 +118,48 @@
         <div class="form-group">
           <label for="userUsername">Username*</label>
           <input
+            value="<%= old?.username%>"
             type="text"
             id="userUsername"
             name="username"
             class="form-control"
             data-validate="username"
           />
-          <span class="error-text" id="userUsernameError"></span>
+          <% if (errors?.username) {%>
+          <span class="custom-error-text" id="userUsernameError">
+            <%= errors?.username %>
+          </span>
+          <% } %>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="userRole">Role*</label>
+            <% const roles = ['Admin', 'Editor', 'Viewer'] %>
             <select id="userRole" name="role" class="form-control" required>
               <option value="">Select Role</option>
-              <option value="admin">Administrator</option>
-              <option value="editor">Editor</option>
-              <option value="viewer">Viewer</option>
+
+              <% for (role of roles) { %> 
+                <% const selected = old?.role === role ? 'selected' : '' %>
+              <option value="<%= role %>" <%=selected %>> <%= role%></option>
+              <% } %>
+
             </select>
-            <span class="error-text" id="userRoleError"></span>
+            <span class="custom-error-text" id="userRoleError"></span>
           </div>
 
           <div class="form-group">
             <label for="userStatus">Status*</label>
+            <% const statuses = ['Active', 'Inactive', 'Pending'] %>
             <select id="userStatus" name="status" class="form-control" required>
               <option value="">Select Status</option>
-              <option value="active" selected>Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="pending">Pending</option>
+
+              <% for (status of statuses) { %> 
+                <% const selected = old?.status === status ? 'selected' : '' %>
+              <option value="<%= status %>" <%=selected %>> <%= status%></option>
+              <% } %>
             </select>
-            <span class="error-text" id="userStatusError"></span>
+            <span class="custom-error-text" id="userStatusError"></span>
           </div>
         </div>
       </div>
@@ -166,7 +178,7 @@
               required
               data-validate="password"
             />
-            <span class="error-text" id="userPasswordError"></span>
+            <span class="custom-error-text" id="userPasswordError"></span>
           </div>
 
           <div class="form-group">
@@ -179,7 +191,10 @@
               class="form-control"
               required
             />
-            <span class="error-text" id="userConfirmPasswordError"></span>
+            <span
+              class="custom-error-text"
+              id="userConfirmPasswordError"
+            ></span>
           </div>
         </div>
         <p
@@ -190,34 +205,6 @@
           lowercase, number, and special character.
         </p>
       </div>
-
-      <!-- <div class="form-section">
-        <h3>Notification Settings</h3>
-        <div class="form-group">
-          <div class="checkbox-group">
-            <input
-              type="checkbox"
-              id="emailNotifications"
-              name="emailNotifications"
-              checked
-            />
-            <label for="emailNotifications"
-              >Send welcome email to the user</label
-            >
-          </div>
-          <div class="checkbox-group">
-            <input
-              type="checkbox"
-              id="adminNotifications"
-              name="adminNotifications"
-              checked
-            />
-            <label for="adminNotifications"
-              >Notify administrators about this new user</label
-            >
-          </div>
-        </div>
-      </div> -->
 
       <div class="form-buttons">
         <button type="button" class="btn btn-secondary" id="cancelBtn">
@@ -262,28 +249,18 @@
             console.log("Creating new user...");
             // Generate form data for logging (in a real app, this would be sent to the server)
 
-            const formData = {
-              name: document.getElementById("userName").value,
-              username: document.getElementById("userUsername").value,
-              avatar: document.getElementById("userAvatar").value,
-              email: document.getElementById("userEmail").value,
-              phone: document.getElementById("userPhone").value,
-              address: document.getElementById("userAddress").value,
-              role: document.getElementById("userRole").value,
-              status: document.getElementById("userStatus").value,
-              // sendEmail: document.getElementById("emailNotifications").checked,
-              // notifyAdmin:
-              //   document.getElementById("adminNotifications").checked,
-            };
+            // const formData = {
+            //   name: document.getElementById("userName").value,
+            //   username: document.getElementById("userUsername").value,
+            //   avatar: document.getElementById("userAvatar").value,
+            //   email: document.getElementById("userEmail").value,
+            //   phone: document.getElementById("userPhone").value,
+            //   address: document.getElementById("userAddress").value,
+            //   role: document.getElementById("userRole").value,
+            //   status: document.getElementById("userStatus").value,
+            // };
 
-            console.log("Form data:", formData);
-
-            // Show success message
-            showMessage(
-              "successMessage",
-              "User has been created successfully.",
-              3000
-            );
+            // console.log("Form data:", formData);
           }
         });
 
@@ -291,7 +268,7 @@
       document
         .getElementById("cancelBtn")
         .addEventListener("click", function () {
-          window.location.href = "users.html";
+          window.location.href = "/admin/users";
         });
 
       // Custom validation for password confirmation
@@ -322,6 +299,13 @@
       margin-top: 5px;
       color: #666;
       font-size: 13px;
+    }
+
+    .custom-error-text {
+      color: #f44336;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 5px;
     }
   </style>
 </html>

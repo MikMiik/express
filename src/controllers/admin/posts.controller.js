@@ -9,7 +9,7 @@ exports.index = async (req, res) => {
 };
 
 exports.show = async (req, res) => {
-  const post = await postsService.getById(req.post.id);
+  const post = await postsService.getById(req.params.id);
   res.render("admin/posts/show", {
     post,
   });

@@ -8,13 +8,13 @@ exports.createUser = [
   },
   checkSchema({
     name: {
-      notEmpty: { errorMessage: "Name is not empty." },
+      notEmpty: { errorMessage: "Name is required." },
     },
     email: {
-      notEmpty: { errorMessage: "Email is not empty." },
+      notEmpty: { errorMessage: "Email is required." },
     },
     phone: {
-      notEmpty: { errorMessage: "Phone is not empty." },
+      notEmpty: { errorMessage: "Phone is required." },
     },
   }),
   handlerValidationErrors,

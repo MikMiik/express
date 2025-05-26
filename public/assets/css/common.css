@@ -219,6 +219,7 @@ h6 {
     color: #f44336;
     font-size: 12px;
     margin-top: 5px;
+    display: none;
 }
 
 .form-control.error {
