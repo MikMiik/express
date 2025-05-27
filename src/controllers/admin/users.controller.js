@@ -6,6 +6,7 @@ exports.index = async (req, res) => {
   res.render("admin/users/index", {
     users: items,
     total,
+    getSession: req.session.get,
     formatDate,
     formatDay,
   });
@@ -29,7 +30,7 @@ exports.create = async (req, res) => {
 
 exports.store = async (req, res) => {
   const { confirm_password, ...body } = req.body;
-  const avatar = `/uploads/${req.file?.filename}`;
+  const avatar = req.file ? `/uploads/${req.file.filename}` : null;
   await usersService.create({ ...body, avatar });
   res.redirect("/admin/users");
 };
@@ -47,7 +48,7 @@ exports.edit = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { confirm_password, ...body } = req.body;
-  const avatar = `/uploads/${req.file?.filename}`;
+  const avatar = req.file ? `/uploads/${req.file.filename}` : null;
   await usersService.update(req.params.id, { ...body, avatar });
   res.redirect(`/admin/users/${req.params.id}/edit`);
 };

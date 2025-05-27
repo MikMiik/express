@@ -3,6 +3,7 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const methodOverride = require("method-override");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = 3000;
@@ -13,10 +14,12 @@ const errorHandler = require("@/middlewares/errorHandler");
 const responseEnhancer = require("@/middlewares/responseEnhancer");
 const handlePagination = require("@/middlewares/handlePagination");
 const handleSidebar = require("@/middlewares/admin/handleSidebar");
+const handleSession = require("@/middlewares/admin/handleSession");
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded());
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
@@ -30,7 +33,7 @@ app.set("views", "./src/views");
 app.set("layout", "./admin/layouts/default");
 
 // Router
-app.use("/admin", handleSidebar, adminRouter);
+app.use("/admin", handleSession, handleSidebar, adminRouter);
 app.use("/api/v1", router);
 
 // ErrorHandle
