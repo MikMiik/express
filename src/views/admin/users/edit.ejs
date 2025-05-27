@@ -45,6 +45,7 @@
     class="card"
     method="POST"
     action="/admin/users/<%= user.id %>?_method=PUT"
+    enctype="multipart/form-data"
   >
     <div class="card-header">
       <h3>User Information</h3>
@@ -67,6 +68,13 @@
             <%= errors?.name %>
           </span>
           <% } %>
+          <label style="margin-top: 10px" for="userAvatar">Avatar</label>
+          <input
+            type="file"
+            id="userAvatar"
+            name="avatar"
+            class="form-control"
+          />
         </div>
 
         <div class="form-row">

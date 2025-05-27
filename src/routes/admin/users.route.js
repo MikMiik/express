@@ -8,14 +8,19 @@ const usersValidator = require("@/validators/admin/users.validator");
 router.get("/", usersController.index);
 router.post(
   "/",
-  usersValidator.createUser,
   handleUpload.single("avatar"),
+  usersValidator.createUser,
   usersController.store,
 );
 router.get("/create", usersController.create);
 router.get("/:id/edit", usersController.edit);
 router.delete("/:id/force-delete", usersController.forceDelete);
-router.put("/:id", usersValidator.updateUser, usersController.update);
+router.put(
+  "/:id",
+  handleUpload.single("avatar"),
+  usersValidator.updateUser,
+  usersController.update,
+);
 router.get("/:id", usersController.show);
 
 module.exports = router;
