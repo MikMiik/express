@@ -1,5 +1,5 @@
 const { checkSchema } = require("express-validator");
-const handlerValidationErrors = require("./handlerValidationError");
+const handleValidationErrors = require("./handleValidationErrors");
 
 exports.createCommentValidator = [
   checkSchema({
@@ -10,7 +10,7 @@ exports.createCommentValidator = [
       },
     },
   }),
-  handlerValidationErrors,
+  handleValidationErrors,
 ];
 
 exports.updateCommentValidator = [
@@ -22,5 +22,5 @@ exports.updateCommentValidator = [
       },
     },
   }),
-  handlerValidationErrors,
+  handleValidationErrors,
 ];

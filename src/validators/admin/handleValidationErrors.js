@@ -1,6 +1,8 @@
+const usersService = require("@/services/users.service");
 const { validationResult } = require("express-validator");
+const { formatDate, formatDay } = require("@/utils/dayjsFormat");
 
-const handlerValidationErrors = (req, res, next) => {
+const handleValidationErrors = async (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) return next();
   const formatted = errors
@@ -15,10 +17,16 @@ const handlerValidationErrors = (req, res, next) => {
       errors[error.path] = error.msg;
       return errors;
     }, {});
+  console.log(req.body);
+  console.log(formatted);
+  const user = await usersService.getById(req.params.id);
   res.render(res.view, {
+    user,
+    formatDate,
+    formatDay,
     errors: formatted,
     old: req.body,
   });
 };
 
-module.exports = handlerValidationErrors;
+module.exports = handleValidationErrors;

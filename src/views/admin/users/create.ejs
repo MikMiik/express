@@ -106,9 +106,9 @@
             rows="2"
           ><%= old?.address%></textarea>
           <% if (errors?.address) {%>
-          <span class="custom-error-text" id="userAddressError">
-            <%= errors?.address %>
-          </span>
+            <span class="custom-error-text" id="userAddressError">
+              <%= errors?.address %>
+            </span>
           <% } %>
         </div>
       </div>
@@ -126,9 +126,9 @@
             data-validate="username"
           />
           <% if (errors?.username) {%>
-          <span class="custom-error-text" id="userUsernameError">
-            <%= errors?.username %>
-          </span>
+            <span class="custom-error-text" id="userUsernameError">
+              <%= errors?.username %>
+            </span>
           <% } %>
         </div>
 
@@ -141,7 +141,9 @@
 
               <% for (role of roles) { %> 
                 <% const selected = old?.role === role ? 'selected' : '' %>
-              <option value="<%= role %>" <%=selected %>> <%= role%></option>
+                <option value="<%= role %>" <%= selected %>> 
+                  <%= role %> 
+                </option>
               <% } %>
 
             </select>
@@ -156,7 +158,9 @@
 
               <% for (status of statuses) { %> 
                 <% const selected = old?.status === status ? 'selected' : '' %>
-              <option value="<%= status %>" <%=selected %>> <%= status%></option>
+                <option value="<%= status %>" <%= selected %>> 
+                  <%= status %>
+                </option>
               <% } %>
             </select>
             <span class="custom-error-text" id="userStatusError"></span>
@@ -299,13 +303,6 @@
       margin-top: 5px;
       color: #666;
       font-size: 13px;
-    }
-
-    .custom-error-text {
-      color: #f44336;
-      font-size: 14px;
-      font-weight: 500;
-      margin-top: 5px;
     }
   </style>
 </html>

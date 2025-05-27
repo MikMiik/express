@@ -6,6 +6,8 @@ exports.index = async (req, res) => {
   res.render("admin/users/index", {
     users: items,
     total,
+    formatDate,
+    formatDay,
   });
 };
 
@@ -26,16 +28,31 @@ exports.create = async (req, res) => {
 };
 
 exports.store = async (req, res) => {
+  console.log(req?.file);
   const { confirm_password, ...body } = req.body;
-  const user = await usersService.create(body);
+  await usersService.create(body);
   res.redirect("/admin/users");
 };
 
 exports.edit = async (req, res) => {
-  user = await usersService.getById(req.params.id);
+  const user = await usersService.getById(req.params.id);
   res.render("admin/users/edit", {
     user,
+    errors: {},
+    old: {},
     formatDate,
     formatDay,
   });
+};
+
+exports.update = async (req, res) => {
+  console.log(req.body);
+  const { confirm_password, ...body } = req.body;
+  await usersService.update(req.params.id, body);
+  res.redirect(`/admin/users/${req.params.id}/edit`);
+};
+
+exports.forceDelete = async (req, res) => {
+  await usersService.remove(req.params.id);
+  res.redirect("/admin/users");
 };

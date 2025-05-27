@@ -1,8 +1,9 @@
 require("module-alias/register");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-
+const methodOverride = require("method-override");
 const cors = require("cors");
+
 const app = express();
 const port = 3000;
 const router = require("@/routes/api/index");
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 app.use(handlePagination);
 app.use(responseEnhancer);
 

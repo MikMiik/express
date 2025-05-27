@@ -104,10 +104,12 @@
             </div>
           </td>
           <td><%= user.email %></td>
-          <td>Administrator</td>
-          <td>Today, 09:45 AM</td>
+          <td><%= user.role || "Administrator" %></td>
+          <td><%= formatDay(user.updated_at) %></td>
           <td>
-            <span class="badge badge-success">Active</span>
+            <span class="badge badge-success"
+              ><%= user.status || "Active" %></span
+            >
           </td>
           <td>
             <div class="action-buttons">
@@ -125,64 +127,21 @@
               >
                 <i class="fas fa-edit"></i>
               </a>
-              <a
-                href="#"
-                class="action-btn delete delete-item"
-                title="Delete"
-                data-id="1"
-                data-name="John Doe"
+              <form
+                class="deleteUserForm delete-item"
+                data-id="<%= user.id %>"
+                data-name="<%= user.name %>"
+                method="POST"
+                action="/admin/users/<%= user.id %>/force-delete?_method=DELETE"
               >
-                <i class="fas fa-trash"></i>
-              </a>
+                <button type="submit" class="action-btn delete" title="Delete">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
             </div>
           </td>
         </tr>
         <% } %>
-
-        <!-- <tr data-id="1">
-          <td>
-            <div style="display: flex; align-items: center">
-              <div class="avatar">JD</div>
-              <div style="margin-left: 15px">
-                <div class="item-title">John Doe</div>
-                <div class="item-subtitle">@johndoe</div>
-              </div>
-            </div>
-          </td>
-          <td>john.doe@example.com</td>
-          <td>Administrator</td>
-          <td>Today, 09:45 AM</td>
-          <td>
-            <span class="badge badge-success">Active</span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <a
-                href="user-detail.html?id=1"
-                class="action-btn view"
-                title="View"
-              >
-                <i class="fas fa-eye"></i>
-              </a>
-              <a
-                href="edit-user.html?id=1"
-                class="action-btn edit"
-                title="Edit"
-              >
-                <i class="fas fa-edit"></i>
-              </a>
-              <a
-                href="#"
-                class="action-btn delete delete-item"
-                title="Delete"
-                data-id="1"
-                data-name="John Doe"
-              >
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr> -->
       </tbody>
     </table>
 
@@ -317,32 +276,33 @@
       });
 
       // Setup delete confirmation
-      const deleteButtons = document.querySelectorAll(".delete-item");
-      deleteButtons.forEach((button) => {
-        button.addEventListener("click", async function (e) {
-          e.preventDefault();
+      // const deleteButtons = document.querySelectorAll(".delete-item");
+      // deleteButtons.forEach((button) => {
+      //   button.addEventListener("click", async function (e) {
+      //     e.preventDefault();
 
+      //     const itemId = this.getAttribute("data-id");
+      //     const itemName = this.getAttribute("data-name");
+      //     // Show confirmation dialog
+      //     const result = await showConfirmDialog("confirmDeleteModal", {
+      //       title: "Confirm Delete",
+      //       message: `Are you sure you want to delete "${itemName}"? This action cannot be undone.`,
+      //     });
+      //   });
+      // });
+
+      const deleteForm = document.querySelectorAll(".delete-item");
+      deleteForm.forEach((form) => {
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
           const itemId = this.getAttribute("data-id");
           const itemName = this.getAttribute("data-name");
-
-          // Set item name in modal
-          document.getElementById("deleteItemName").textContent = itemName;
-
-          // Show confirmation dialog
           const result = await showConfirmDialog("confirmDeleteModal", {
             title: "Confirm Delete",
             message: `Are you sure you want to delete "${itemName}"? This action cannot be undone.`,
           });
-
           if (result) {
-            // Delete the user (in a real application, this would likely be an API call)
-            console.log(`Deleting user with ID: ${itemId}`);
-
-            // Remove user from table
-            const itemRow = document.querySelector(`tr[data-id="${itemId}"]`);
-            if (itemRow) {
-              itemRow.remove();
-            }
+            this.submit();
           }
         });
       });

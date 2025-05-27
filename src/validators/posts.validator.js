@@ -1,5 +1,5 @@
 const { checkSchema } = require("express-validator");
-const handlerValidationErrors = require("./handlerValidationError");
+const handleValidationErrors = require("./handleValidationErrors");
 
 exports.createPostValidator = [
   checkSchema({
@@ -16,7 +16,7 @@ exports.createPostValidator = [
       notEmpty: { errorMessage: "Content is not empty." },
     },
   }),
-  handlerValidationErrors,
+  handleValidationErrors,
 ];
 
 exports.updatePostValidator = [
@@ -40,5 +40,5 @@ exports.updatePostValidator = [
       },
     },
   }),
-  handlerValidationErrors,
+  handleValidationErrors,
 ];
