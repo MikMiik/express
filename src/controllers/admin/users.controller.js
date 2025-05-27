@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
 
 exports.store = async (req, res) => {
   const { confirm_password, ...body } = req.body;
-  const avatar = `/uploads/${req?.file.filename}`;
+  const avatar = `/uploads/${req.file?.filename}`;
   await usersService.create({ ...body, avatar });
   res.redirect("/admin/users");
 };
@@ -47,7 +47,7 @@ exports.edit = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { confirm_password, ...body } = req.body;
-  const avatar = `/uploads/${req?.file.filename}`;
+  const avatar = `/uploads/${req.file?.filename}`;
   await usersService.update(req.params.id, { ...body, avatar });
   res.redirect(`/admin/users/${req.params.id}/edit`);
 };
