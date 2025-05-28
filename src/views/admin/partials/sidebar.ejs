@@ -4,13 +4,16 @@
   </div>
 
   <nav class="sidebar-menu">
-    <% for (let item of sidebarItems) {%>
+    <% for (let item of sidebarItems) {%> <% const isActive = item.path === '/'
+    ? path === '/' : path.startsWith(item.path); %>
+
     <a
       href="/admin<%= item.path %>"
-      class="menu-item <%= (item.path === path || `${item.path}/` === `${path}`) ? 'active' : '' %>"
+      class="menu-item <%= isActive ? 'active' : '' %>"
     >
       <i class="fas <%= item.icon %>"></i>
-      <%= item.title %> <% } %>
+      <%= item.title %>
+      <% } %>
     </a>
   </nav>
 

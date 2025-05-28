@@ -19,17 +19,17 @@ exports.buildInsertQuery = (data) => {
 /*
 VD:
     const data = {
-        name: "Nguyễn Văn A",
-        email: "a@example.com",
-        age: 25,
-        is_active: true
+      name: "Nguyễn Văn A",
+      email: "a@example.com",
+      age: 25,
+      is_active: true
     };
     const { columns, placeholders, values } = buildInsertQuery(data);
     Result:
     {
-        columns: '`name`, `email`, `age`, `is_active`',
-        placeholders: '?, ?, ?, ?',
-        values: ['Nguyễn Văn A', 'a@example.com', 25, true]
+      columns: '`name`, `email`, `age`, `is_active`',
+      placeholders: '?, ?, ?, ?',
+      values: ['Nguyễn Văn A', 'a@example.com', 25, true]
     }
 */
 exports.buildUpdateQuery = (data) => {
@@ -42,3 +42,18 @@ exports.buildUpdateQuery = (data) => {
 
   return { setClause, values };
 };
+/*
+VD:
+    const data = {
+      name: "Nguyễn Văn A",
+      email: "a@example.com",
+      age: 25,
+      is_active: true
+    };
+    const { setClause, values } = buildUpdateQuery(data);
+    Result:
+    {
+      setClause: '`name` = ?, `email` = ?, `age` = ?, `is_active`= ?',
+      values: ['Nguyễn Văn A', 'a@example.com', 25, true]
+    }
+*/

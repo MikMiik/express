@@ -1,14 +1,24 @@
+// InitImport
 require("module-alias/register");
 const express = require("express");
-const expressLayouts = require("express-ejs-layouts");
-const methodOverride = require("method-override");
 const cors = require("cors");
-const cookieParser = require("cookie-parser");
-
 const app = express();
 const port = 3000;
+
+// RouterImport
 const router = require("@/routes/api/index");
 const adminRouter = require("@/routes/admin/index");
+
+// LayoutImport
+const expressLayouts = require("express-ejs-layouts");
+
+// MethodOverideImport
+const methodOverride = require("method-override");
+
+// CookieImport
+const cookieParser = require("cookie-parser");
+
+//MiddlewareImport
 const notFoundHandler = require("@/middlewares/notFoundHandler");
 const errorHandler = require("@/middlewares/errorHandler");
 const responseEnhancer = require("@/middlewares/responseEnhancer");
@@ -16,12 +26,14 @@ const handlePagination = require("@/middlewares/handlePagination");
 const handleSidebar = require("@/middlewares/admin/handleSidebar");
 const handleSession = require("@/middlewares/admin/handleSession");
 
+/*------------------------------------------------------------ */
+
 // Middleware
 app.use(cors());
-app.use(express.json());
-app.use(cookieParser());
-app.use(express.urlencoded());
 app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(cookieParser());
 app.use(methodOverride("_method"));
 app.use(handlePagination);
 app.use(responseEnhancer);

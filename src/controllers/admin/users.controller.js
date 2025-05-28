@@ -29,9 +29,12 @@ exports.create = async (req, res) => {
 };
 
 exports.store = async (req, res) => {
-  const { confirm_password, ...body } = req.body;
-  const avatar = req.file ? `/uploads/${req.file.filename}` : null;
-  await usersService.create({ ...body, avatar });
+  let { confirm_password, ...body } = req.body;
+  const avatar = req.file
+    ? `/uploads/${req.file.filename}`
+    : `/uploads/default-avatar.jpg`;
+  body.avatar = avatar;
+  await usersService.create(body);
   res.redirect("/admin/users");
 };
 
@@ -47,9 +50,12 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { confirm_password, ...body } = req.body;
+  let { confirm_password, ...body } = req.body;
   const avatar = req.file ? `/uploads/${req.file.filename}` : null;
-  await usersService.update(req.params.id, { ...body, avatar });
+  if (avatar) {
+    body.avatar = avatar;
+  }
+  await usersService.update(req.params.id, body);
   res.redirect(`/admin/users/${req.params.id}/edit`);
 };
 
