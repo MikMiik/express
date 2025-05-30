@@ -1,8 +1,8 @@
 const sessionModel = require("@/models/session.model");
 
 class SessionService {
-  async getBySid(sid) {
-    const session = await sessionModel.findBySid(sid);
+  async getById(id) {
+    const session = await sessionModel.findById(id);
     return session;
   }
   async create(data) {
@@ -10,13 +10,13 @@ class SessionService {
     return session;
   }
 
-  async update(sid, data) {
-    const session = await sessionModel.update(sid, data);
+  async update(id, data) {
+    const session = await sessionModel.update(id, data);
     return session;
   }
 
-  async remove(sid) {
-    const result = await sessionModel.remove(sid);
+  async remove(id) {
+    const result = await sessionModel.remove(id);
     return result;
   }
 }

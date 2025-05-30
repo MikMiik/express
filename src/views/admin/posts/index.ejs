@@ -216,7 +216,7 @@
           showMessage(
             "filterSuccess",
             `Applied filters: Title="${title}", Topic="${topic}", Status="${status}"`,
-            3000
+            3000,
           );
         }
       });
@@ -245,7 +245,7 @@
             document.getElementById("filterTitleError").style.display = "none";
             input.classList.remove("error");
           }
-        }, 300)
+        }, 300),
       );
 
       // Setup pagination
@@ -256,7 +256,7 @@
 
           // Remove active class from all links
           paginationLinks.forEach((l) =>
-            l.parentElement.classList.remove("active")
+            l.parentElement.classList.remove("active"),
           );
 
           // Add active class to clicked link

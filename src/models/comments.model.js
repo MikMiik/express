@@ -1,4 +1,4 @@
-const db = require("@/configs/db");
+const { db } = require("@/configs/db");
 const { buildInsertQuery, buildUpdateQuery } = require("@/utils/queryBuilder");
 
 const table = "`comments`";

@@ -16,7 +16,11 @@
       <a href="/admin/posts" class="btn btn-secondary" id="backButton">
         <i class="fas fa-arrow-left"></i> Back
       </a>
-      <a href="#" class="btn btn-primary" id="editButton">
+      <a
+        href="/admin/posts/<%= post.id %>/edit"
+        class="btn btn-primary"
+        id="editButton"
+      >
         <i class="fas fa-edit"></i> Edit
       </a>
     </div>
@@ -55,9 +59,6 @@
       // Get post ID from URL
       const urlParams = new URLSearchParams(window.location.search);
       const postId = urlParams.get("id");
-      // Set edit button URL
-      const editButton = document.getElementById("editButton");
-      editButton.href = `edit-post.html?id=${postId}`;
 
       // Load post details
       loadPostDetails(postId);
@@ -111,7 +112,7 @@
                             </div>
                             <p><strong>Author:</strong> ${postData.author}</p>
                             <p><strong>Published:</strong> ${formatDate(
-                              "<%= post.published_at %>"
+                              "<%= post.published_at %>",
                             )}</p>
                             <p><strong>Stats:</strong> ${
                               postData.comments
@@ -136,7 +137,7 @@
                               .map(
                                 (tag) => `
                                 <span class="badge" style="background-color: #eee; color: #555; margin-right: 5px;">${tag}</span>
-                            `
+                            `,
                               )
                               .join("")}
                         </div>
@@ -183,8 +184,8 @@
                             <div>
                                 <i class="fas fa-history" style="color: #3a86ff; margin-right: 10px;"></i>
                                 <strong>${activity.action}</strong> by ${
-            activity.user
-          }
+                                  activity.user
+                                }
                             </div>
                             <div style="color: #666;">
                                 ${formatDate(activity.date, {
@@ -197,7 +198,7 @@
                             </div>
                         </div>
                     </li>
-                `
+                `,
         )
         .join("");
 

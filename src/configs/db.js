@@ -1,11 +1,34 @@
 const mysql = require("mysql2/promise");
 
+const host = "localhost";
+const port = 3306;
+const user = "root";
+const password = "Minhthnd512006";
+const database = "tyhh_db";
+
+const createDatabase = async () => {
+  let connection;
+  try {
+    connection = await mysql.createConnection({
+      host,
+      port,
+      user,
+      password,
+    });
+    await connection.query(`CREATE DATABASE IF NOT EXISTS ${database}`);
+  } catch (error) {
+    throw error;
+  } finally {
+    connection?.end();
+  }
+};
+
 const db = mysql.createPool({
-  host: "localhost",
-  port: 3306,
+  host,
+  port,
   user: "root",
-  password: "Minhthnd512006",
-  database: "tyhh_db",
+  password,
+  database,
   waitForConnections: true,
   connectionLimit: 10,
   maxIdle: 10,
@@ -15,4 +38,22 @@ const db = mysql.createPool({
   keepAliveInitialDelay: 0,
 });
 
-module.exports = db;
+const testQuery = async () => {
+  let connection = await db.getConnection();
+  try {
+    await connection.query("SELECT 1");
+    console.log("Connect DB succeedded");
+  } catch (error) {
+    throw error;
+  } finally {
+    connection?.release();
+  }
+};
+
+const pool = {
+  createDatabase,
+  db,
+  testQuery,
+};
+
+module.exports = pool;

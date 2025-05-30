@@ -16,7 +16,7 @@
       <main class="content-wrapper">
         <div class="content-header">
           <h1>Create New Post</h1>
-          <a href="posts.html" class="btn btn-secondary">
+          <a href="/admin/posts" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Back to Posts
           </a>
         </div>
@@ -284,7 +284,7 @@
         setupFileUpload(
           "postFeaturedImage",
           "postFeaturedImagePreview",
-          "postFeaturedImageUpload"
+          "postFeaturedImageUpload",
         );
 
         // Auto-generate slug from title
@@ -310,7 +310,7 @@
           .getElementById("postStatus")
           .addEventListener("change", function () {
             const scheduledDateContainer = document.getElementById(
-              "scheduledDateContainer"
+              "scheduledDateContainer",
             );
             if (this.value === "scheduled") {
               scheduledDateContainer.style.display = "block";
@@ -336,7 +336,7 @@
                 if (!scheduledDate) {
                   showError(
                     document.getElementById("postScheduledDate"),
-                    "Please select a scheduled date."
+                    "Please select a scheduled date.",
                   );
                   return;
                 }
@@ -372,13 +372,8 @@
               showMessage(
                 "successMessage",
                 "Post has been created successfully.",
-                3000
+                3000,
               );
-
-              // Redirect after a delay
-              setTimeout(() => {
-                window.location.href = "posts.html";
-              }, 2000);
             }
           });
 
@@ -386,7 +381,7 @@
         document
           .getElementById("cancelBtn")
           .addEventListener("click", function () {
-            window.location.href = "posts.html";
+            window.location.href = "/admin/posts";
           });
       });
     </script>

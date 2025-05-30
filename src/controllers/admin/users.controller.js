@@ -6,7 +6,6 @@ exports.index = async (req, res) => {
   res.render("admin/users/index", {
     users: items,
     total,
-    getSession: req.session.get,
     formatDate,
     formatDay,
   });

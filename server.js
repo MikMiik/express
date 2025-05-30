@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = 3000;
+const { createDatabase, testQuery } = require("@/configs/db");
 
 // RouterImport
 const router = require("@/routes/api/index");
@@ -52,6 +53,14 @@ app.use("/api/v1", router);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`http://localhost:${port}/api/v1`);
-});
+(async () => {
+  try {
+    await createDatabase();
+    await testQuery();
+  } catch (error) {
+    console.log(error);
+  }
+  app.listen(port, () => {
+    console.log(`http://localhost:${port}/api/v1`);
+  });
+})();
