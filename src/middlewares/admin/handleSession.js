@@ -4,8 +4,7 @@ const { randomUUID } = require("node:crypto");
 async function handleSession(req, res, next) {
   let _id = req.cookies.id;
   let session = _id && (await sessionService.getById(_id));
-  const excludedPaths = ["/login", "/register", "/forgot-password"];
-  if (!session && !excludedPaths.includes(req.path)) {
+  if (!session) {
     _id = randomUUID();
     const days_7 = 7 * 24 * 60 * 60 * 1000;
     const expires = new Date(Date.now() + days_7);
