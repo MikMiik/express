@@ -14,18 +14,25 @@
   <!-- Main Content -->
   <div class="content-header">
     <h1>Edit User</h1>
-    <div>
+    <div style="display: flex">
       <a href="/admin/users" class="btn btn-secondary">
         <i class="fas fa-arrow-left"></i> Back to Users
       </a>
-      <a
-        href="#"
-        class="btn btn-danger"
-        id="deleteUserBtn"
-        style="margin-left: 10px"
+      <form
+        id="deleteForm"
+        method="POST"
+        action="/admin/users/<%= user.id %>/force-delete?_method=DELETE"
       >
-        <i class="fas fa-trash"></i> Delete User
-      </a>
+        <button
+          type="submit"
+          class="btn btn-danger"
+          id="deleteUserBtn"
+          style="margin-left: 10px"
+        >
+          <i class="fas fa-trash"></i>
+          Delete User
+        </button>
+      </form>
     </div>
   </div>
 
@@ -63,7 +70,7 @@
             required
             data-validate="name"
           />
-          <% if (errors?.name) {%>
+          <% if (errors?.name) { %>
           <span class="custom-error-text" id="userNameError">
             <%= errors?.name %>
           </span>
@@ -117,7 +124,7 @@
               class="form-control"
               data-validate="phone"
             />
-            <% if (errors?.phone) {%>
+            <% if (errors?.phone) { %>
             <span class="custom-error-text" id="userPhoneError">
               <%= errors?.phone %>
             </span>
@@ -133,7 +140,7 @@
             class="form-control"
             rows="2"
           ></textarea>
-          <% if (errors?.address) {%>
+          <% if (errors?.address) { %>
           <span class="custom-error-text" id="userAddressError">
             <%= errors?.address %>
           </span>
@@ -333,8 +340,8 @@
 
       // Handle delete button
       document
-        .getElementById("deleteUserBtn")
-        .addEventListener("click", async function (e) {
+        .getElementById("deleteForm")
+        .addEventListener("submit", async function (e) {
           e.preventDefault();
 
           // Get user name from field
@@ -347,11 +354,7 @@
           const result = await showConfirmDialog("confirmDeleteModal");
 
           if (result) {
-            // In a real app, this would make an API call to delete the user
-            console.log("Deleting user with ID:", userId);
-
-            // Redirect to users list
-            window.location.href = "users.html";
+            this.submit();
           }
         });
 
