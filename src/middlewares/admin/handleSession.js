@@ -4,7 +4,8 @@ const { randomUUID } = require("node:crypto");
 async function handleSession(req, res, next) {
   let _id = req.cookies.id;
   let session = _id && (await sessionService.getById(_id));
-  if (!session) {
+  const excludedPaths = ["/login", "/register", "/forgot-password"];
+  if (!session && !excludedPaths.includes(req.path)) {
     _id = randomUUID();
     const days_7 = 7 * 24 * 60 * 60 * 1000;
     const expires = new Date(Date.now() + days_7);
@@ -15,13 +16,15 @@ async function handleSession(req, res, next) {
     });
     // res.set("Set-Cookie", `id=${_id}; path=/; httpOnly; expires=${date}`);
     res.cookie("id", _id, {
+      path: "/",
       maxAge: days_7,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     });
   }
 
-  const sessionData = JSON.parse(session.data) ?? {};
+  const sessionData = JSON.parse(session?.data ?? null) ?? {};
+
   req.session = {
     ...sessionData,
     get(key) {

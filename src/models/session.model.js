@@ -6,7 +6,7 @@ const table = "`sessions`";
 exports.findById = async (id) => {
   const [rows] = await db.query(
     `SELECT * FROM ${table} WHERE id = ? AND expires_at > NOW()`,
-    [id]
+    [id],
   );
   return rows[0];
 };
@@ -38,7 +38,14 @@ exports.update = async (id, data) => {
 exports.remove = async (id) => {
   const [{ affectedRows }] = await db.query(
     `DELETE FROM ${table} WHERE id = ?`,
-    [id]
+    [id],
   );
   return affectedRows > 0;
+};
+
+exports.logout = async (sid) => {
+  await db.query(`UPDATE ${table} SET expires_at = ? WHERE id = ?;`, [
+    new Date(),
+    sid,
+  ]);
 };

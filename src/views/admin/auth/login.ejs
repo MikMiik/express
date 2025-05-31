@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | Admin Dashboard</title>
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -16,12 +16,13 @@
         <h1>Admin Dashboard</h1>
       </div>
 
-      <form id="loginForm" novalidate>
+      <form id="loginForm" novalidate method="post" action="/admin/login">
         <div class="form-group">
           <label for="email">Email</label>
           <input
             type="email"
             id="email"
+            name="email"
             class="form-control"
             placeholder="Enter your email"
             required
@@ -36,6 +37,7 @@
           <input
             type="password"
             id="password"
+            name="password"
             class="form-control"
             placeholder="Enter your password"
             required
@@ -58,7 +60,7 @@
           </div>
 
           <a
-            href="forgot-password"
+            href="/admin/forgot-password"
             style="color: #3a86ff; text-decoration: none; font-size: 14px"
             >Forgot Password?</a
           >
@@ -69,33 +71,33 @@
         <div class="footer">
           <p>
             Don't have an account?
-            <a href="register">Register</a>
+            <a href="/admin/register">Register</a>
           </p>
         </div>
       </form>
     </div>
 
-    <script src="assets/js/validation.js"></script>
+    <!-- <script src="assets/js/validation.js"></script> -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Initialize form validation
-        if (typeof initFormValidation === "function") {
-          initFormValidation("loginForm");
-        }
+      // document.addEventListener("DOMContentLoaded", function () {
+      //   // Initialize form validation
+      //   if (typeof initFormValidation === "function") {
+      //     initFormValidation("loginForm");
+      //   }
 
-        // Handle form submission
-        document
-          .getElementById("loginForm")
-          .addEventListener("submit", function (event) {
-            event.preventDefault();
+      //   // Handle form submission
+      //   document
+      //     .getElementById("loginForm")
+      //     .addEventListener("submit", function (event) {
+      //       event.preventDefault();
 
-            if (validateForm("loginForm")) {
-              // In a real app, you would send an AJAX request to your server
-              // For demo: redirect to dashboard
-              window.location.href = "index.html";
-            }
-          });
-      });
+      //       if (validateForm("loginForm")) {
+      //         // In a real app, you would send an AJAX request to your server
+      //         // For demo: redirect to dashboard
+      //         this.submit();
+      //       }
+      //     });
+      // });
     </script>
   </body>
 </html>

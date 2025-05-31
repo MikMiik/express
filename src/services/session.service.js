@@ -19,6 +19,10 @@ class SessionService {
     const result = await sessionModel.remove(id);
     return result;
   }
+
+  async logout(sid) {
+    await sessionModel.logout(sid);
+  }
 }
 
 module.exports = new SessionService();

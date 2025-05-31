@@ -157,7 +157,6 @@
             id="userUsername"
             name="username"
             class="form-control"
-            required
             data-validate="username"
           />
           <% if (errors?.username) {%>
@@ -171,7 +170,7 @@
           <div class="form-group">
             <label for="userRole">Role*</label>
             <% const roles = ['Admin', 'Editor', 'Viewer'] %>
-            <select id="userRole" name="role" class="form-control" required>
+            <select id="userRole" name="role" class="form-control">
               <option value="">Select Role</option>
 
               <% for (role of roles) { %>
@@ -185,7 +184,7 @@
           <div class="form-group">
             <label for="userStatus">Status*</label>
             <% const statuses = ['Active', 'Inactive', 'Pending'] %>
-            <select id="userStatus" name="status" class="form-control" required>
+            <select id="userStatus" name="status" class="form-control">
               <option value="">Select Status</option>
               <% for (status of statuses) { %>
               <option value="<%= status %>"><%= status%></option>

@@ -26,6 +26,7 @@ const responseEnhancer = require("@/middlewares/responseEnhancer");
 const handlePagination = require("@/middlewares/handlePagination");
 const handleSidebar = require("@/middlewares/admin/handleSidebar");
 const handleSession = require("@/middlewares/admin/handleSession");
+const shareLocals = require("@/middlewares/admin/shareLocals");
 
 /*------------------------------------------------------------ */
 
@@ -46,7 +47,7 @@ app.set("views", "./src/views");
 app.set("layout", "./admin/layouts/default");
 
 // Router
-app.use("/admin", handleSession, handleSidebar, adminRouter);
+app.use("/admin", handleSession, shareLocals, handleSidebar, adminRouter);
 app.use("/api/v1", router);
 
 // ErrorHandle
