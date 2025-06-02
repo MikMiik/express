@@ -37,6 +37,10 @@ exports.createUser = [
 exports.updateUser = [
   (req, res, next) => {
     res.view = `admin/users/edit`;
+    res.setFlash({
+      type: "error",
+      message: "Error edit",
+    });
     next();
   },
   checkSchema({

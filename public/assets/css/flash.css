@@ -1,0 +1,32 @@
+/* Flash message */
+.flash-message-container{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.flash-message{
+    color: #4caf50;
+    font-weight: 500;
+    font-size: 16px;
+    min-width: 80%;
+    padding: 10px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+.flash-message.success{
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4caf50;
+}
+.flash-message.info{
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #ff9800;
+}
+.flash-message.error{
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+}

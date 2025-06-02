@@ -1,10 +1,11 @@
-const sessionService = require("@/services/session.service");
 const usersService = require("@/services/users.service");
 const md5 = require("md5");
 
 exports.showLoginForm = async (req, res) => {
   res.render("admin/auth/login", {
     layout: "./admin/layouts/auth",
+    errors: {},
+    old: {},
   });
 };
 
@@ -13,7 +14,7 @@ exports.login = async (req, res) => {
   const password = md5(req.body.password);
   const user = await usersService.getByEmailAndPassword(email, password);
   if (user) {
-    req.session.set("userId", user.id);
+    req.session.userId = user.id;
     res.redirect("/admin");
   }
 };
@@ -46,6 +47,6 @@ exports.showResetForm = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  await sessionService.logout(req.cookies.id);
-  res.redirect("/admin/login");
+  delete req.session.userId;
+  return res.redirect("/admin/login");
 };

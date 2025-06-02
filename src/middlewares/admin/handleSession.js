@@ -22,20 +22,28 @@ async function handleSession(req, res, next) {
     });
   }
 
-  const sessionData = JSON.parse(session?.data ?? null) ?? {};
-
-  req.session = {
-    ...sessionData,
-    get(key) {
-      return sessionData[key] ?? null;
-    },
-    set(key, value) {
-      sessionData[key] = value;
-      sessionService.update(_id, {
-        data: JSON.stringify(sessionData),
-      });
-    },
+  req.session = JSON.parse(session?.data ?? null) ?? {};
+  res.setFlash = (data) => {
+    req.session.flash = data;
   };
+  // req.session = {
+  //   ...sessionData,
+  //   get(key) {
+  //     return sessionData[key] ?? null;
+  //   },
+  //   set(key, value) {
+  //     sessionData[key] = value;
+  //     sessionService.update(_id, {
+  //       data: JSON.stringify(sessionData),
+  //     });
+  //   },
+  // };
+  res.on("finish", () => {
+    sessionService.update(_id, {
+      data: JSON.stringify(req.session),
+    });
+  });
+
   next();
 }
 

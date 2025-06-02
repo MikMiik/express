@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | Admin Dashboard</title>
     <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/form.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
   </head>
   <body>
@@ -16,38 +24,48 @@
         <h1>Admin Dashboard</h1>
       </div>
 
-      <form id="loginForm" novalidate method="post" action="/admin/login">
+      <form id="loginForm" method="post" action="/admin/login">
         <div class="form-group">
           <label for="email">Email</label>
           <input
+            value="<%= old?.email %>"
             type="email"
             id="email"
             name="email"
-            class="form-control"
+            class="form-control input-hover"
             placeholder="Enter your email"
-            required
           />
-          <span class="error-text" id="emailError"
-            >Please enter a valid email address.</span
-          >
+          <% if (errors?.email) {%>
+          <span class="form-message"> <%= errors?.email %> </span>
+          <% } %>
+          <span class="form-message"></span>
         </div>
 
         <div class="form-group">
           <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-            placeholder="Enter your password"
-            required
-          />
-          <span class="error-text" id="passwordError"
-            >Please enter your password.</span
-          >
+          <div style="display: flex; align-items: center; position: relative">
+            <input
+              value="<%= old?.password %>"
+              type="password"
+              id="password"
+              name="password"
+              class="form-control input-hover"
+              placeholder="Enter your password"
+            />
+            <i
+              style="position: absolute; right: 10px"
+              class="fa-solid fa-eye-slash"
+            ></i>
+          </div>
+          <% if (errors?.password) {%>
+          <span class="form-message" id="passwordError">
+            <%= errors?.password %>
+          </span>
+          <% } %>
+          <span class="form-message"></span>
         </div>
 
-        <div
+        <!-- <div
           style="
             display: flex;
             justify-content: space-between;
@@ -64,7 +82,7 @@
             style="color: #3a86ff; text-decoration: none; font-size: 14px"
             >Forgot Password?</a
           >
-        </div>
+        </div> -->
 
         <button type="submit" class="btn">Login</button>
 
@@ -76,28 +94,64 @@
         </div>
       </form>
     </div>
+    <script type="module">
+      import * as yup from "https://cdn.skypack.dev/yup";
+      const loginSchema = yup.object().shape({
+        email: yup
+          .string()
+          .email("This field must be an email")
+          .required("Please enter your email"),
+        password: yup.string().required("Please enter your password"),
+      });
 
-    <!-- <script src="assets/js/validation.js"></script> -->
-    <script>
-      // document.addEventListener("DOMContentLoaded", function () {
-      //   // Initialize form validation
-      //   if (typeof initFormValidation === "function") {
-      //     initFormValidation("loginForm");
-      //   }
+      const loginForm = document.getElementById("loginForm");
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = {
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
+        };
+        try {
+          const validatedData = await loginSchema.validate(data, {
+            abortEarly: false,
+          });
+          if (validatedData) {
+            loginForm.submit();
+          }
+        } catch (err) {
+          if (err instanceof yup.ValidationError) {
+            err.inner.forEach((error) => {
+              const errorInput = document.querySelector(
+                `input[name=${error.path}]`,
+              );
+              const errorSpan = errorInput
+                .closest(".form-group")
+                .querySelector(".form-message");
+              errorSpan.textContent = error.message;
+              errorInput.closest(".form-group").classList.add("invalid");
+              errorInput.classList.remove("input-hover");
 
-      //   // Handle form submission
-      //   document
-      //     .getElementById("loginForm")
-      //     .addEventListener("submit", function (event) {
-      //       event.preventDefault();
+              errorInput.oninput = () => {
+                errorSpan.textContent = "";
+                errorInput.closest(".form-group").classList.remove("invalid");
+                errorInput.classList.add("input-hover");
+              };
+            });
+          }
+        }
+      });
 
-      //       if (validateForm("loginForm")) {
-      //         // In a real app, you would send an AJAX request to your server
-      //         // For demo: redirect to dashboard
-      //         this.submit();
-      //       }
-      //     });
-      // });
+      const eyeIcon = document.querySelector(".fa-eye-slash");
+      const passwordInput = document.querySelector("input[name=password");
+      eyeIcon.addEventListener("click", () => {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyeIcon.className = "fa-solid fa-eye";
+        } else {
+          passwordInput.type = "password";
+          eyeIcon.className = "fa-solid fa-eye-slash";
+        }
+      });
     </script>
   </body>
 </html>

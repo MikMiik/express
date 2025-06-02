@@ -75,7 +75,10 @@
             <%= errors?.name %>
           </span>
           <% } %>
-          <label style="margin-top: 10px" for="userAvatar">
+          <label
+            style="margin-top: 10px; display: inline-block"
+            for="userAvatar"
+          >
             Avatar
             <div
               class="avatar"
@@ -84,7 +87,7 @@
               <img
                 src="<%= user.avatar %>"
                 alt=""
-                class="avatar"
+                class="avatarImg avatar"
                 style="width: 100%; height: 100%; margin: 0"
               />
             </div>
@@ -123,6 +126,7 @@
               name="phone"
               class="form-control"
               data-validate="phone"
+              required
             />
             <% if (errors?.phone) { %>
             <span class="custom-error-text" id="userPhoneError">
@@ -157,7 +161,6 @@
             id="userUsername"
             name="username"
             class="form-control"
-            data-validate="username"
           />
           <% if (errors?.username) {%>
           <span class="custom-error-text" id="userUsernameError">
@@ -293,6 +296,14 @@
   <script src="assets/js/common.js"></script>
 
   <script>
+    const userAvatarInput = document.getElementById("userAvatar");
+    const avatarImg = document.querySelector(".avatarImg");
+    userAvatarInput.addEventListener("change", () => {
+      const file = userAvatarInput.files[0];
+      if (file) {
+        avatarImg.src = URL.createObjectURL(file);
+      }
+    });
     document.addEventListener("DOMContentLoaded", function () {
       // Initialize form validation
       initFormValidation("editUserForm");

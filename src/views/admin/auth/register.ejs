@@ -63,7 +63,7 @@
       <h1>Admin Dashboard</h1>
     </div>
 
-    <form id="registerForm" method="post" action="/admin/register" novalidate>
+    <form id="registerForm" method="post" action="/admin/register">
       <div class="form-group">
         <label for="name">Name</label>
         <input
@@ -73,7 +73,6 @@
           class="form-control"
           placeholder="Enter name"
           data-validate="name"
-          required
         />
         <span class="error-text" id="nameError"
           >Please enter a valid name.</span
@@ -88,7 +87,6 @@
           name="email"
           class="form-control"
           placeholder="Enter your email"
-          required
         />
         <span class="error-text" id="emailError"
           >Please enter a valid email address.</span
@@ -105,7 +103,6 @@
           class="form-control"
           placeholder="Choose a password"
           data-validate="password"
-          required
         />
         <span class="error-text" id="passwordError"
           >Password must meet the requirements below.</span
@@ -146,7 +143,7 @@
         >
       </div>
 
-      <div class="terms">
+      <!-- <div class="terms">
         <input type="checkbox" id="terms" required />
         <label for="terms"
           >I agree to the Terms of Service and Privacy Policy</label
@@ -157,7 +154,7 @@
           style="display: block; margin-left: 20px"
           >You must agree to the terms to continue.</span
         >
-      </div>
+      </div> -->
 
       <button type="submit" class="btn">Create Account</button>
 
@@ -167,8 +164,21 @@
     </form>
   </div>
 
-  <!-- <script src="assets/js/validation.js"></script> -->
+  <script src="assets/js/validation.js"></script>
   <script>
+    //     const FormSchema = yup.object().shape({
+    //   pass: yup
+    //     .string()
+    //     .min(8, 'Password must be 8 characters long')
+    //     .matches(/[0-9]/, 'Password requires a number')
+    //     .matches(/[a-z]/, 'Password requires a lowercase letter')
+    //     .matches(/[A-Z]/, 'Password requires an uppercase letter')
+    //     .matches(/[^\w]/, 'Password requires a symbol'),
+    //   confirm: yup
+    //     .string()
+    //     .oneOf([yup.ref('pass'), null], 'Must match "password" field value'),
+    // });
+
     document.addEventListener("DOMContentLoaded", function () {
       // Initialize form validation
       if (typeof initFormValidation === "function") {
@@ -261,42 +271,42 @@
       termsError.style.display = "none";
 
       // Handle form submission
-      document
-        .getElementById("registerForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
+      // document
+      //   .getElementById("registerForm")
+      //   .addEventListener("submit", function (event) {
+      //     event.preventDefault();
 
-          // Validate terms checkbox
-          if (!termsCheckbox.checked) {
-            termsError.style.display = "block";
-            return;
-          }
+      //     // Validate terms checkbox
+      //     if (!termsCheckbox.checked) {
+      //       termsError.style.display = "block";
+      //       return;
+      //     }
 
-          // Use the validation.js utility for validating the form
-          if (
-            validateForm("registerForm") &&
-            isValidPassword(passwordInput.value) &&
-            passwordInput.value === confirmPasswordInput.value
-          ) {
-            this.submit();
-          }
-        });
+      //     // Use the validation.js utility for validating the form
+      //     if (
+      //       validateForm("registerForm") &&
+      //       isValidPassword(passwordInput.value) &&
+      //       passwordInput.value === confirmPasswordInput.value
+      //     )
+      //       console.log("hi");
+      //     this.submit();
+      //   });
 
-      function isValidPassword(password) {
-        const lengthValid = password.length >= 8;
-        const uppercaseValid = /[A-Z]/.test(password);
-        const lowercaseValid = /[a-z]/.test(password);
-        const numberValid = /[0-9]/.test(password);
-        const specialValid = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+      // function isValidPassword(password) {
+      //   const lengthValid = password.length >= 8;
+      //   const uppercaseValid = /[A-Z]/.test(password);
+      //   const lowercaseValid = /[a-z]/.test(password);
+      //   const numberValid = /[0-9]/.test(password);
+      //   const specialValid = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-        return (
-          lengthValid &&
-          uppercaseValid &&
-          lowercaseValid &&
-          numberValid &&
-          specialValid
-        );
-      }
+      //   return (
+      //     lengthValid &&
+      //     uppercaseValid &&
+      //     lowercaseValid &&
+      //     numberValid &&
+      //     specialValid
+      //   );
+      // }
     });
   </script>
 </html>

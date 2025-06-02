@@ -7,7 +7,7 @@
 
 body {
     background-color: #f5f8fa;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,7 +30,7 @@ body {
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    padding-bottom: 8px;
     font-size: 14px;
     color: #444;
     font-weight: 500;
@@ -42,7 +42,7 @@ body {
     border: 1px solid #dfe3e8;
     border-radius: 8px;
     font-size: 15px;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
 }
 
 .form-control:focus {
@@ -109,6 +109,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
     padding: 40px;
+    margin: 40px 0;
 }
 
 .form-row {
@@ -134,4 +135,11 @@ body {
 .terms label {
     font-size: 13px;
     color: #666;
+}
+
+.custom-error-text {
+    color: #f44336;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 5px;
 }

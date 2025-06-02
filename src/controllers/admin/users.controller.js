@@ -1,5 +1,6 @@
 const usersService = require("@/services/users.service");
 const { formatDate, formatDay } = require("@/utils/dayjsFormat");
+const md5 = require("md5");
 
 exports.index = async (req, res) => {
   const { items, total } = await usersService.getAll();
@@ -34,6 +35,10 @@ exports.store = async (req, res) => {
     : `/uploads/default-avatar.jpg`;
   body.avatar = avatar;
   await usersService.create(body);
+  res.setFlash({
+    type: "success",
+    message: "Create success",
+  });
   res.redirect("/admin/users");
 };
 
@@ -49,10 +54,13 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  let { confirm_password, ...body } = req.body;
+  let { confirm_password, password, ...body } = req.body;
   const avatar = req.file ? `/uploads/${req.file.filename}` : null;
   if (avatar) {
     body.avatar = avatar;
+  }
+  if (password) {
+    body.password = md5(password);
   }
   await usersService.update(req.params.id, body);
   res.redirect(`/admin/users/${req.params.id}/edit`);

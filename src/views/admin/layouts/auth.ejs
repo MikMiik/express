@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | Admin Dashboard</title>
     <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/flash.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -23,7 +24,11 @@
     </style>
   </head>
   <body>
-    <main><%- body %></main>
+    <main>
+      <%- include('../partials/flash-message') %>
+      <%- body %>
+    </main>
     <!-- <script src="assets/js/validation.js"></script> -->
+    <script src="/assets/js/common.js"></script>
   </body>
 </html>

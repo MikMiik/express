@@ -27,6 +27,7 @@ const handlePagination = require("@/middlewares/handlePagination");
 const handleSidebar = require("@/middlewares/admin/handleSidebar");
 const handleSession = require("@/middlewares/admin/handleSession");
 const shareLocals = require("@/middlewares/admin/shareLocals");
+const checkAuth = require("@/middlewares/admin/checkAuth");
 
 /*------------------------------------------------------------ */
 
@@ -47,7 +48,14 @@ app.set("views", "./src/views");
 app.set("layout", "./admin/layouts/default");
 
 // Router
-app.use("/admin", handleSession, shareLocals, handleSidebar, adminRouter);
+app.use(
+  "/admin",
+  handleSession,
+  shareLocals,
+  checkAuth,
+  handleSidebar,
+  adminRouter,
+);
 app.use("/api/v1", router);
 
 // ErrorHandle
@@ -62,6 +70,6 @@ app.use(errorHandler);
     console.log(error);
   }
   app.listen(port, () => {
-    console.log(`http://localhost:${port}/api/v1`);
+    console.log(`http://localhost:${port}/admin`);
   });
 })();

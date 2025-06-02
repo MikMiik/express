@@ -1,0 +1,34 @@
+input.input-hover:hover{
+  box-shadow: #3a86ff 0px 1px 1px, #3a86ff 0px 0px 1px 1px;
+}
+input.input-hover:hover{
+  box-shadow: #3a86ff 0px 1px 1px, #3a86ff 0px 0px 1px 1px;
+}
+.form-group.invalid input {
+  border-color: #f33a58;
+}
+
+.form-group.invalid .auth-input {
+  border-color: #f33a58;
+}
+
+.form-group.invalid .form-message {
+  color: #f33a58;
+}
+.form-message{
+  display: block;
+  font-size: 14px;
+  margin-top: 8px;
+  color: #f33a58;
+}
+.gender-group{
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.gender-group .form-message {
+  flex-basis: 100%;
+}
+
