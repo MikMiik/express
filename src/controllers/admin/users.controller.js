@@ -60,7 +60,7 @@ exports.update = async (req, res) => {
     body.password = md5(password);
   }
   await usersService.update(req.params.id, body);
-  req.flash("success", "Update successful");
+  // req.flash("success", "Update successful");
   res.redirect(`/admin/users/${req.params.id}/edit`);
 };
 

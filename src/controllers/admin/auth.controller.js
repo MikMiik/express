@@ -29,7 +29,7 @@ exports.showRegisterForm = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  let { confirm_password, ...body } = req.body;
+  let { confirm_password, terms, ...body } = req.body;
   const avatar = req.file
     ? `/uploads/${req.file.filename}`
     : `/uploads/default-avatar.jpg`;

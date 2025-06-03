@@ -144,18 +144,16 @@
         <span class="form-message" id="confirmPasswordError"></span>
       </div>
 
-      <!-- <div class="terms">
-        <input type="checkbox" id="terms" required />
-        <label for="terms"
-          >I agree to the Terms of Service and Privacy Policy</label
-        >
-        <span
-          class="error-text"
-          id="termsError"
-          style="display: block; margin-left: 20px"
-          >You must agree to the terms to continue.</span
-        >
-      </div> -->
+      <div class="terms form-group">
+        <div style="display: flex; align-items: center">
+          <input type="checkbox" name="terms" id="terms" />
+          <label style="padding: 0" for="terms"
+            >I agree to the Terms of Service and Privacy Policy</label
+          >
+        </div>
+
+        <p class="form-message" id="termsError" style="margin-left: 20px"></p>
+      </div>
 
       <button type="submit" class="btn">Create Account</button>
 
@@ -201,14 +199,15 @@
                 message: `Password requires: ${errors.join(", ")}`,
               });
             }
-
             return true;
           },
         ),
-
       confirm_password: yup
         .string()
         .oneOf([yup.ref("password"), null], "Passwords do not match"),
+      terms: yup
+        .boolean()
+        .oneOf([true], "You must agree to the terms to continue"),
     });
     const registerForm = document.getElementById("registerForm");
     const result = registerForm.addEventListener("submit", async (e) => {
@@ -218,6 +217,7 @@
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
         confirm_password: document.getElementById("confirmPassword").value,
+        terms: document.getElementById("terms").checked,
       };
       try {
         const validatedData = await registerSchema.validate(data, {
@@ -227,7 +227,6 @@
           registerForm.submit();
         }
       } catch (err) {
-        // console.log({ err });
         if (err instanceof yup.ValidationError) {
           const passwordReqs = [];
 
@@ -425,18 +424,6 @@
             "fa-solid fa-eye-slash confirm_password";
         }
       });
-
-      // Handle terms checkbox
-      // termsCheckbox.addEventListener("change", function () {
-      //   if (this.checked) {
-      //     termsError.style.display = "none";
-      //   } else {
-      //     termsError.style.display = "block";
-      //   }
-      // });
-
-      // Initially hide terms error
-      termsError.style.display = "none";
     });
   </script>
 </html>

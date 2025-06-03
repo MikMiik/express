@@ -21,10 +21,12 @@
   </nav>
 
   <div class="user-profile" id="userProfileDropdown">
-    <div class="avatar">JD</div>
+    <div style="display: flex; align-items: center">
+      <img src="<%= auth.avatar %>" alt="" class="avatar" />
+    </div>
     <div class="user-info">
-      <p>John Doe</p>
-      <small>Administrator</small>
+      <p><%= auth.name %></p>
+      <small><%= auth.role || 'Adminstrator' %></small>
     </div>
     <i class="fas fa-chevron-down dropdown-icon"></i>
     <div class="user-dropdown">
