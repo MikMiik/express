@@ -5,23 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register | Admin Dashboard</title>
     <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/form.css" />
 
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
-      .error-text {
-        color: #f44336;
-        font-size: 12px;
-        margin-top: 5px;
-        display: none;
-      }
-
-      .form-control.error {
-        border-color: #f44336;
-      }
-
       .password-requirements {
         margin-top: 5px;
         padding: 10px;
@@ -67,22 +57,24 @@
       <div class="form-group">
         <label for="name">Name</label>
         <input
+          autocomplete="name"
           value="<%= old?.name %>"
           type="text"
           id="name"
           name="name"
           class="form-control"
           placeholder="Enter name"
-          data-validate="name"
         />
-        <span class="error-text" id="nameError"
-          >Please enter a valid name.</span
-        >
+        <% if (errors?.name) {%>
+        <span class="form-message"> <%= errors?.name %> </span>
+        <% } %>
+        <span class="form-message"></span>
       </div>
 
-      <div class="form-group">
+      <div class="form-group <%= errors?.email ? 'invalid' : '' %>">
         <label for="email">Email</label>
         <input
+          autocomplete="email"
           value="<%= old?.email %>"
           type="email"
           id="email"
@@ -90,25 +82,29 @@
           class="form-control"
           placeholder="Enter your email"
         />
-        <span class="error-text" id="emailError"
-          >Please enter a valid email address.</span
-        >
+        <% if (errors?.email) {%>
+        <span class="form-message"> <%= errors?.email %> </span>
+        <% } %>
+        <span class="form-message"></span>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input
-          type="password"
-          value="Minhthnd@512006"
-          id="password"
-          name="password"
-          class="form-control"
-          placeholder="Choose a password"
-          data-validate="password"
-        />
-        <span class="error-text" id="passwordError"
-          >Password must meet the requirements below.</span
-        >
+        <div style="display: flex; align-items: center; position: relative">
+          <input
+            type="password"
+            value="Minhthnd@512006"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="Choose a password"
+          />
+          <i
+            style="position: absolute; right: 10px; padding: 5px"
+            class="fa-solid fa-eye-slash password"
+          ></i>
+        </div>
+        <span class="form-message" id="passwordError"></span>
         <div class="password-requirements">
           <h4>Password Requirements:</h4>
           <div class="requirement" id="lengthReq">
@@ -131,18 +127,21 @@
 
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          value="Minhthnd@512006"
-          name="confirm_password"
-          id="confirmPassword"
-          class="form-control"
-          placeholder="Confirm password"
-          required
-        />
-        <span class="error-text" id="confirmPasswordError"
-          >Passwords do not match.</span
-        >
+        <div style="display: flex; align-items: center; position: relative">
+          <input
+            type="password"
+            value="Minhthnd@512006"
+            name="confirm_password"
+            id="confirmPassword"
+            class="form-control"
+            placeholder="Confirm password"
+          />
+          <i
+            style="position: absolute; right: 10px; padding: 5px"
+            class="fa-solid fa-eye-slash confirm_password"
+          ></i>
+        </div>
+        <span class="form-message" id="confirmPasswordError"></span>
       </div>
 
       <!-- <div class="terms">
@@ -166,27 +165,96 @@
     </form>
   </div>
 
-  <script src="assets/js/validation.js"></script>
-  <script>
-    //     const FormSchema = yup.object().shape({
-    //   pass: yup
-    //     .string()
-    //     .min(8, 'Password must be 8 characters long')
-    //     .matches(/[0-9]/, 'Password requires a number')
-    //     .matches(/[a-z]/, 'Password requires a lowercase letter')
-    //     .matches(/[A-Z]/, 'Password requires an uppercase letter')
-    //     .matches(/[^\w]/, 'Password requires a symbol'),
-    //   confirm: yup
-    //     .string()
-    //     .oneOf([yup.ref('pass'), null], 'Must match "password" field value'),
-    // });
+  <script type="module">
+    import * as yup from "https://cdn.skypack.dev/yup";
+    const registerSchema = yup.object().shape({
+      name: yup.string().required("Please enter your name"),
+      email: yup
+        .string()
+        .email("This field must be an email")
+        .required("Please enter your email"),
+      password: yup
+        .string()
+        .required("Please enter a password")
+        .test(
+          "password",
+          "Password must meet all requirements",
+          function (value) {
+            const errors = [];
 
-    document.addEventListener("DOMContentLoaded", function () {
-      // Initialize form validation
-      if (typeof initFormValidation === "function") {
-        initFormValidation("registerForm");
+            if (!value) return true;
+
+            if (value.length < 8) errors.push("at least 8 characters long");
+
+            if (!/[0-9]/.test(value)) errors.push("a number");
+
+            if (!/[a-z]/.test(value)) errors.push("a lowercase letter");
+
+            if (!/[A-Z]/.test(value)) {
+              errors.push("an uppercase letter");
+            }
+
+            if (!/[^\w]/.test(value)) errors.push("a special character");
+
+            if (errors.length > 0) {
+              return this.createError({
+                message: `Password requires: ${errors.join(", ")}`,
+              });
+            }
+
+            return true;
+          },
+        ),
+
+      confirm_password: yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Passwords do not match"),
+    });
+    const registerForm = document.getElementById("registerForm");
+    const result = registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
+        confirm_password: document.getElementById("confirmPassword").value,
+      };
+      try {
+        const validatedData = await registerSchema.validate(data, {
+          abortEarly: false,
+        });
+        if (validatedData) {
+          registerForm.submit();
+        }
+      } catch (err) {
+        // console.log({ err });
+        if (err instanceof yup.ValidationError) {
+          const passwordReqs = [];
+
+          err.inner.forEach((error) => {
+            const errorInput = document.querySelector(
+              `input[name=${error.path}]`,
+            );
+
+            const errorSpan = errorInput
+              .closest(".form-group")
+              .querySelector(".form-message");
+            errorSpan.textContent = error.message;
+            errorInput.closest(".form-group").classList.add("invalid");
+            errorInput.classList.remove("input-hover");
+
+            errorInput.oninput = () => {
+              errorSpan.textContent = "";
+              errorInput.closest(".form-group").classList.remove("invalid");
+              errorInput.classList.add("input-hover");
+            };
+          });
+        }
       }
+    });
 
+    // Password
+    document.addEventListener("DOMContentLoaded", function () {
       const passwordInput = document.getElementById("password");
       const confirmPasswordInput = document.getElementById("confirmPassword");
       const termsCheckbox = document.getElementById("terms");
@@ -249,66 +317,123 @@
         }
       });
 
-      // Check password match when confirm password is changed
+      // Password
+      passwordInput.addEventListener("input", function () {
+        const formGroup = this.closest(".form-group");
+        const errorSpan = formGroup.querySelector(".form-message");
+
+        if (errorSpan.textContent) {
+          errorSpan.textContent = "";
+          formGroup.classList.remove("invalid");
+          this.classList.add("input-hover");
+        }
+      });
+
+      let timeoutId;
+      passwordInput.addEventListener("keyup", function () {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+
+        const currentValue = this.value;
+        const confirm_passwordformGroup =
+          confirmPasswordInput.closest(".form-group");
+        const errorSpan =
+          confirm_passwordformGroup.querySelector(".form-message");
+
+        timeoutId = setTimeout(() => {
+          if (currentValue !== confirmPasswordInput.value) {
+            errorSpan.textContent = "Passwords do not match";
+            confirm_passwordformGroup.classList.add("invalid");
+            confirmPasswordInput.classList.remove("input-hover");
+          } else {
+            errorSpan.textContent = "";
+            confirm_passwordformGroup.classList.remove("invalid");
+            confirmPasswordInput.classList.add("input-hover");
+          }
+        }, 400);
+      });
+
+      // Confirm_password
+      confirmPasswordInput.addEventListener("input", function () {
+        const formGroup = this.closest(".form-group");
+        const errorSpan = formGroup.querySelector(".form-message");
+
+        if (errorSpan.textContent) {
+          errorSpan.textContent = "";
+          formGroup.classList.remove("invalid");
+          this.classList.add("input-hover");
+        }
+      });
+
+      let timerId;
       confirmPasswordInput.addEventListener("keyup", function () {
-        if (this.value !== passwordInput.value) {
-          document.getElementById("confirmPasswordError").style.display =
-            "block";
+        if (timerId) {
+          clearTimeout(timerId);
+        }
+
+        const currentValue = this.value;
+        const formGroup = this.closest(".form-group");
+        const errorSpan = formGroup.querySelector(".form-message");
+
+        timerId = setTimeout(() => {
+          if (currentValue !== passwordInput.value) {
+            errorSpan.textContent = "Passwords do not match";
+            formGroup.classList.add("invalid");
+            this.classList.remove("input-hover");
+          }
+        }, 400);
+      });
+
+      confirmPasswordInput.addEventListener("input", function () {
+        const formGroup = this.closest(".form-group");
+        const errorSpan = formGroup.querySelector(".form-message");
+
+        if (errorSpan.textContent) {
+          errorSpan.textContent = "";
+          formGroup.classList.remove("invalid");
+          this.classList.add("input-hover");
+        }
+      });
+
+      // Show Password
+      const eyePasswordIcon = document.querySelector(".fa-eye-slash.password");
+      eyePasswordIcon.addEventListener("click", () => {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyePasswordIcon.className = "fa-solid fa-eye password";
         } else {
-          document.getElementById("confirmPasswordError").style.display =
-            "none";
+          passwordInput.type = "password";
+          eyePasswordIcon.className = "fa-solid fa-eye-slash password";
+        }
+      });
+
+      const eyeConfirm_passwordIcon = document.querySelector(
+        ".fa-eye-slash.confirm_password",
+      );
+      eyeConfirm_passwordIcon.addEventListener("click", () => {
+        if (confirmPasswordInput.type === "password") {
+          confirmPasswordInput.type = "text";
+          eyeConfirm_passwordIcon.className =
+            "fa-solid fa-eye confirm_password";
+        } else {
+          confirmPasswordInput.type = "password";
+          eyeConfirm_passwordIcon.className =
+            "fa-solid fa-eye-slash confirm_password";
         }
       });
 
       // Handle terms checkbox
-      termsCheckbox.addEventListener("change", function () {
-        if (this.checked) {
-          termsError.style.display = "none";
-        } else {
-          termsError.style.display = "block";
-        }
-      });
+      // termsCheckbox.addEventListener("change", function () {
+      //   if (this.checked) {
+      //     termsError.style.display = "none";
+      //   } else {
+      //     termsError.style.display = "block";
+      //   }
+      // });
 
       // Initially hide terms error
       termsError.style.display = "none";
-
-      // Handle form submission
-      document
-        .getElementById("registerForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-
-          // Validate terms checkbox
-          if (!termsCheckbox.checked) {
-            termsError.style.display = "block";
-            return;
-          }
-
-          // Use the validation.js utility for validating the form
-          if (
-            validateForm("registerForm") &&
-            isValidPassword(passwordInput.value) &&
-            passwordInput.value === confirmPasswordInput.value
-          )
-            console.log("hi");
-          this.submit();
-        });
-
-      function isValidPassword(password) {
-        const lengthValid = password.length >= 8;
-        const uppercaseValid = /[A-Z]/.test(password);
-        const lowercaseValid = /[a-z]/.test(password);
-        const numberValid = /[0-9]/.test(password);
-        const specialValid = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-        return (
-          lengthValid &&
-          uppercaseValid &&
-          lowercaseValid &&
-          numberValid &&
-          specialValid
-        );
-      }
     });
   </script>
 </html>

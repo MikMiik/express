@@ -223,13 +223,6 @@ h6 {
 }
 
 
-.custom-error-text {
-    color: #f44336;
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 5px;
-}
-
 .form-control.error {
     border-color: #f44336;
 }
