@@ -15,6 +15,7 @@ exports.login = async (req, res) => {
   const user = await usersService.getByEmailAndPassword(email, password);
   if (user) {
     req.session.userId = user.id;
+    req.flash("success", "Login successful");
     res.redirect("/admin");
   }
 };

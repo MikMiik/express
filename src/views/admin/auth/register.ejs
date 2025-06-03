@@ -93,7 +93,7 @@
         <div style="display: flex; align-items: center; position: relative">
           <input
             type="password"
-            value="Minhthnd@512006"
+            value="<%= old?.password %>"
             id="password"
             name="password"
             class="form-control"
@@ -130,7 +130,7 @@
         <div style="display: flex; align-items: center; position: relative">
           <input
             type="password"
-            value="Minhthnd@512006"
+            value="<%= old?.confirm_password %>"
             name="confirm_password"
             id="confirmPassword"
             class="form-control"
@@ -342,7 +342,10 @@
           confirm_passwordformGroup.querySelector(".form-message");
 
         timeoutId = setTimeout(() => {
-          if (currentValue !== confirmPasswordInput.value) {
+          if (
+            currentValue !== confirmPasswordInput.value &&
+            confirmPasswordInput.value !== ""
+          ) {
             errorSpan.textContent = "Passwords do not match";
             confirm_passwordformGroup.classList.add("invalid");
             confirmPasswordInput.classList.remove("input-hover");
@@ -351,7 +354,7 @@
             confirm_passwordformGroup.classList.remove("invalid");
             confirmPasswordInput.classList.add("input-hover");
           }
-        }, 400);
+        }, 500);
       });
 
       // Confirm_password
@@ -382,7 +385,7 @@
             formGroup.classList.add("invalid");
             this.classList.remove("input-hover");
           }
-        }, 400);
+        }, 500);
       });
 
       confirmPasswordInput.addEventListener("input", function () {

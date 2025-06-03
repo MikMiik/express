@@ -9,6 +9,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/form.css" />
   </head>
 
   <!-- Main Content -->
@@ -60,17 +61,17 @@
     <div class="card-body">
       <div class="form-section">
         <h3>Personal Information</h3>
-        <div class="form-group">
+        <div class="form-group <%= errors?.name ? 'invalid' : '' %>">
           <label for="userName">Full Name*</label>
           <input
+            autocomplete="name"
             type="text"
             id="userName"
             name="name"
             class="form-control"
-            data-validate="name"
           />
           <% if (errors?.name) { %>
-          <span class="custom-error-text" id="userNameError">
+          <span class="form-message" id="userNameError">
             <%= errors?.name %>
           </span>
           <% } %>
@@ -103,33 +104,31 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group">
+          <div class="form-group <%= errors?.email ? 'invalid' : '' %>">
             <label for="userEmail">Email*</label>
             <input
               type="email"
               id="userEmail"
               name="email"
               class="form-control"
-              required
             />
             <% if (errors?.email) {%>
-            <span class="custom-error-text" id="userEmailError">
+            <span class="form-message" id="userEmailError">
               <%= errors?.email %>
             </span>
             <% } %>
           </div>
 
-          <div class="form-group">
+          <div class="form-group <%= errors?.phone ? 'invalid' : '' %>">
             <label for="userPhone">Phone</label>
             <input
               type="tel"
               id="userPhone"
               name="phone"
               class="form-control"
-              data-validate="phone"
             />
             <% if (errors?.phone) { %>
-            <span class="custom-error-text" id="userPhoneError">
+            <span class="form-message" id="userPhoneError">
               <%= errors?.phone %>
             </span>
             <% } %>

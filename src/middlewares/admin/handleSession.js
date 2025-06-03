@@ -21,11 +21,11 @@ async function handleSession(req, res, next) {
       secure: process.env.NODE_ENV === "production",
     });
   }
-
+  // console.log(req.sess)
   req.session = JSON.parse(session?.data ?? null) ?? {};
-  req.setFlash = (data) => {
-    req.session.flash = data;
-  };
+  // req.setFlash = (data) => {
+  //   req.session.flash = data;
+  // };
 
   // req.session = {
   //   ...sessionData,

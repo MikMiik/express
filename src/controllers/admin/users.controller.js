@@ -35,6 +35,7 @@ exports.store = async (req, res) => {
     : `/uploads/default-avatar.jpg`;
   body.avatar = avatar;
   await usersService.create(body);
+  req.flash("success", "Create successful");
   res.redirect("/admin/users");
 };
 
@@ -59,10 +60,12 @@ exports.update = async (req, res) => {
     body.password = md5(password);
   }
   await usersService.update(req.params.id, body);
+  req.flash("success", "Update successful");
   res.redirect(`/admin/users/${req.params.id}/edit`);
 };
 
 exports.forceDelete = async (req, res) => {
   await usersService.remove(req.params.id);
+  req.flash("success", "Delete successful");
   res.redirect("/admin/users");
 };

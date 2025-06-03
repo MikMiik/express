@@ -29,18 +29,18 @@ function _flash(type, msg, ...args) {
       msg.forEach((val) => {
         (msgs[type] = msgs[type] || []).push(val);
       });
-      return { type, message: msgs };
+      return msgs;
     }
     (msgs[type] = msgs[type] || []).push(msg);
-    return { type, message: msgs };
+    return msgs;
   } else if (type) {
     const messages = msgs[type];
     delete msgs[type];
-    return { type, messages };
+    return { [type]: messages };
   } else {
     this.session.flash = {};
     // gán lại giá trị, thay đổi tham chiếu this.session.flash nên msgs vẫn giữ giá trị cũ
-    return { type: "info", message: msgs };
+    return msgs;
   }
 }
 

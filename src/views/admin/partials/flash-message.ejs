@@ -1,9 +1,10 @@
-<% if (flash && flash.messages) { %>
+<% if (flash) { %>
 <div class="flash-message-container">
-  <% for (let message of flash.messages) { %>
-  <div class="flash-message <%= flash.type %>">
+  <% for (let key in flash) { %> <% for (let message of flash[key]) { %>
+  <div class="flash-message <%= key %>">
     <p><%= message %></p>
   </div>
+  <% } %>
   <% } %>
 </div>
 <% } %>
