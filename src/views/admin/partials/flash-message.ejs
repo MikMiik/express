@@ -1,7 +1,9 @@
-<% if (flash) { %>
+<% if (flash && flash.messages) { %>
 <div class="flash-message-container">
+  <% for (let message of flash.messages) { %>
   <div class="flash-message <%= flash.type %>">
-    <p><%= flash.message %></p>
+    <p><%= message %></p>
   </div>
+  <% } %>
 </div>
 <% } %>

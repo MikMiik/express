@@ -37,7 +37,7 @@ exports.createUser = [
 exports.updateUser = [
   (req, res, next) => {
     res.view = `admin/users/edit`;
-    res.setFlash({
+    req.setFlash({
       type: "error",
       message: "Error edit",
     });
@@ -45,24 +45,24 @@ exports.updateUser = [
   },
   checkSchema({
     name: {
-      notEmpty: { errorMessage: "Name is required." },
+      notEmpty: { errorMessage: "Update error: Name is required." },
     },
     email: {
-      notEmpty: { errorMessage: "Email is required." },
-      isEmail: { errorMessage: "Not a valid e-mail address" },
+      notEmpty: { errorMessage: "Update error: Email is required." },
+      isEmail: { errorMessage: "Update error: Not a valid e-mail address" },
       custom: {
         options: async (value, { req }) => {
           const editingUser = await usersService.getById(req.params.id);
           const emailOwner = await usersService.getByEmail(value);
           if (emailOwner && emailOwner.id !== editingUser.id) {
-            throw new Error("Email is already in use");
+            throw new Error("Update error: Email is already in use");
           }
           return true;
         },
       },
     },
     phone: {
-      notEmpty: { errorMessage: "Phone is required." },
+      notEmpty: { errorMessage: "Update error: Phone is required." },
       isMobilePhone: {
         options: ["vi-VN"],
         errorMessage: "Not a valid mobile phone",

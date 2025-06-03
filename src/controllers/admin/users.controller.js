@@ -35,10 +35,6 @@ exports.store = async (req, res) => {
     : `/uploads/default-avatar.jpg`;
   body.avatar = avatar;
   await usersService.create(body);
-  res.setFlash({
-    type: "success",
-    message: "Create success",
-  });
   res.redirect("/admin/users");
 };
 

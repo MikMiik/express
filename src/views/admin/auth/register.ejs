@@ -67,6 +67,7 @@
       <div class="form-group">
         <label for="name">Name</label>
         <input
+          value="<%= old?.name %>"
           type="text"
           id="name"
           name="name"
@@ -82,6 +83,7 @@
       <div class="form-group">
         <label for="email">Email</label>
         <input
+          value="<%= old?.email %>"
           type="email"
           id="email"
           name="email"
@@ -271,42 +273,42 @@
       termsError.style.display = "none";
 
       // Handle form submission
-      // document
-      //   .getElementById("registerForm")
-      //   .addEventListener("submit", function (event) {
-      //     event.preventDefault();
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
 
-      //     // Validate terms checkbox
-      //     if (!termsCheckbox.checked) {
-      //       termsError.style.display = "block";
-      //       return;
-      //     }
+          // Validate terms checkbox
+          if (!termsCheckbox.checked) {
+            termsError.style.display = "block";
+            return;
+          }
 
-      //     // Use the validation.js utility for validating the form
-      //     if (
-      //       validateForm("registerForm") &&
-      //       isValidPassword(passwordInput.value) &&
-      //       passwordInput.value === confirmPasswordInput.value
-      //     )
-      //       console.log("hi");
-      //     this.submit();
-      //   });
+          // Use the validation.js utility for validating the form
+          if (
+            validateForm("registerForm") &&
+            isValidPassword(passwordInput.value) &&
+            passwordInput.value === confirmPasswordInput.value
+          )
+            console.log("hi");
+          this.submit();
+        });
 
-      // function isValidPassword(password) {
-      //   const lengthValid = password.length >= 8;
-      //   const uppercaseValid = /[A-Z]/.test(password);
-      //   const lowercaseValid = /[a-z]/.test(password);
-      //   const numberValid = /[0-9]/.test(password);
-      //   const specialValid = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+      function isValidPassword(password) {
+        const lengthValid = password.length >= 8;
+        const uppercaseValid = /[A-Z]/.test(password);
+        const lowercaseValid = /[a-z]/.test(password);
+        const numberValid = /[0-9]/.test(password);
+        const specialValid = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-      //   return (
-      //     lengthValid &&
-      //     uppercaseValid &&
-      //     lowercaseValid &&
-      //     numberValid &&
-      //     specialValid
-      //   );
-      // }
+        return (
+          lengthValid &&
+          uppercaseValid &&
+          lowercaseValid &&
+          numberValid &&
+          specialValid
+        );
+      }
     });
   </script>
 </html>

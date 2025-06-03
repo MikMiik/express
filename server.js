@@ -28,6 +28,7 @@ const handleSidebar = require("@/middlewares/admin/handleSidebar");
 const handleSession = require("@/middlewares/admin/handleSession");
 const shareLocals = require("@/middlewares/admin/shareLocals");
 const checkAuth = require("@/middlewares/admin/checkAuth");
+const flash = require("@/middlewares/admin/flash");
 
 /*------------------------------------------------------------ */
 
@@ -37,6 +38,7 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use(flash());
 app.use(methodOverride("_method"));
 app.use(handlePagination);
 app.use(responseEnhancer);

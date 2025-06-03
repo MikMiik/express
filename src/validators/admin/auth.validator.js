@@ -5,37 +5,34 @@ const md5 = require("md5");
 
 exports.register = [
   (req, res, next) => {
-    res.view = "admin/register";
-    res.setFlash({
-      type: "error",
-      message: "Register failed: Please check your register information",
-    });
+    res.view = "admin/auth/register";
     next();
   },
   checkSchema({
     name: {
-      notEmpty: { errorMessage: "Please enter your name" },
+      notEmpty: { errorMessage: "Registration error: Please enter your name" },
     },
     email: {
-      notEmpty: { errorMessage: "Please enter your email" },
-      isEmail: { errorMessage: "Not a valid e-mail address" },
+      notEmpty: {
+        errorMessage: "Registration error: Please enter your email",
+      },
+      isEmail: {
+        errorMessage: "Registration error: Not a valid e-mail address",
+      },
       custom: {
         options: async (value, { req }) => {
           const user = await usersService.getByEmail(value);
           if (user) {
-            throw new Error("This email has already existed");
+            throw new Error(
+              "Registration error: This email has already existed",
+            );
           }
         },
       },
     },
     password: {
-      isStrongPassword: { errorMessage: "Password must be strong enough" },
-    },
-    phone: {
-      notEmpty: { errorMessage: "Please enter your phone number" },
-      isMobilePhone: {
-        options: ["vi-VN"],
-        errorMessage: "Not a valid mobile phone",
+      isStrongPassword: {
+        errorMessage: "Registration failed: Password must be strong enough",
       },
     },
   }),
@@ -45,10 +42,6 @@ exports.register = [
 exports.login = [
   (req, res, next) => {
     res.view = "admin/auth/login";
-    res.setFlash({
-      type: "error",
-      message: "Login failed: Please check your login information",
-    });
     next();
   },
   checkSchema({
@@ -61,7 +54,9 @@ exports.login = [
             md5(password),
           );
           if (!user) {
-            throw new Error();
+            throw new Error(
+              "Login failed: Please check your login information",
+            );
           }
         },
       },

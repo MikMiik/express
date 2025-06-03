@@ -22,6 +22,8 @@ exports.login = async (req, res) => {
 exports.showRegisterForm = async (req, res) => {
   res.render("admin/auth/register", {
     layout: "./admin/layouts/auth",
+    errors: {},
+    old: {},
   });
 };
 

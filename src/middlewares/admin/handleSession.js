@@ -23,9 +23,10 @@ async function handleSession(req, res, next) {
   }
 
   req.session = JSON.parse(session?.data ?? null) ?? {};
-  res.setFlash = (data) => {
+  req.setFlash = (data) => {
     req.session.flash = data;
   };
+
   // req.session = {
   //   ...sessionData,
   //   get(key) {

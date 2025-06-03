@@ -19,19 +19,23 @@ const handleValidationErrors = async (req, res, next) => {
     // }))
     .reduce((errors, error) => {
       errors[error.path] = error.msg;
+      req.flash("error", error.msg);
       return errors;
     }, {});
-  console.log(req.body);
-  console.log(formatted);
-  const user = await usersService.getById(req.params.id);
+  // console.log(req.body);
+  // console.log(formatted);
+
   let layout;
+  const user = await usersService.getById(req.params.id);
   if (res.view.includes("admin/auth")) layout = "./admin/layouts/auth";
-  res.locals.flash = req.session.flash;
-  delete req.session.flash;
+
+  // req.flash("error", "Login failed: Please check your login information");
+  const flash = req.flash("error");
   res.render(res.view, {
     user,
     formatDate,
     formatDay,
+    flash,
     errors: formatted,
     old: req.body,
     layout,
