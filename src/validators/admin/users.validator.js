@@ -35,7 +35,7 @@ exports.createUser = [
         options: async (value, { req }) => {
           const phoneOwner = await usersService.getByPhoneNumber(value);
           if (phoneOwner) {
-            throw new Error("Create error: Phone has already in use");
+            throw new Error("Create error: Phone number has already in use");
           }
           return true;
         },

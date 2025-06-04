@@ -1,425 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit User | Admin Dashboard</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="/assets/css/common.css" />
-    <link rel="stylesheet" href="/assets/css/form.css" />
-  </head>
 
-  <!-- Main Content -->
-  <div class="content-header">
-    <h1>Edit User</h1>
-    <div style="display: flex">
-      <a href="/admin/users" class="btn btn-secondary">
-        <i class="fas fa-arrow-left"></i> Back to Users
-      </a>
-      <form
-        id="deleteForm"
-        method="POST"
-        action="/admin/users/<%= user.id %>/force-delete?_method=DELETE"
-      >
-        <button
-          type="submit"
-          class="btn btn-danger"
-          id="deleteUserBtn"
-          style="margin-left: 10px"
-        >
-          <i class="fas fa-trash"></i>
-          Delete User
-        </button>
-      </form>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit User: <%= user.name %>
+  </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/common.css" />
+  <link rel="stylesheet" href="/assets/css/form.css" />
+</head>
+
+<!-- Main Content -->
+<div class="content-header">
+  <h1>Edit User</h1>
+  <div style="display: flex">
+    <a href="/admin/users" class="btn btn-secondary">
+      <i class="fas fa-arrow-left"></i> Back to Users
+    </a>
+    <form id="deleteForm" method="POST" action="/admin/users/<%= user.id %>/force-delete?_method=DELETE">
+      <button type="submit" class="btn btn-danger" id="deleteUserBtn" style="margin-left: 10px">
+        <i class="fas fa-trash"></i>
+        Delete User
+      </button>
+    </form>
   </div>
+</div>
 
-  <!-- Success Message -->
-  <div
-    id="successMessage"
-    class="message message-success"
-    style="display: none"
-  >
-    <i class="fas fa-check-circle"></i>
-    <span data-message-text>User has been updated successfully.</span>
-  </div>
+<!-- Edit User Form -->
+<form id="editUserForm" class="card" method="POST" action="/admin/users/<%= user.id %>?_method=PUT"
+  enctype="multipart/form-data">
+  <div class="card-body">
+    <div class="form-section">
+      <h3>Personal Information</h3>
 
-  <!-- Edit User Form -->
-  <form
-    id="editUserForm"
-    class="card"
-    method="POST"
-    action="/admin/users/<%= user.id %>?_method=PUT"
-    enctype="multipart/form-data"
-  >
-    <div class="card-header">
-      <h3>User Information</h3>
-    </div>
-    <div class="card-body">
-      <div class="form-section">
-        <h3>Personal Information</h3>
-        <div class="form-group <%= errors?.name ? 'invalid' : '' %>">
-          <label for="userName">Full Name*</label>
-          <input
-            autocomplete="name"
-            type="text"
-            id="userName"
-            name="name"
-            class="form-control"
-          />
-          <% if (errors?.name) { %>
-          <span class="form-message" id="userNameError">
-            <%= errors?.name %>
-          </span>
-          <% } %>
-          <div class="form-group">
-            <label
-              style="margin-top: 10px; max-width: fit-content"
-              for="userAvatar"
-            >
-              Avatar
-              <div
-                class="avatar"
-                style="width: 100px; height: 100px; margin-top: 20px"
-              >
-                <img
-                  src="<%= user.avatar %>"
-                  alt=""
-                  class="avatarImg avatar"
-                  style="width: 100%; height: 100%; margin: 0"
-                />
-              </div>
-            </label>
+      <!-- name -->
+      <div class="form-group <%= errors?.name ? 'invalid' : '' %>">
+        <label for="userName">Full Name*</label>
+        <input value="<%= old?.name || user.name %>" autocomplete="name" type="text" id="userName" name="name"
+          class="form-control" />
+        <span class="form-message" id="userNameError">
+          <%= errors?.name ? errors?.name : '' %>
+        </span>
+      </div>
+      <!-- avatar -->
+      <div class="form-group">
+        <label style="margin-top: 10px; max-width: fit-content" for="userAvatar">
+          Avatar
+          <div class="avatar" style="width: 100px; height: 100px; margin-top: 20px">
+            <img src="<%= user.avatar %>" alt="" class="avatarImg avatar"
+              style="width: 100%; height: 100%; margin: 0" />
           </div>
-          <input
-            hidden
-            type="file"
-            id="userAvatar"
-            name="avatar"
-            class="form-control"
-          />
+        </label>
+        <input hidden type="file" id="userAvatar" name="avatar" class="form-control" />
+      </div>
+
+      <div class="form-row">
+        <!-- email -->
+        <div class="form-group <%= errors?.email ? 'invalid' : '' %>">
+          <label for="userEmail">Email*</label>
+          <input value="<%= old?.email || user.email %>" type="email" id="userEmail" name="email"
+            class="form-control" />
+          <span class="form-message" id="userEmailError">
+            <%= errors?.email ? errors?.email : '' %>
+          </span>
         </div>
 
-        <div class="form-row">
-          <div class="form-group <%= errors?.email ? 'invalid' : '' %>">
-            <label for="userEmail">Email*</label>
-            <input
-              type="email"
-              id="userEmail"
-              name="email"
-              class="form-control"
-            />
-            <% if (errors?.email) {%>
-            <span class="form-message" id="userEmailError">
-              <%= errors?.email %>
-            </span>
-            <% } %>
-          </div>
-
-          <div class="form-group <%= errors?.phone ? 'invalid' : '' %>">
-            <label for="userPhone">Phone</label>
-            <input
-              type="tel"
-              id="userPhone"
-              name="phone"
-              class="form-control"
-            />
-            <% if (errors?.phone) { %>
+        <!-- phone -->
+        <div class="form-group <%= errors?.phone ? 'invalid' : '' %>">
+          <label for="userPhone">Phone</label>
+          <input value="<%= old?.phone || user.phone %>" type="tel" id="userPhone" name="phone" class="form-control" />
+          <% if (errors?.phone) { %>
             <span class="form-message" id="userPhoneError">
               <%= errors?.phone %>
             </span>
             <% } %>
-          </div>
+              <span class="form-message"></span>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="userAddress">Address</label>
-          <textarea
-            id="userAddress"
-            name="address"
-            class="form-control"
-            rows="2"
-          ></textarea>
-          <% if (errors?.address) { %>
-          <span class="custom-error-text" id="userAddressError">
+      <!-- address -->
+      <div class="form-group">
+        <label for="userAddress">Address</label>
+        <textarea id="userAddress" name="address" class="form-control" rows="2">
+<%= old?.address || user.address %></textarea>
+        <% if (errors?.address) { %>
+          <span class="form-message" id="userAddressError">
             <%= errors?.address %>
           </span>
           <% } %>
-        </div>
       </div>
+    </div>
 
-      <div class="form-section">
-        <h3>Account Information</h3>
-        <div class="form-group">
-          <label for="userUsername">Username*</label>
-          <input
-            type="text"
-            id="userUsername"
-            name="username"
-            class="form-control"
-          />
-          <% if (errors?.username) {%>
-          <span class="custom-error-text" id="userUsernameError">
+    <div class="form-section">
+      <h3>Account Information</h3>
+      <!-- username -->
+      <div class="form-group">
+        <label for="userUsername">Username*</label>
+        <input value="<%= old?.username || user.username %>" type="text" id="userUsername" name="username"
+          class="form-control" />
+        <% if (errors?.username) {%>
+          <span class="form-message" id="userUsernameError">
             <%= errors?.username %>
           </span>
           <% } %>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="userRole">Role*</label>
-            <% const roles = ['Admin', 'Editor', 'Viewer'] %>
+            <span class="form-message"></span>
+      </div>
+      
+      <!-- role -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="userRole">Role*</label>
+          <% const roles=['Admin', 'Editor' , 'Viewer' ] %>
             <select id="userRole" name="role" class="form-control">
               <option value="">Select Role</option>
 
-              <% for (role of roles) { %>
-              <% const selected = user?.role === role ? 'selected' : '' %>
-              <option value="<%= role %>"><%= role%></option>
+              <% for (let role of roles) { %>
+                <% const selected = user?.role===role ? 'selected' : '' %>
+                  <option value="<%= role %>" <%= selected %>>
+                    <%= role %>
+                  </option>
               <% } %>
             </select>
             <span class="error-text" id="userRoleError"></span>
-          </div>
+        </div>
 
-          <div class="form-group">
-            <label for="userStatus">Status*</label>
-            <% const statuses = ['Active', 'Inactive', 'Pending'] %>
+        <!-- status -->
+        <div class="form-group">
+          <label for="userStatus">Status*</label>
+          <% const statuses=['Active', 'Inactive' , 'Pending' ] %>
             <select id="userStatus" name="status" class="form-control">
               <option value="">Select Status</option>
-              <% for (status of statuses) { %>
-              <option value="<%= status %>"><%= status%></option>
-              <% } %>
+              <% for (let status of statuses) { -%>
+                <% const selected = user?.status===status ? 'selected' : '' %>
+                  <option value="<%= status %>" <%= selected %>><%= status%>
+                  </option>
+                <% } %>
             </select>
             <span class="error-text" id="userStatusError"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="dateCreated">Date Created</label>
-          <input
-            type="text"
-            id="dateCreated"
-            class="form-control"
-            readonly
-            disabled
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="lastLogin">Last Login</label>
-          <input
-            type="text"
-            id="lastLogin"
-            class="form-control"
-            readonly
-            disabled
-          />
         </div>
       </div>
 
-      <div class="form-section">
-        <h3>Change Password</h3>
-        <p class="form-help-text">Leave blank to keep the current password</p>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="userPassword">New Password</label>
-            <input
-              type="password"
-              id="userPassword"
-              name="password"
-              class="form-control"
-              data-validate="password"
-            />
-            <span class="error-text" id="userPasswordError"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="userConfirmPassword">Confirm New Password</label>
-            <input
-              type="password"
-              id="userConfirmPassword"
-              name="confirm_password"
-              class="form-control"
-            />
-            <span class="error-text" id="userConfirmPasswordError"></span>
-          </div>
-        </div>
-        <p class="form-help-text">
-          Password must be at least 8 characters and include uppercase,
-          lowercase, number, and special character.
-        </p>
+      <!-- date created -->
+      <div class="form-group">
+        <label for="dateCreated">Date Created</label>
+        <input value="<%= formatDate(user.created_at) %>" type="text" id="dateCreated" class="form-control" readonly
+          disabled />
       </div>
 
-      <div class="form-buttons">
-        <button type="button" class="btn btn-secondary" id="cancelBtn">
-          Cancel
-        </button>
-        <button type="submit" class="btn btn-primary">
-          <i class="fas fa-save"></i> Save Changes
-        </button>
+      <!-- lastlogin -->
+      <div class="form-group">
+        <label for="lastLogin">Last Login</label>
+        <input value="<%= formatDay(user.updated_at) %>" type="text" id="lastLogin" class="form-control" readonly
+          disabled />
       </div>
     </div>
-  </form>
 
-  <!-- Confirm Delete Modal -->
-  <div class="modal" id="confirmDeleteModal">
-    <div class="modal-content">
-      <h3 class="modal-title">Confirm Delete</h3>
-      <div class="modal-body">
-        Are you sure you want to delete user "<span id="deleteUserName"></span
-        >"? This action cannot be undone.
+    <div class="form-section">
+      <h3>Change Password</h3>
+      <p style="margin-bottom: 10px; font-size: 14px; font-weight: 500; color: #ff9800;" class="form-help-text">*Leave blank to keep the current password</p>
+      <div class="form-row">
+        <!-- password -->
+        <div class="form-group">
+          <label for="userPassword">New Password</label>
+          <div style="display: flex; align-items: center; position: relative">
+            <input type="password" id="userPassword" name="password" class="form-control" data-validate="password" />
+            <i
+              style="position: absolute; right: 10px; padding: 5px"
+              class="fa-solid fa-eye-slash password"
+            ></i>
+          </div>
+          <span class="form-message">
+            <%= errors?.password ? errors?.password : '' %>
+          </span>
+        </div>
+
+        <!-- confirmPassword -->
+        <div class="form-group">
+          <label for="userConfirmPassword">Confirm New Password</label>
+          <div style="display: flex; align-items: center; position: relative">
+            <input type="password" id="userConfirmPassword" name="confirm_password" class="form-control" />
+            <i
+              style="position: absolute; right: 10px; padding: 5px"
+              class="fa-solid fa-eye-slash confirm_password"
+            ></i>
+          </div>
+          <span class="form-message">
+            <%= errors?.confirm_password ? errors?.confirm_password : '' %>
+          </span>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          id="cancelDelete"
-          class="btn btn-secondary"
-          data-cancel
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          id="confirmDelete"
-          class="btn btn-danger"
-          data-confirm
-        >
-          Delete
-        </button>
-      </div>
+      <p class="form-help-text">
+        Password must be at least 8 characters and include uppercase,
+        lowercase, number, and special character.
+      </p>
+    </div>
+
+    <div class="form-buttons">
+      <button style="padding: 0; overflow: hidden;" type="button" class="btn btn-secondary" id="cancelBtn">
+        <a style="text-decoration: none; color: inherit; padding: 10px 20px;"
+          href="/admin/users/<%= user.id%>">Cancel</a>
+      </button>
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> Save Changes
+      </button>
     </div>
   </div>
+</form>
 
-  <!-- <script src="assets/js/common.js"></script> -->
+<!-- Confirm Delete Modal -->
+<div class="modal" id="confirmDeleteModal">
+  <div class="modal-content">
+    <h3 class="modal-title">Confirm Delete</h3>
+    <div class="modal-body">
+      Are you sure you want to delete user "<%= auth.name %>"?
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancelDelete" class="btn btn-secondary" data-cancel>
+        Cancel
+      </button>
+      <button type="submit" id="confirmDelete" class="btn btn-danger" data-confirm>
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
 
-  <script>
-    const userAvatarInput = document.getElementById("userAvatar");
-    const avatarImg = document.querySelector(".avatarImg");
-    userAvatarInput.addEventListener("change", () => {
-      const file = userAvatarInput.files[0];
-      if (file) {
-        avatarImg.src = URL.createObjectURL(file);
+<script type="module" defer>
+  import * as yup from "https://cdn.skypack.dev/yup";
+  const userAvatarInput = document.getElementById("userAvatar");
+  const avatarImg = document.querySelector(".avatarImg");
+  userAvatarInput.addEventListener("change", () => {
+    const file = userAvatarInput.files[0];
+    if (file) {
+      avatarImg.src = URL.createObjectURL(file);
+    }
+  });
+
+  const editSchema = yup.object().shape({
+    name: yup.string().required("Please enter your name"),
+    email: yup
+      .string()
+      .email("This field must be an email")
+      .required("Please enter your email"),
+    phone: yup
+      .string()
+      .required("Please enter your phone number")
+      .matches(
+        /(?:\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\d]+|$)/,
+        "Not a valid phone number",
+      ),
+    username: yup.string().required("Please enter your username"),
+    password: yup
+      .string()
+      .test(
+        "password",
+        "Password must meet all requirements",
+        function (value) {
+          const errors = [];
+
+          if (!value) return true;
+
+          if (value.length < 8) errors.push("at least 8 characters long");
+
+          if (!/[0-9]/.test(value)) errors.push("a number");
+
+          if (!/[a-z]/.test(value)) errors.push("a lowercase letter");
+
+          if (!/[A-Z]/.test(value)) {
+            errors.push("an uppercase letter");
+          }
+
+          if (!/[^\w]/.test(value)) errors.push("a special character");
+
+          if (errors.length > 0) {
+            return this.createError({
+              message: `Password requires: ${errors.join(", ")}`,
+            });
+          }
+          return true;
+        },
+      ),
+    confirm_password: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords do not match"),
+  });
+  const editForm = document.getElementById("editUserForm");
+  const nameInput = document.getElementById("userName")
+  const emailInput = document.getElementById("userEmail")
+  const usernameInput = document.getElementById("userUsername")
+  const phoneInput = document.getElementById("userPhone")
+  const passwordInput = document.getElementById("userPassword")
+  const confirmPasswordInput = document.getElementById("userConfirmPassword")
+  editForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = {
+      name: nameInput.value,
+      email: emailInput.value,
+      username: usernameInput.value,
+      phone: phoneInput.value,
+      password: passwordInput.value,
+      confirm_password: confirmPasswordInput.value,
+    };
+    try {
+      const validatedData = await editSchema.validate(data, {
+        abortEarly: false,
+      });
+      if (validatedData) {
+        editForm.submit();
       }
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-      // Initialize form validation
-      // initFormValidation("editUserForm");
+    } catch (err) {
+      if (err instanceof yup.ValidationError) {
+        const passwordReqs = [];
 
-      // Load user data
-      loadUserData();
+        err.inner.forEach((error) => {
+          const errorInput = document.querySelector(
+            `input[name=${error.path}]`,
+          );
+          const errorSpan = errorInput
+            .closest(".form-group")
+            .querySelector(".form-message");
+          errorSpan.textContent = error.message;
+          errorInput.closest(".form-group").classList.add("invalid");
 
-      // Handle form submission
-      document
-        .getElementById("editUserForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-
-          if (validateForm("editUserForm")) {
-            // Check if password and confirm password match (if provided)
-            const password = document.getElementById("userPassword").value;
-            const confirmPassword = document.getElementById(
-              "userConfirmPassword",
-            ).value;
-
-            if (password && password !== confirmPassword) {
-              showError(
-                document.getElementById("userConfirmPassword"),
-                "Passwords do not match.",
-              );
-              return;
-            } else if (!password && confirmPassword) {
-              showError(
-                document.getElementById("userPassword"),
-                "Please fill the password first",
-              );
-              return;
-            }
-            this.submit();
-          }
+          errorInput.oninput = () => {
+            errorSpan.textContent = "";
+            errorInput.closest(".form-group").classList.remove("invalid");
+          };
         });
-
-      // Handle cancel button
-      document
-        .getElementById("cancelBtn")
-        .addEventListener("click", function () {
-          window.location.href = "/admin/users/<%= user.id%>";
-        });
-
-      // Handle delete button
-      document
-        .getElementById("deleteForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-
-          // Get user name from field
-          const userName = document.getElementById("userName").value;
-
-          // Set the name in the modal
-          document.getElementById("deleteUserName").textContent = userName;
-
-          // Show modal
-          const result = await showConfirmDialog("confirmDeleteModal");
-
-          if (result) {
-            this.submit();
-          }
-        });
-
-      // Custom validation for password confirmation
-      document
-        .getElementById("userConfirmPassword")
-        .addEventListener("blur", function () {
-          const password = document.getElementById("userPassword").value;
-          const confirmPassword = this.value;
-
-          if (password && password !== confirmPassword) {
-            showError(this, "Passwords do not match.");
-          }
-        });
-    });
-
-    // Load user data for editing
-    function loadUserData() {
-      // Set document title
-      document.title = `Edit User: <%= user.name %> | Admin Dashboard`;
-
-      // Fill form fields with user data
-      document.getElementById("userName").value =
-        "<%= old?.name || user.name %>";
-      document.getElementById("userEmail").value =
-        "<%= old?.email || user.email %>";
-      document.getElementById("userPhone").value =
-        "<%= old?.phone || user.phone %>";
-      document.getElementById("userAddress").value =
-        "<%= old?.address || user.address %>";
-      document.getElementById("userUsername").value =
-        "<%= old?.username || user.username %>";
-      document.getElementById("userRole").value =
-        "<%= old?.role || user.role || 'Administrator' %>";
-      document.getElementById("userStatus").value =
-        "<%= old?.status || user.status || 'Active' %>";
-      document.getElementById("dateCreated").value =
-        "<%= formatDate(user.created_at) %>";
-      document.getElementById("lastLogin").value =
-        "<%= formatDay(user.updated_at) %>";
+      }
     }
-  </script>
-
-  <style>
-    .checkbox-group {
-      margin-bottom: 10px;
+  });
+  // Password
+  let timeoutId;
+  passwordInput.addEventListener("keyup", function () {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
     }
 
-    .checkbox-group input[type="checkbox"] {
-      margin-right: 8px;
+    const currentValue = this.value;
+    const confirm_passwordformGroup =
+      confirmPasswordInput.closest(".form-group");
+    const errorSpan =
+      confirm_passwordformGroup.querySelector(".form-message");
+
+    timeoutId = setTimeout(() => {
+      if (
+        currentValue !== confirmPasswordInput.value &&
+        confirmPasswordInput.value !== ""
+      ) {
+        errorSpan.textContent = "Passwords do not match";
+        confirm_passwordformGroup.classList.add("invalid");
+      } else {
+        errorSpan.textContent = "";
+        confirm_passwordformGroup.classList.remove("invalid");
+      }
+    }, 500);
+  });
+
+  // Confirm_password
+  confirmPasswordInput.addEventListener("input", function () {
+    const formGroup = this.closest(".form-group");
+    const errorSpan = formGroup.querySelector(".form-message");
+
+    if (errorSpan.textContent) {
+      errorSpan.textContent = "";
+      formGroup.classList.remove("invalid");
+    }
+  });
+
+  let timerId;
+  confirmPasswordInput.addEventListener("keyup", function () {
+    if (timerId) {
+      clearTimeout(timerId);
     }
 
-    .form-help-text {
-      margin-top: 5px;
-      color: #666;
-      font-size: 13px;
+    const currentValue = this.value;
+    const formGroup = this.closest(".form-group");
+    const errorSpan = formGroup.querySelector(".form-message");
+
+    timerId = setTimeout(() => {
+      if (currentValue !== passwordInput.value) {
+        errorSpan.textContent = "Passwords do not match";
+        formGroup.classList.add("invalid");
+      }
+    }, 500);
+  });
+
+  confirmPasswordInput.addEventListener("input", function () {
+    const formGroup = this.closest(".form-group");
+    const errorSpan = formGroup.querySelector(".form-message");
+
+    if (errorSpan.textContent) {
+      errorSpan.textContent = "";
+      formGroup.classList.remove("invalid");
     }
-  </style>
+  });
+
+  // Show Password
+  const eyePasswordIcon = document.querySelector(".fa-eye-slash.password");
+  eyePasswordIcon.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      eyePasswordIcon.className = "fa-solid fa-eye password";
+    } else {
+      passwordInput.type = "password";
+      eyePasswordIcon.className = "fa-solid fa-eye-slash password";
+    }
+  });
+
+  const eyeConfirm_passwordIcon = document.querySelector(
+    ".fa-eye-slash.confirm_password",
+  );
+  eyeConfirm_passwordIcon.addEventListener("click", () => {
+    if (confirmPasswordInput.type === "password") {
+      confirmPasswordInput.type = "text";
+      eyeConfirm_passwordIcon.className = "fa-solid fa-eye confirm_password";
+    } else {
+      confirmPasswordInput.type = "password";
+      eyeConfirm_passwordIcon.className =
+        "fa-solid fa-eye-slash confirm_password";
+    }
+  });
+
+
+// Handle delete button
+const deleteForm = document.getElementById("deleteForm");
+deleteForm.addEventListener("submit", async function (e) {
+  e.preventDefault();
+  // Show modal
+  const result = await showConfirmDialog("confirmDeleteModal");
+  if (result) {
+    this.submit();
+  }
+});
+</script>
+
+<style>
+  .checkbox-group {
+    margin-bottom: 10px;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+  }
+
+  .form-help-text {
+    margin-top: 5px;
+    color: #666;
+    font-size: 13px;
+  }
+</style>
+
 </html>

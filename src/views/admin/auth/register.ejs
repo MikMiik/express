@@ -65,10 +65,9 @@
           class="form-control"
           placeholder="Enter name"
         />
-        <% if (errors?.name) {%>
-        <span class="form-message"> <%= errors?.name %> </span>
-        <% } %>
-        <span class="form-message"></span>
+        <span class="form-message">
+          <%= errors?.name ? errors?.name : '' %>
+        </span>
       </div>
 
       <div class="form-group <%= errors?.email ? 'invalid' : '' %>">
@@ -82,10 +81,9 @@
           class="form-control"
           placeholder="Enter your email"
         />
-        <% if (errors?.email) {%>
-        <span class="form-message"> <%= errors?.email %> </span>
-        <% } %>
-        <span class="form-message"></span>
+        <span class="form-message">
+          <%= errors?.email ? errors?.email : '' %>
+        </span>
       </div>
 
       <div class="form-group">
@@ -104,7 +102,9 @@
             class="fa-solid fa-eye-slash password"
           ></i>
         </div>
-        <span class="form-message" id="passwordError"></span>
+        <span class="form-message">
+          <%= errors?.password ? errors?.password : '' %>
+        </span>
         <div class="password-requirements">
           <h4>Password Requirements:</h4>
           <div class="requirement" id="lengthReq">
@@ -141,7 +141,9 @@
             class="fa-solid fa-eye-slash confirm_password"
           ></i>
         </div>
-        <span class="form-message" id="confirmPasswordError"></span>
+        <span class="form-message">
+          <%= errors?.confirm_password ? errors?.confirm_password : '' %>
+        </span>
       </div>
 
       <div class="terms form-group">
@@ -152,7 +154,7 @@
           >
         </div>
 
-        <p class="form-message" id="termsError" style="margin-left: 20px"></p>
+        <p class="form-message" style="margin-left: 20px"></p>
       </div>
 
       <button type="submit" class="btn">Create Account</button>
@@ -163,7 +165,7 @@
     </form>
   </div>
 
-  <script type="module">
+  <script type="module" defer>
     import * as yup from "https://cdn.skypack.dev/yup";
     const registerSchema = yup.object().shape({
       name: yup.string().required("Please enter your name"),
@@ -253,177 +255,173 @@
     });
 
     // Password
-    document.addEventListener("DOMContentLoaded", function () {
-      const passwordInput = document.getElementById("password");
-      const confirmPasswordInput = document.getElementById("confirmPassword");
-      const termsCheckbox = document.getElementById("terms");
-      const termsError = document.getElementById("termsError");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+    const termsCheckbox = document.getElementById("terms");
 
-      // Password requirements elements
-      const lengthReq = document.getElementById("lengthReq");
-      const uppercaseReq = document.getElementById("uppercaseReq");
-      const lowercaseReq = document.getElementById("lowercaseReq");
-      const numberReq = document.getElementById("numberReq");
-      const specialReq = document.getElementById("specialReq");
+    // Password requirements elements
+    const lengthReq = document.getElementById("lengthReq");
+    const uppercaseReq = document.getElementById("uppercaseReq");
+    const lowercaseReq = document.getElementById("lowercaseReq");
+    const numberReq = document.getElementById("numberReq");
+    const specialReq = document.getElementById("specialReq");
 
-      // Check password requirements in real-time
-      passwordInput.addEventListener("keyup", function () {
-        const password = this.value;
+    // Check password requirements in real-time
+    passwordInput.addEventListener("keyup", function () {
+      const password = this.value;
 
-        // Length requirement (at least 8 characters)
-        if (password.length >= 8) {
-          lengthReq.classList.add("valid");
-          lengthReq.querySelector("i").className = "fas fa-check-circle";
+      // Length requirement (at least 8 characters)
+      if (password.length >= 8) {
+        lengthReq.classList.add("valid");
+        lengthReq.querySelector("i").className = "fas fa-check-circle";
+      } else {
+        lengthReq.classList.remove("valid");
+        lengthReq.querySelector("i").className = "fas fa-circle";
+      }
+
+      // Uppercase letter requirement
+      if (/[A-Z]/.test(password)) {
+        uppercaseReq.classList.add("valid");
+        uppercaseReq.querySelector("i").className = "fas fa-check-circle";
+      } else {
+        uppercaseReq.classList.remove("valid");
+        uppercaseReq.querySelector("i").className = "fas fa-circle";
+      }
+
+      // Lowercase letter requirement
+      if (/[a-z]/.test(password)) {
+        lowercaseReq.classList.add("valid");
+        lowercaseReq.querySelector("i").className = "fas fa-check-circle";
+      } else {
+        lowercaseReq.classList.remove("valid");
+        lowercaseReq.querySelector("i").className = "fas fa-circle";
+      }
+
+      // Number requirement
+      if (/[0-9]/.test(password)) {
+        numberReq.classList.add("valid");
+        numberReq.querySelector("i").className = "fas fa-check-circle";
+      } else {
+        numberReq.classList.remove("valid");
+        numberReq.querySelector("i").className = "fas fa-circle";
+      }
+
+      // Special character requirement
+      if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        specialReq.classList.add("valid");
+        specialReq.querySelector("i").className = "fas fa-check-circle";
+      } else {
+        specialReq.classList.remove("valid");
+        specialReq.querySelector("i").className = "fas fa-circle";
+      }
+    });
+
+    // Password
+    passwordInput.addEventListener("input", function () {
+      const formGroup = this.closest(".form-group");
+      const errorSpan = formGroup.querySelector(".form-message");
+
+      if (errorSpan.textContent) {
+        errorSpan.textContent = "";
+        formGroup.classList.remove("invalid");
+        this.classList.add("input-hover");
+      }
+    });
+
+    let timeoutId;
+    passwordInput.addEventListener("keyup", function () {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      const currentValue = this.value;
+      const confirm_passwordformGroup =
+        confirmPasswordInput.closest(".form-group");
+      const errorSpan =
+        confirm_passwordformGroup.querySelector(".form-message");
+
+      timeoutId = setTimeout(() => {
+        if (
+          currentValue !== confirmPasswordInput.value &&
+          confirmPasswordInput.value !== ""
+        ) {
+          errorSpan.textContent = "Passwords do not match";
+          confirm_passwordformGroup.classList.add("invalid");
+          confirmPasswordInput.classList.remove("input-hover");
         } else {
-          lengthReq.classList.remove("valid");
-          lengthReq.querySelector("i").className = "fas fa-circle";
-        }
-
-        // Uppercase letter requirement
-        if (/[A-Z]/.test(password)) {
-          uppercaseReq.classList.add("valid");
-          uppercaseReq.querySelector("i").className = "fas fa-check-circle";
-        } else {
-          uppercaseReq.classList.remove("valid");
-          uppercaseReq.querySelector("i").className = "fas fa-circle";
-        }
-
-        // Lowercase letter requirement
-        if (/[a-z]/.test(password)) {
-          lowercaseReq.classList.add("valid");
-          lowercaseReq.querySelector("i").className = "fas fa-check-circle";
-        } else {
-          lowercaseReq.classList.remove("valid");
-          lowercaseReq.querySelector("i").className = "fas fa-circle";
-        }
-
-        // Number requirement
-        if (/[0-9]/.test(password)) {
-          numberReq.classList.add("valid");
-          numberReq.querySelector("i").className = "fas fa-check-circle";
-        } else {
-          numberReq.classList.remove("valid");
-          numberReq.querySelector("i").className = "fas fa-circle";
-        }
-
-        // Special character requirement
-        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-          specialReq.classList.add("valid");
-          specialReq.querySelector("i").className = "fas fa-check-circle";
-        } else {
-          specialReq.classList.remove("valid");
-          specialReq.querySelector("i").className = "fas fa-circle";
-        }
-      });
-
-      // Password
-      passwordInput.addEventListener("input", function () {
-        const formGroup = this.closest(".form-group");
-        const errorSpan = formGroup.querySelector(".form-message");
-
-        if (errorSpan.textContent) {
           errorSpan.textContent = "";
-          formGroup.classList.remove("invalid");
-          this.classList.add("input-hover");
+          confirm_passwordformGroup.classList.remove("invalid");
+          confirmPasswordInput.classList.add("input-hover");
         }
-      });
+      }, 500);
+    });
 
-      let timeoutId;
-      passwordInput.addEventListener("keyup", function () {
-        if (timeoutId) {
-          clearTimeout(timeoutId);
+    // Confirm_password
+    confirmPasswordInput.addEventListener("input", function () {
+      const formGroup = this.closest(".form-group");
+      const errorSpan = formGroup.querySelector(".form-message");
+
+      if (errorSpan.textContent) {
+        errorSpan.textContent = "";
+        formGroup.classList.remove("invalid");
+        this.classList.add("input-hover");
+      }
+    });
+
+    let timerId;
+    confirmPasswordInput.addEventListener("keyup", function () {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+
+      const currentValue = this.value;
+      const formGroup = this.closest(".form-group");
+      const errorSpan = formGroup.querySelector(".form-message");
+
+      timerId = setTimeout(() => {
+        if (currentValue !== passwordInput.value) {
+          errorSpan.textContent = "Passwords do not match";
+          formGroup.classList.add("invalid");
+          this.classList.remove("input-hover");
         }
+      }, 500);
+    });
 
-        const currentValue = this.value;
-        const confirm_passwordformGroup =
-          confirmPasswordInput.closest(".form-group");
-        const errorSpan =
-          confirm_passwordformGroup.querySelector(".form-message");
+    confirmPasswordInput.addEventListener("input", function () {
+      const formGroup = this.closest(".form-group");
+      const errorSpan = formGroup.querySelector(".form-message");
 
-        timeoutId = setTimeout(() => {
-          if (
-            currentValue !== confirmPasswordInput.value &&
-            confirmPasswordInput.value !== ""
-          ) {
-            errorSpan.textContent = "Passwords do not match";
-            confirm_passwordformGroup.classList.add("invalid");
-            confirmPasswordInput.classList.remove("input-hover");
-          } else {
-            errorSpan.textContent = "";
-            confirm_passwordformGroup.classList.remove("invalid");
-            confirmPasswordInput.classList.add("input-hover");
-          }
-        }, 500);
-      });
+      if (errorSpan.textContent) {
+        errorSpan.textContent = "";
+        formGroup.classList.remove("invalid");
+        this.classList.add("input-hover");
+      }
+    });
 
-      // Confirm_password
-      confirmPasswordInput.addEventListener("input", function () {
-        const formGroup = this.closest(".form-group");
-        const errorSpan = formGroup.querySelector(".form-message");
+    // Show Password
+    const eyePasswordIcon = document.querySelector(".fa-eye-slash.password");
+    eyePasswordIcon.addEventListener("click", () => {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyePasswordIcon.className = "fa-solid fa-eye password";
+      } else {
+        passwordInput.type = "password";
+        eyePasswordIcon.className = "fa-solid fa-eye-slash password";
+      }
+    });
 
-        if (errorSpan.textContent) {
-          errorSpan.textContent = "";
-          formGroup.classList.remove("invalid");
-          this.classList.add("input-hover");
-        }
-      });
-
-      let timerId;
-      confirmPasswordInput.addEventListener("keyup", function () {
-        if (timerId) {
-          clearTimeout(timerId);
-        }
-
-        const currentValue = this.value;
-        const formGroup = this.closest(".form-group");
-        const errorSpan = formGroup.querySelector(".form-message");
-
-        timerId = setTimeout(() => {
-          if (currentValue !== passwordInput.value) {
-            errorSpan.textContent = "Passwords do not match";
-            formGroup.classList.add("invalid");
-            this.classList.remove("input-hover");
-          }
-        }, 500);
-      });
-
-      confirmPasswordInput.addEventListener("input", function () {
-        const formGroup = this.closest(".form-group");
-        const errorSpan = formGroup.querySelector(".form-message");
-
-        if (errorSpan.textContent) {
-          errorSpan.textContent = "";
-          formGroup.classList.remove("invalid");
-          this.classList.add("input-hover");
-        }
-      });
-
-      // Show Password
-      const eyePasswordIcon = document.querySelector(".fa-eye-slash.password");
-      eyePasswordIcon.addEventListener("click", () => {
-        if (passwordInput.type === "password") {
-          passwordInput.type = "text";
-          eyePasswordIcon.className = "fa-solid fa-eye password";
-        } else {
-          passwordInput.type = "password";
-          eyePasswordIcon.className = "fa-solid fa-eye-slash password";
-        }
-      });
-
-      const eyeConfirm_passwordIcon = document.querySelector(
-        ".fa-eye-slash.confirm_password",
-      );
-      eyeConfirm_passwordIcon.addEventListener("click", () => {
-        if (confirmPasswordInput.type === "password") {
-          confirmPasswordInput.type = "text";
-          eyeConfirm_passwordIcon.className =
-            "fa-solid fa-eye confirm_password";
-        } else {
-          confirmPasswordInput.type = "password";
-          eyeConfirm_passwordIcon.className =
-            "fa-solid fa-eye-slash confirm_password";
-        }
-      });
+    const eyeConfirm_passwordIcon = document.querySelector(
+      ".fa-eye-slash.confirm_password",
+    );
+    eyeConfirm_passwordIcon.addEventListener("click", () => {
+      if (confirmPasswordInput.type === "password") {
+        confirmPasswordInput.type = "text";
+        eyeConfirm_passwordIcon.className = "fa-solid fa-eye confirm_password";
+      } else {
+        confirmPasswordInput.type = "password";
+        eyeConfirm_passwordIcon.className =
+          "fa-solid fa-eye-slash confirm_password";
+      }
     });
   </script>
 </html>

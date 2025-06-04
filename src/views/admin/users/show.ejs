@@ -12,48 +12,46 @@
   </head>
 
   <!-- Main Content -->
-  <main class="content-wrapper">
-    <div class="content-header">
-      <h1>User Detail</h1>
-      <div>
-        <a href="/admin/users" class="btn btn-secondary" id="backButton">
-          <i class="fas fa-arrow-left"></i> Back
-        </a>
-        <a
-          href="/admin/users/<%= user.id %>/edit"
-          class="btn btn-primary"
-          id="editButton"
-        >
-          <i class="fas fa-edit"></i> Edit
-        </a>
-      </div>
+  <div class="content-header">
+    <h1>User Detail</h1>
+    <div>
+      <a href="/admin/users" class="btn btn-secondary" id="backButton">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+      <a
+        href="/admin/users/<%= user.id %>/edit"
+        class="btn btn-primary"
+        id="editButton"
+      >
+        <i class="fas fa-edit"></i> Edit
+      </a>
     </div>
+  </div>
 
-    <!-- User Details Container -->
-    <div class="card">
-      <div class="card-header">
-        <h3 id="itemTitle">Loading...</h3>
-      </div>
-      <div class="card-body">
-        <div id="itemContent">
-          <!-- Will be populated with JavaScript -->
-          <div class="loading-spinner">Loading details...</div>
-        </div>
+  <!-- User Details Container -->
+  <div class="card">
+    <div class="card-header">
+      <h3 id="itemTitle">Loading...</h3>
+    </div>
+    <div class="card-body">
+      <div id="itemContent">
+        <!-- Will be populated with JavaScript -->
+        <div class="loading-spinner">Loading details...</div>
       </div>
     </div>
+  </div>
 
-    <!-- Activity History -->
-    <div class="card">
-      <div class="card-header">
-        <h3>Activity History</h3>
-      </div>
-      <div class="card-body">
-        <ul class="activity-list" id="activityList">
-          <!-- Will be populated with JavaScript -->
-        </ul>
-      </div>
+  <!-- Activity History -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Activity History</h3>
     </div>
-  </main>
+    <div class="card-body">
+      <ul class="activity-list" id="activityList">
+        <!-- Will be populated with JavaScript -->
+      </ul>
+    </div>
+  </div>
 
   <!-- <script src="assets/js/common.js"></script> -->
 
