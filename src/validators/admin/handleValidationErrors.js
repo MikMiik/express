@@ -5,7 +5,6 @@ const { formatDate, formatDay } = require("@/utils/dayjsFormat");
 const handleValidationErrors = async (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    delete req.session.flash;
     return next();
   }
 
