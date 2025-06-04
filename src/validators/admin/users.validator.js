@@ -9,25 +9,36 @@ exports.createUser = [
   },
   checkSchema({
     name: {
-      notEmpty: { errorMessage: "Name is required." },
+      notEmpty: { errorMessage: "Create error: Name is required." },
     },
     email: {
-      notEmpty: { errorMessage: "Email is required." },
-      isEmail: { errorMessage: "Not a valid e-mail address" },
+      notEmpty: { errorMessage: "Create error: Email is required." },
+      isEmail: { errorMessage: "Create error: Not a valid e-mail address" },
       custom: {
         options: async (value, { req }) => {
           const existingUser = await usersService.getByEmail(value);
           if (existingUser) {
-            throw new Error("A user already exists with this e-mail address");
+            throw new Error(
+              "Create error: A user already exists with this e-mail address",
+            );
           }
         },
       },
     },
     phone: {
-      notEmpty: { errorMessage: "Phone is required." },
+      notEmpty: { errorMessage: "Create error: Phone is required." },
       isMobilePhone: {
         options: ["vi-VN"],
-        errorMessage: "Not a valid mobile phone",
+        errorMessage: "Create error: Not a valid mobile phone",
+      },
+      custom: {
+        options: async (value, { req }) => {
+          const phoneOwner = await usersService.getByPhoneNumber(value);
+          if (phoneOwner) {
+            throw new Error("Create error: Phone has already in use");
+          }
+          return true;
+        },
       },
     },
   }),
@@ -51,7 +62,7 @@ exports.updateUser = [
           const editingUser = await usersService.getById(req.params.id);
           const emailOwner = await usersService.getByEmail(value);
           if (emailOwner && emailOwner.id !== editingUser.id) {
-            throw new Error("Update error: Email is already in use");
+            throw new Error("Update error: Email has already in use");
           }
           return true;
         },
@@ -61,7 +72,17 @@ exports.updateUser = [
       notEmpty: { errorMessage: "Update error: Phone is required." },
       isMobilePhone: {
         options: ["vi-VN"],
-        errorMessage: "Not a valid mobile phone",
+        errorMessage: "Update error: Not a valid mobile phone",
+      },
+      custom: {
+        options: async (value, { req }) => {
+          const editingUser = await usersService.getById(req.params.id);
+          const phoneOwner = await usersService.getByPhoneNumber(value);
+          if (phoneOwner && phoneOwner.id !== editingUser.id) {
+            throw new Error("Update error: Phone has already in use");
+          }
+          return true;
+        },
       },
     },
     password: {

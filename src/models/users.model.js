@@ -42,6 +42,13 @@ exports.findByEmailAndPassword = async (email, password) => {
   return users[0];
 };
 
+exports.findByPhoneNumber = async (phone) => {
+  const [users] = await db.query(`SELECT * FROM ${table} WHERE phone = ?`, [
+    phone,
+  ]);
+  return users[0];
+};
+
 exports.create = async (data) => {
   const { columns, placeholders, values } = buildInsertQuery(data);
   const query = `INSERT INTO ${table} (${columns}) VALUES (${placeholders});`;

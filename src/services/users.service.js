@@ -22,6 +22,11 @@ class UsersService {
     return user;
   }
 
+  async getByPhoneNumber(phone) {
+    const user = await usersModel.findByPhoneNumber(phone);
+    return user;
+  }
+
   async create(data) {
     const user = await usersModel.create(data);
     return user;
