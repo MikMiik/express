@@ -9,8 +9,8 @@ async function shareLocals(req, res, next) {
       res.locals.auth = user;
     }
   }
-  console.log(req.flash());
   res.locals.flash = req.flash() || {};
+  console.log(res.locals.flash);
   // delete req.session.flash;
   next();
 }
