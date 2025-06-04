@@ -12,7 +12,6 @@ const accountSettingsRouter = require("@/routes/admin/accountSettings.route");
 const authRouter = require("@/routes/admin/auth.route");
 
 const router = express.Router();
-
 router.use("/", dashboardRouter);
 router.use("/", authRouter);
 router.use("/categories", categoriesRouter);
