@@ -17,7 +17,7 @@ const flash = (options) => {
 function _flash(type, msg, ...args) {
   if (this.session === undefined) throw Error("req.flash() requires sessions");
   const msgs = (this.session.flash = this.session.flash || {});
-  console.log(this.url, this.session.flash);
+  // console.log(this.url, this.session.flash);
   // Kiểm tra và khởi tạo this.session.flash nếu chưa tồn tại
   // msgs và this.session.flash cùng tham chiếu đến cùng 1 object nên thay đổi msgs cũng là thay đổi this.session.flash
   if (type && msg) {
@@ -39,9 +39,6 @@ function _flash(type, msg, ...args) {
     delete msgs[type];
     return { [type]: messages };
   } else {
-    this.session.flash = {};
-    // console.log(msgs);
-    // gán lại giá trị, thay đổi tham chiếu this.session.flash nên msgs vẫn giữ giá trị cũ
     return msgs;
   }
 }

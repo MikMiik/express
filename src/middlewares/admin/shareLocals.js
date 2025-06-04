@@ -10,9 +10,8 @@ async function shareLocals(req, res, next) {
     }
   }
   res.locals.flash = req.flash() || {};
-  // console.log(res.locals.flash);
-  // console.log(req.session.flash);
-  // delete req.session.flash;
+  console.log(req.session.flash);
+  delete req.session.flash;
   next();
 }
 
