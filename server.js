@@ -38,7 +38,7 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
-app.use(flash());
+// app.use(flash());
 app.use(methodOverride("_method"));
 app.use(handlePagination);
 app.use(responseEnhancer);
@@ -53,6 +53,7 @@ app.set("layout", "./admin/layouts/default");
 app.use(
   "/admin",
   handleSession,
+  flash(),
   shareLocals,
   checkAuth,
   handleSidebar,
