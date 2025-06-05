@@ -18,12 +18,14 @@ exports.createUser = [
         options: async (value, { req }) => {
           const existingUser = await usersService.getByEmail(value);
           if (existingUser) {
-            throw new Error(
-              "Create error: A user already exists with this e-mail address",
-            );
+            throw new Error("Create error: Email has already in use");
           }
+          return true;
         },
       },
+    },
+    username: {
+      notEmpty: { errorMessage: "Create error: Username is required." },
     },
     phone: {
       notEmpty: { errorMessage: "Create error: Phone is required." },
@@ -36,6 +38,36 @@ exports.createUser = [
           const phoneOwner = await usersService.getByPhoneNumber(value);
           if (phoneOwner) {
             throw new Error("Create error: Phone number has already in use");
+          }
+          return true;
+        },
+      },
+    },
+    password: {
+      custom: {
+        options: (value) => {
+          if (value === "" || value === null) return true;
+          if (value.length < 8) {
+            throw new Error("Password must be at least 8 characters long");
+          }
+
+          const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/;
+          if (!regex.test(value)) {
+            throw new Error(
+              "Password must include uppercase, lowercase, number, and special character",
+            );
+          }
+
+          return true;
+        },
+      },
+    },
+    confirm_password: {
+      optional: true,
+      custom: {
+        options: (value, { req }) => {
+          if (req.body.password && value !== req.body.password) {
+            throw new Error("Passwords do not match");
           }
           return true;
         },
@@ -67,6 +99,9 @@ exports.updateUser = [
           return true;
         },
       },
+    },
+    username: {
+      notEmpty: { errorMessage: "Update error: Username is required." },
     },
     phone: {
       notEmpty: { errorMessage: "Update error: Phone is required." },

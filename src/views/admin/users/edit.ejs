@@ -45,7 +45,7 @@
       </div>
       <!-- avatar -->
       <div class="form-group">
-        <label style="margin-top: 10px; max-width: fit-content" for="userAvatar">
+      <label style="margin-top: 10px; max-width: fit-content" for="userAvatar">
           Avatar
           <div class="avatar" style="width: 100px; height: 100px; margin-top: 20px">
             <img src="<%= user.avatar %>" alt="" class="avatarImg avatar"
@@ -164,7 +164,7 @@
         <div class="form-group">
           <label for="userPassword">New Password</label>
           <div style="display: flex; align-items: center; position: relative">
-            <input type="password" id="userPassword" name="password" class="form-control" data-validate="password" />
+            <input type="password" id="userPassword" name="password" class="form-control"/>
             <i
               style="position: absolute; right: 10px; padding: 5px"
               class="fa-solid fa-eye-slash password"
@@ -245,11 +245,11 @@
       .required("Please enter your email"),
     phone: yup
       .string()
-      .required("Please enter your phone number")
       .matches(
         /(?:\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\d]+|$)/,
         "Not a valid phone number",
-      ),
+      )
+      .required("Please enter your phone number"),
     username: yup.string().required("Please enter your username"),
     password: yup
       .string()
@@ -312,7 +312,7 @@
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const passwordReqs = [];
-
+        document.querySelector('main').scrollTo(0,150 )
         err.inner.forEach((error) => {
           const errorInput = document.querySelector(
             `input[name=${error.path}]`,

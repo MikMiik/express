@@ -4,8 +4,7 @@ function checkAuth(req, res, next) {
   );
   if (!res.locals.auth && isAuthRequired) {
     return res.redirect("/admin/login");
-  }
-  if (res.locals.auth && !isAuthRequired) {
+  } else if (res.locals.auth && !isAuthRequired) {
     return res.redirect("/admin/");
   }
   next();
