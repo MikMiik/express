@@ -1,4 +1,6 @@
 const usersService = require("@/services/users.service");
+const { formatDate, formatDay } = require("@/utils/dayjsFormat");
+const getVisiblePages = require("@/utils/getVisiblePages");
 
 async function shareLocals(req, res, next) {
   const userId = req.session.userId;
@@ -10,6 +12,9 @@ async function shareLocals(req, res, next) {
     }
   }
   res.locals.flash = req.flash() || {};
+  res.locals.formatDate = formatDate;
+  res.locals.formatDay = formatDay;
+  res.locals.getVisiblePages = getVisiblePages;
   delete req.session.flash;
   next();
 }

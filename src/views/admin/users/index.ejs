@@ -146,16 +146,17 @@
 
     <!-- Pagination -->
     <div class="pagination-container">
-      <div class="pagination-info">Showing 1-6 of 42 users</div>
+      <div class="pagination-info">
+        Showing <%= (currentPage - 1)*limit+1 %>-<%= currentPage*limit < total ?
+        currentPage*limit : total %> of <%= total %> users
+      </div>
       <ul class="pagination">
-        <li class="active">
-          <a href="#" data-page="1">1</a>
+        <% const visiblePages = getVisiblePages(currentPage, totalPages, 5) %>
+        <% for (let i of visiblePages) { %>
+        <li class="<%= currentPage == i ? 'active' : '' %>">
+          <a href="/admin/users?page=<%= i %>"> <%= i %> </a>
         </li>
-        <li><a href="#" data-page="2">2</a></li>
-        <li><a href="#" data-page="3">3</a></li>
-        <li><a href="#" data-page="4">4</a></li>
-        <li><a href="#" data-page="5">5</a></li>
-        <li><a href="#" data-page="6">6</a></li>
+        <% } %>
       </ul>
     </div>
   </div>
@@ -249,30 +250,6 @@
           }
         }, 300),
       );
-
-      // Setup pagination
-      const paginationLinks = document.querySelectorAll(".pagination li a");
-      paginationLinks.forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-
-          // Remove active class from all links
-          paginationLinks.forEach((l) =>
-            l.parentElement.classList.remove("active"),
-          );
-
-          // Add active class to clicked link
-          this.parentElement.classList.add("active");
-
-          // Get page number
-          const page = this.getAttribute("data-page");
-
-          // Update pagination info
-          document.querySelector(".pagination-info").textContent = `Showing ${
-            (page - 1) * 10 + 1
-          }-${Math.min(page * 10, 42)} of 42 users`;
-        });
-      });
 
       // Setup delete confirmation
       // const deleteButtons = document.querySelectorAll(".delete-item");
