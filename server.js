@@ -1,5 +1,6 @@
 // InitImport
 require("module-alias/register");
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -38,7 +39,6 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
-// app.use(flash());
 app.use(methodOverride("_method"));
 app.use(handlePagination);
 app.use(responseEnhancer);

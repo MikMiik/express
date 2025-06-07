@@ -37,8 +37,7 @@
         <label style="margin-top: 10px; max-width: fit-content" for="userAvatar">
           Avatar
           <div class="avatar" style="width: 100px; height: 100px; margin-top: 20px">
-            <img src="/uploads/default-avatar.jpg" alt="" class="avatarImg avatar"
-              style="width: 100%; height: 100%; margin: 0" />
+            <img src="/uploads/default-avatar.jpg" alt="" class="avatarImg avatar" style="width: 100%; height: 100%; margin: 0" />
           </div>
         </label>
         <input hidden type="file" id="userAvatar" name="avatar" class="form-control" />
@@ -55,8 +54,7 @@
         <!-- phone -->
         <div class="form-group">
           <label for="userPhone">Phone</label>
-          <input value="<%= old?.phone %>" type="tel" id="userPhone" name="phone" class="form-control"
-            data-validate="phone" />
+          <input value="<%= old?.phone %>" type="tel" id="userPhone" name="phone" class="form-control" data-validate="phone" />
           <span class="form-message" id="userPhoneError">
             <%= errors?.phone ? errors?.phone : '' %>
           </span>
@@ -77,8 +75,7 @@
       <!-- username -->
       <div class="form-group">
         <label for="userUsername">Username*</label>
-        <input value="<%= old?.username %>" type="text" id="userUsername" name="username" class="form-control"
-          data-validate="username" />
+        <input value="<%= old?.username %>" type="text" id="userUsername" name="username" class="form-control" data-validate="username" />
         <span class="form-message" id="userUsernameError">
           <%= errors?.username ? errors?.username : '' %>
         </span>
@@ -89,34 +86,34 @@
         <div class="form-group">
           <label for="userRole">Role*</label>
           <% const roles=['Admin', 'Editor' , 'Viewer' ] %>
-            <select id="userRole" name="role" class="form-control">
-              <option value="">Select Role</option>
+          <select id="userRole" name="role" class="form-control">
+            <option value="">Select Role</option>
 
-              <% for (let role of roles) { %>
-                <% const selected = old?.role === role ? 'selected' : '' %>
-                  <option value="<%= role %>" <%= selected %>>
-                    <%= role %>
-                  </option>
-                  <% } %>
+            <% for (let role of roles) { %>
+            <% const selected = old?.role === role ? 'selected' : '' %>
+            <option value="<%= role %>" <%= selected %>>
+              <%= role %>
+            </option>
+            <% } %>
 
-            </select>
-            <span class="form-message" id="userRoleError"></span>
+          </select>
+          <span class="form-message" id="userRoleError"></span>
         </div>
         <!-- status -->
         <div class="form-group">
           <label for="userStatus">Status*</label>
           <% const statuses=['Active', 'Inactive' , 'Pending'] %>
-            <select id="userStatus" name="status" class="form-control">
-              <option value="">Select Status</option>
+          <select id="userStatus" name="status" class="form-control">
+            <option value="">Select Status</option>
 
-              <% for (let status of statuses) { %>
-                <% const selected = old?.status === status ? 'selected' : '' %>
-                  <option value="<%= status %>" <%= selected %>>
-                    <%= status %>
-                  </option>
-                  <% } %>
-            </select>
-            <span class="form-message" id="userStatusError"></span>
+            <% for (let status of statuses) { %>
+            <% const selected = old?.status === status ? 'selected' : '' %>
+            <option value="<%= status %>" <%= selected %>>
+              <%= status %>
+            </option>
+            <% } %>
+          </select>
+          <span class="form-message" id="userStatusError"></span>
         </div>
       </div>
     </div>
@@ -128,11 +125,8 @@
         <div class="form-group">
           <label for="userPassword">Password*</label>
           <div style="display: flex; align-items: center; position: relative">
-            <input value="<%= old?.password %>" type="password" id="userPassword" name="password" class="form-control"/>
-            <i
-              style="position: absolute; right: 10px; padding: 5px"
-              class="fa-solid fa-eye-slash password"
-            ></i>
+            <input value="<%= old?.password %>" type="password" id="userPassword" name="password" class="form-control" />
+            <i style="position: absolute; right: 10px; padding: 5px" class="fa-solid fa-eye-slash password"></i>
           </div>
           <span class="form-message" id="userPasswordError">
             <%= errors?.password ? errors?.password : '' %>
@@ -141,14 +135,10 @@
         <!-- confirm_password -->
         <div class="form-group">
           <label for="userConfirmPassword">Confirm Password*</label>
-        <div style="display: flex; align-items: center; position: relative">
-            <input value="<%= old?.confirm_password %>" type="password" id="userConfirmPassword" name="confirm_password"
-              class="form-control" />
-            <i
-              style="position: absolute; right: 10px; padding: 5px"
-              class="fa-solid fa-eye-slash confirm_password"
-            ></i>
-        </div>
+          <div style="display: flex; align-items: center; position: relative">
+            <input value="<%= old?.confirm_password %>" type="password" id="userConfirmPassword" name="confirm_password" class="form-control" />
+            <i style="position: absolute; right: 10px; padding: 5px" class="fa-solid fa-eye-slash confirm_password"></i>
+          </div>
           <span class="form-message" id="userConfirmPasswordError">
             <%= errors?.confirm_password ? errors?.confirm_password : '' %>
           </span>
@@ -162,8 +152,7 @@
 
     <div class="form-buttons">
       <button style="padding: 0; overflow: hidden;" type="button" class="btn btn-secondary" id="cancelBtn">
-        <a style="text-decoration: none; color: inherit; padding: 10px 20px;"
-          href="/admin/users">Cancel</a>
+        <a style="text-decoration: none; color: inherit; padding: 10px 20px;" href="/admin/users">Cancel</a>
       </button>
       <button type="submit" class="btn btn-primary">
         <i class="fas fa-save"></i> Create User
@@ -205,7 +194,7 @@
       .test(
         "password",
         "Password must meet all requirements",
-        function (value) {
+        function(value) {
           const errors = [];
 
           if (!value) return true;
@@ -261,7 +250,7 @@
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const passwordReqs = [];
-        document.querySelector('main').scrollTo(0,150 )
+        document.querySelector('main').scrollTo(0, 150)
         err.inner.forEach((error) => {
           const errorInput = document.querySelector(
             `input[name=${error.path}]`,
@@ -282,7 +271,7 @@
   });
   // Password
   let timeoutId;
-  passwordInput.addEventListener("keyup", function () {
+  passwordInput.addEventListener("keyup", function() {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
@@ -308,7 +297,7 @@
   });
 
   // Confirm_password
-  confirmPasswordInput.addEventListener("input", function () {
+  confirmPasswordInput.addEventListener("input", function() {
     const formGroup = this.closest(".form-group");
     const errorSpan = formGroup.querySelector(".form-message");
 
@@ -319,7 +308,7 @@
   });
 
   let timerId;
-  confirmPasswordInput.addEventListener("keyup", function () {
+  confirmPasswordInput.addEventListener("keyup", function() {
     if (timerId) {
       clearTimeout(timerId);
     }
@@ -336,7 +325,7 @@
     }, 500);
   });
 
-  confirmPasswordInput.addEventListener("input", function () {
+  confirmPasswordInput.addEventListener("input", function() {
     const formGroup = this.closest(".form-group");
     const errorSpan = formGroup.querySelector(".form-message");
 
@@ -372,4 +361,5 @@
     }
   });
 </script>
+
 </html>

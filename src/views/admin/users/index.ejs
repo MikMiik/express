@@ -1,287 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Users | Admin Dashboard</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="/assets/css/common.css" />
-  </head>
 
-  <!-- Main Content -->
-  <div class="content-header">
-    <h1>User</h1>
-    <a href="/admin/users/create" class="btn btn-primary">
-      <i class="fas fa-plus"></i> Add New
-    </a>
-  </div>
-  <!-- Filter Bar -->
-  <div class="filter-bar">
-    <form id="filterForm" class="filter-form" novalidate>
-      <div class="form-group">
-        <label for="filterName">Username</label>
-        <input
-          type="text"
-          id="filterName"
-          class="form-control"
-          placeholder="Search users..."
-        />
-        <span class="error-text" id="filterNameError"
-          >Please enter a valid username.</span
-        >
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Users | Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/common.css" />
+</head>
 
-      <div class="form-group">
-        <label for="filterRole">Role</label>
-        <select id="filterRole" class="form-control">
-          <option value="">All Roles</option>
-          <option value="admin">Administrator</option>
-          <option value="editor">Editor</option>
-          <option value="viewer">Viewer</option>
-        </select>
-        <span class="error-text" id="filterRoleError"
-          >Please select a valid role.</span
-        >
-      </div>
+<!-- Main Content -->
+<div class="content-header">
+  <h1>User</h1>
+  <a href="/admin/users/create" class="btn btn-primary">
+    <i class="fas fa-plus"></i> Add New
+  </a>
+</div>
+<!-- Filter Bar -->
+<div class="filter-bar">
+  <form id="filterForm" class="filter-form" novalidate>
+    <div class="form-group">
+      <label for="filterName">Username</label>
+      <input type="text" id="filterName" class="form-control" placeholder="Search users..." />
+      <span class="error-text" id="filterNameError">Please enter a valid username.</span>
+    </div>
 
-      <div class="form-group">
-        <label for="filterStatus">Status</label>
-        <select id="filterStatus" class="form-control">
-          <option value="">All Statuses</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-          <option value="pending">Pending</option>
-        </select>
-        <span class="error-text" id="filterStatusError"
-          >Please select a valid status.</span
-        >
-      </div>
+    <div class="form-group">
+      <label for="filterRole">Role</label>
+      <select id="filterRole" class="form-control">
+        <option value="">All Roles</option>
+        <option value="admin">Administrator</option>
+        <option value="editor">Editor</option>
+        <option value="viewer">Viewer</option>
+      </select>
+      <span class="error-text" id="filterRoleError">Please select a valid role.</span>
+    </div>
 
-      <div class="form-group filter-actions">
-        <button type="submit" class="btn btn-primary">
-          <i class="fas fa-filter"></i> Filter
-        </button>
-        <button
-          type="button"
-          id="resetFilters"
-          class="btn btn-secondary"
-          style="margin-left: 10px"
-        >
-          <i class="fas fa-times"></i> Reset
-        </button>
-      </div>
-    </form>
-  </div>
+    <div class="form-group">
+      <label for="filterStatus">Status</label>
+      <select id="filterStatus" class="form-control">
+        <option value="">All Statuses</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+        <option value="pending">Pending</option>
+      </select>
+      <span class="error-text" id="filterStatusError">Please select a valid status.</span>
+    </div>
 
-  <!-- Data Table -->
-  <div class="table-container">
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>User</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Last Login</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- User rows -->
-        <% for (let user of users) { %>
-        <tr data-id="<%= user.id %>">
-          <td>
-            <div style="display: flex; align-items: center">
-              <img src="<%= user.avatar %>" alt="" class="avatar" />
-              <div style="margin-left: 15px">
-                <div class="item-title"><%= user.name %></div>
-                <div class="item-subtitle"><%= user.username %></div>
-              </div>
+    <div class="form-group filter-actions">
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-filter"></i> Filter
+      </button>
+      <button type="button" id="resetFilters" class="btn btn-secondary" style="margin-left: 10px">
+        <i class="fas fa-times"></i> Reset
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Data Table -->
+<div class="table-container">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Last Login</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- User rows -->
+      <% for (let user of users) { %>
+      <tr data-id="<%= user.id %>">
+        <td>
+          <div style="display: flex; align-items: center">
+            <img src="<%= user.avatar %>" alt="" class="avatar" />
+            <div style="margin-left: 15px">
+              <div class="item-title"><%= user.name %></div>
+              <div class="item-subtitle"><%= user.username %></div>
             </div>
-          </td>
-          <td><%= user.email %></td>
-          <td><%= user.role || "Administrator" %></td>
-          <td><%= formatDay(user.updated_at) %></td>
-          <td>
-            <span class="badge badge-success"
-              ><%= user.status || "Active" %></span
-            >
-          </td>
-          <td>
-            <div class="action-buttons">
-              <a
-                href="/admin/users/<%= user.id %>"
-                class="action-btn view"
-                title="View"
-              >
-                <i class="fas fa-eye"></i>
-              </a>
-              <a
-                href="/admin/users/<%= user.id %>/edit"
-                class="action-btn edit"
-                title="Edit"
-              >
-                <i class="fas fa-edit"></i>
-              </a>
-              <form
-                class="deleteUserForm delete-item"
-                data-id="<%= user.id %>"
-                data-name="<%= user.name %>"
-                method="POST"
-                action="/admin/users/<%= user.id %>/force-delete?_method=DELETE"
-              >
-                <button type="submit" class="action-btn delete" title="Delete">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </form>
-            </div>
-          </td>
-        </tr>
-        <% } %>
-      </tbody>
-    </table>
+          </div>
+        </td>
+        <td><%= user.email %></td>
+        <td><%= user.role || "Administrator" %></td>
+        <td><%= formatDay(user.updated_at) %></td>
+        <td>
+          <span class="badge badge-success"><%= user.status || "Active" %></span>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <a href="/admin/users/<%= user.id %>" class="action-btn view" title="View">
+              <i class="fas fa-eye"></i>
+            </a>
+            <a href="/admin/users/<%= user.id %>/edit" class="action-btn edit" title="Edit">
+              <i class="fas fa-edit"></i>
+            </a>
+            <form class="deleteUserForm delete-item" data-id="<%= user.id %>" data-name="<%= user.name %>" method="POST" action="/admin/users/<%= user.id %>/force-delete?_method=DELETE">
+              <button type="submit" class="action-btn delete" title="Delete">
+                <i class="fas fa-trash"></i>
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
 
-    <!-- Pagination -->
-    <div class="pagination-container">
-      <div class="pagination-info">
-        Showing <%= (currentPage - 1)*limit+1 %>-<%= currentPage*limit < total ?
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <div class="pagination-info">
+      Showing <%= (currentPage - 1)*limit+1 %>-<%= currentPage*limit < total ?
         currentPage*limit : total %> of <%= total %> users
-      </div>
-      <ul class="pagination">
-        <% const visiblePages = getVisiblePages(currentPage, totalPages, 5) %>
-        <% for (let i of visiblePages) { %>
-        <li class="<%= currentPage == i ? 'active' : '' %>">
-          <a href="/admin/users?page=<%= i %>"> <%= i %> </a>
-        </li>
-        <% } %>
-      </ul>
+    </div>
+    <ul class="pagination">
+      <% const visiblePages = getVisiblePages(currentPage, totalPages, 5) %>
+      <% for (let i of visiblePages) { %>
+      <li class="<%= currentPage == i ? 'active' : '' %>">
+        <a href="/admin/users?page=<%= i %>"> <%= i %> </a>
+      </li>
+      <% } %>
+    </ul>
+  </div>
+</div>
+
+<!-- Confirm Dialog -->
+<div class="modal" id="confirmDeleteModal">
+  <div class="modal-content">
+    <h3 class="modal-title">Confirm Delete</h3>
+    <div class="modal-body">
+      Are you sure you want to delete user "<span id="deleteItemName"></span>"? This action cannot be undone.
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancelDelete" class="btn btn-secondary" data-cancel>
+        Cancel
+      </button>
+      <button type="button" id="confirmDelete" class="btn btn-danger" data-confirm>
+        Delete
+      </button>
     </div>
   </div>
+</div>
 
-  <!-- Confirm Dialog -->
-  <div class="modal" id="confirmDeleteModal">
-    <div class="modal-content">
-      <h3 class="modal-title">Confirm Delete</h3>
-      <div class="modal-body">
-        Are you sure you want to delete user "<span id="deleteItemName"></span
-        >"? This action cannot be undone.
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          id="cancelDelete"
-          class="btn btn-secondary"
-          data-cancel
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          id="confirmDelete"
-          class="btn btn-danger"
-          data-confirm
-        >
-          Delete
-        </button>
-      </div>
-    </div>
-  </div>
+<!-- <script src="assets/js/common.js"></script> -->
 
-  <!-- <script src="assets/js/common.js"></script> -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Initialize form validation
+    initFormValidation("filterForm");
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Initialize form validation
-      initFormValidation("filterForm");
+    // Setup filter form
+    const filterForm = document.getElementById("filterForm");
+    filterForm.addEventListener("submit", function(event) {
+      event.preventDefault();
 
-      // Setup filter form
-      const filterForm = document.getElementById("filterForm");
-      filterForm.addEventListener("submit", function (event) {
+      if (validateForm("filterForm")) {
+        // Get filter values
+        const name = document.getElementById("filterName").value;
+        const role = document.getElementById("filterRole").value;
+        const status = document.getElementById("filterStatus").value;
+
+        // Filter users (in a real application, this would likely be an API call)
+        console.log("Filtering with:", {
+          name,
+          role,
+          status,
+        });
+
+        // Show success message
+        showMessage(
+          "filterSuccess",
+          `Applied filters: Username="${name}", Role="${role}", Status="${status}"`,
+          3000,
+        );
+      }
+    });
+
+    // Reset filters
+    document
+      .getElementById("resetFilters")
+      .addEventListener("click", function() {
+        resetForm("filterForm");
+      });
+
+    // Validate alphanumeric input
+    document.getElementById("filterName").addEventListener(
+      "input",
+      debounce(function() {
+        const input = this;
+        const value = input.value.trim();
+
+        // Only validate if there's a value (the field is not required)
+        if (value !== "" && !/^[a-zA-Z0-9\s]+$/.test(value)) {
+          document.getElementById("filterNameError").style.display = "block";
+          document.getElementById("filterNameError").textContent =
+            "Username can only contain letters, numbers, and spaces.";
+          input.classList.add("error");
+        } else {
+          document.getElementById("filterNameError").style.display = "none";
+          input.classList.remove("error");
+        }
+      }, 300),
+    );
+
+    // Setup delete confirmation
+    // const deleteButtons = document.querySelectorAll(".delete-item");
+    // deleteButtons.forEach((button) => {
+    //   button.addEventListener("click", async function (e) {
+    //     e.preventDefault();
+
+    //     const itemId = this.getAttribute("data-id");
+    //     const itemName = this.getAttribute("data-name");
+    //     // Show confirmation dialog
+    //     const result = await showConfirmDialog("confirmDeleteModal", {
+    //       title: "Confirm Delete",
+    //       message: `Are you sure you want to delete "${itemName}"? This action cannot be undone.`,
+    //     });
+    //   });
+    // });
+
+    const deleteForm = document.querySelectorAll(".delete-item");
+    deleteForm.forEach((form) => {
+      form.addEventListener("submit", async function(event) {
         event.preventDefault();
-
-        if (validateForm("filterForm")) {
-          // Get filter values
-          const name = document.getElementById("filterName").value;
-          const role = document.getElementById("filterRole").value;
-          const status = document.getElementById("filterStatus").value;
-
-          // Filter users (in a real application, this would likely be an API call)
-          console.log("Filtering with:", {
-            name,
-            role,
-            status,
-          });
-
-          // Show success message
-          showMessage(
-            "filterSuccess",
-            `Applied filters: Username="${name}", Role="${role}", Status="${status}"`,
-            3000,
-          );
+        const itemId = this.getAttribute("data-id");
+        const itemName = this.getAttribute("data-name");
+        const result = await showConfirmDialog("confirmDeleteModal", {
+          title: "Confirm Delete",
+          message: `Are you sure you want to delete "${itemName}"? This action cannot be undone.`,
+        });
+        if (result) {
+          this.submit();
         }
       });
-
-      // Reset filters
-      document
-        .getElementById("resetFilters")
-        .addEventListener("click", function () {
-          resetForm("filterForm");
-        });
-
-      // Validate alphanumeric input
-      document.getElementById("filterName").addEventListener(
-        "input",
-        debounce(function () {
-          const input = this;
-          const value = input.value.trim();
-
-          // Only validate if there's a value (the field is not required)
-          if (value !== "" && !/^[a-zA-Z0-9\s]+$/.test(value)) {
-            document.getElementById("filterNameError").style.display = "block";
-            document.getElementById("filterNameError").textContent =
-              "Username can only contain letters, numbers, and spaces.";
-            input.classList.add("error");
-          } else {
-            document.getElementById("filterNameError").style.display = "none";
-            input.classList.remove("error");
-          }
-        }, 300),
-      );
-
-      // Setup delete confirmation
-      // const deleteButtons = document.querySelectorAll(".delete-item");
-      // deleteButtons.forEach((button) => {
-      //   button.addEventListener("click", async function (e) {
-      //     e.preventDefault();
-
-      //     const itemId = this.getAttribute("data-id");
-      //     const itemName = this.getAttribute("data-name");
-      //     // Show confirmation dialog
-      //     const result = await showConfirmDialog("confirmDeleteModal", {
-      //       title: "Confirm Delete",
-      //       message: `Are you sure you want to delete "${itemName}"? This action cannot be undone.`,
-      //     });
-      //   });
-      // });
-
-      const deleteForm = document.querySelectorAll(".delete-item");
-      deleteForm.forEach((form) => {
-        form.addEventListener("submit", async function (event) {
-          event.preventDefault();
-          const itemId = this.getAttribute("data-id");
-          const itemName = this.getAttribute("data-name");
-          const result = await showConfirmDialog("confirmDeleteModal", {
-            title: "Confirm Delete",
-            message: `Are you sure you want to delete "${itemName}"? This action cannot be undone.`,
-          });
-          if (result) {
-            this.submit();
-          }
-        });
-      });
     });
-  </script>
+  });
+</script>
+
 </html>

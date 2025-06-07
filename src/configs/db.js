@@ -1,10 +1,10 @@
 const mysql = require("mysql2/promise");
 
-const host = "localhost";
-const port = 3306;
-const user = "root";
-const password = "Minhthnd512006";
-const database = "tyhh_db";
+const host = process.env.DB_HOST;
+const port = process.env.DB_PORT;
+const user = process.env.DB_USER;
+const password = process.env.DB_PASS;
+const database = process.env.DB_NAME;
 
 const createDatabase = async () => {
   let connection;

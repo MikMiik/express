@@ -28,8 +28,7 @@
 </div>
 
 <!-- Edit User Form -->
-<form id="editUserForm" class="card" method="POST" action="/admin/users/<%= user.id %>?_method=PUT"
-  enctype="multipart/form-data">
+<form id="editUserForm" class="card" method="POST" action="/admin/users/<%= user.id %>?_method=PUT" enctype="multipart/form-data">
   <div class="card-body">
     <div class="form-section">
       <h3>Personal Information</h3>
@@ -37,19 +36,17 @@
       <!-- name -->
       <div class="form-group <%= errors?.name ? 'invalid' : '' %>">
         <label for="userName">Full Name*</label>
-        <input value="<%= old?.name || user.name %>" autocomplete="name" type="text" id="userName" name="name"
-          class="form-control" />
+        <input value="<%= old?.name || user.name %>" autocomplete="name" type="text" id="userName" name="name" class="form-control" />
         <span class="form-message" id="userNameError">
           <%= errors?.name ? errors?.name : '' %>
         </span>
       </div>
       <!-- avatar -->
       <div class="form-group">
-      <label style="margin-top: 10px; max-width: fit-content" for="userAvatar">
+        <label style="margin-top: 10px; max-width: fit-content" for="userAvatar">
           Avatar
           <div class="avatar" style="width: 100px; height: 100px; margin-top: 20px">
-            <img src="<%= user.avatar %>" alt="" class="avatarImg avatar"
-              style="width: 100%; height: 100%; margin: 0" />
+            <img src="<%= user.avatar %>" alt="" class="avatarImg avatar" style="width: 100%; height: 100%; margin: 0" />
           </div>
         </label>
         <input hidden type="file" id="userAvatar" name="avatar" class="form-control" />
@@ -59,8 +56,7 @@
         <!-- email -->
         <div class="form-group <%= errors?.email ? 'invalid' : '' %>">
           <label for="userEmail">Email*</label>
-          <input value="<%= old?.email || user.email %>" type="email" id="userEmail" name="email"
-            class="form-control" />
+          <input value="<%= old?.email || user.email %>" type="email" id="userEmail" name="email" class="form-control" />
           <span class="form-message" id="userEmailError">
             <%= errors?.email ? errors?.email : '' %>
           </span>
@@ -71,11 +67,11 @@
           <label for="userPhone">Phone</label>
           <input value="<%= old?.phone || user.phone %>" type="tel" id="userPhone" name="phone" class="form-control" />
           <% if (errors?.phone) { %>
-            <span class="form-message" id="userPhoneError">
-              <%= errors?.phone %>
-            </span>
-            <% } %>
-              <span class="form-message"></span>
+          <span class="form-message" id="userPhoneError">
+            <%= errors?.phone %>
+          </span>
+          <% } %>
+          <span class="form-message"></span>
         </div>
       </div>
 
@@ -85,10 +81,10 @@
         <textarea id="userAddress" name="address" class="form-control" rows="2">
 <%= old?.address || user.address %></textarea>
         <% if (errors?.address) { %>
-          <span class="form-message" id="userAddressError">
-            <%= errors?.address %>
-          </span>
-          <% } %>
+        <span class="form-message" id="userAddressError">
+          <%= errors?.address %>
+        </span>
+        <% } %>
       </div>
     </div>
 
@@ -97,62 +93,60 @@
       <!-- username -->
       <div class="form-group">
         <label for="userUsername">Username*</label>
-        <input value="<%= old?.username || user.username %>" type="text" id="userUsername" name="username"
-          class="form-control" />
+        <input value="<%= old?.username || user.username %>" type="text" id="userUsername" name="username" class="form-control" />
         <% if (errors?.username) {%>
-          <span class="form-message" id="userUsernameError">
-            <%= errors?.username %>
-          </span>
-          <% } %>
-            <span class="form-message"></span>
+        <span class="form-message" id="userUsernameError">
+          <%= errors?.username %>
+        </span>
+        <% } %>
+        <span class="form-message"></span>
       </div>
-      
+
       <!-- role -->
       <div class="form-row">
         <div class="form-group">
           <label for="userRole">Role*</label>
           <% const roles=['Admin', 'Editor' , 'Viewer' ] %>
-            <select id="userRole" name="role" class="form-control">
-              <option value="">Select Role</option>
+          <select id="userRole" name="role" class="form-control">
+            <option value="">Select Role</option>
 
-              <% for (let role of roles) { %>
-                <% const selected = user?.role===role ? 'selected' : '' %>
-                  <option value="<%= role %>" <%= selected %>>
-                    <%= role %>
-                  </option>
-              <% } %>
-            </select>
-            <span class="error-text" id="userRoleError"></span>
+            <% for (let role of roles) { %>
+            <% const selected = user?.role===role ? 'selected' : '' %>
+            <option value="<%= role %>" <%= selected %>>
+              <%= role %>
+            </option>
+            <% } %>
+          </select>
+          <span class="error-text" id="userRoleError"></span>
         </div>
 
         <!-- status -->
         <div class="form-group">
           <label for="userStatus">Status*</label>
           <% const statuses=['Active', 'Inactive' , 'Pending' ] %>
-            <select id="userStatus" name="status" class="form-control">
-              <option value="">Select Status</option>
-              <% for (let status of statuses) { -%>
-                <% const selected = user?.status===status ? 'selected' : '' %>
-                  <option value="<%= status %>" <%= selected %>><%= status%>
-                  </option>
-                <% } %>
-            </select>
-            <span class="error-text" id="userStatusError"></span>
+          <select id="userStatus" name="status" class="form-control">
+            <option value="">Select Status</option>
+            <% for (let status of statuses) { -%>
+            <% const selected = user?.status===status ? 'selected' : '' %>
+            <option value="<%= status %>" <%= selected %>>
+              <%= status%>
+            </option>
+            <% } %>
+          </select>
+          <span class="error-text" id="userStatusError"></span>
         </div>
       </div>
 
       <!-- date created -->
       <div class="form-group">
         <label for="dateCreated">Date Created</label>
-        <input value="<%= formatDate(user.created_at) %>" type="text" id="dateCreated" class="form-control" readonly
-          disabled />
+        <input value="<%= formatDate(user.created_at) %>" type="text" id="dateCreated" class="form-control" readonly disabled />
       </div>
 
       <!-- lastlogin -->
       <div class="form-group">
         <label for="lastLogin">Last Login</label>
-        <input value="<%= formatDay(user.updated_at) %>" type="text" id="lastLogin" class="form-control" readonly
-          disabled />
+        <input value="<%= formatDay(user.updated_at) %>" type="text" id="lastLogin" class="form-control" readonly disabled />
       </div>
     </div>
 
@@ -164,11 +158,8 @@
         <div class="form-group">
           <label for="userPassword">New Password</label>
           <div style="display: flex; align-items: center; position: relative">
-            <input type="password" id="userPassword" name="password" class="form-control"/>
-            <i
-              style="position: absolute; right: 10px; padding: 5px"
-              class="fa-solid fa-eye-slash password"
-            ></i>
+            <input type="password" id="userPassword" name="password" class="form-control" />
+            <i style="position: absolute; right: 10px; padding: 5px" class="fa-solid fa-eye-slash password"></i>
           </div>
           <span class="form-message">
             <%= errors?.password ? errors?.password : '' %>
@@ -180,10 +171,7 @@
           <label for="userConfirmPassword">Confirm New Password</label>
           <div style="display: flex; align-items: center; position: relative">
             <input type="password" id="userConfirmPassword" name="confirm_password" class="form-control" />
-            <i
-              style="position: absolute; right: 10px; padding: 5px"
-              class="fa-solid fa-eye-slash confirm_password"
-            ></i>
+            <i style="position: absolute; right: 10px; padding: 5px" class="fa-solid fa-eye-slash confirm_password"></i>
           </div>
           <span class="form-message">
             <%= errors?.confirm_password ? errors?.confirm_password : '' %>
@@ -198,8 +186,7 @@
 
     <div class="form-buttons">
       <button style="padding: 0; overflow: hidden;" type="button" class="btn btn-secondary" id="cancelBtn">
-        <a style="text-decoration: none; color: inherit; padding: 10px 20px;"
-          href="/admin/users/<%= user.id%>">Cancel</a>
+        <a style="text-decoration: none; color: inherit; padding: 10px 20px;" href="/admin/users/<%= user.id%>">Cancel</a>
       </button>
       <button type="submit" class="btn btn-primary">
         <i class="fas fa-save"></i> Save Changes
@@ -256,7 +243,7 @@
       .test(
         "password",
         "Password must meet all requirements",
-        function (value) {
+        function(value) {
           const errors = [];
 
           if (!value) return true;
@@ -312,7 +299,7 @@
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const passwordReqs = [];
-        document.querySelector('main').scrollTo(0,150 )
+        document.querySelector('main').scrollTo(0, 150)
         err.inner.forEach((error) => {
           const errorInput = document.querySelector(
             `input[name=${error.path}]`,
@@ -333,7 +320,7 @@
   });
   // Password
   let timeoutId;
-  passwordInput.addEventListener("keyup", function () {
+  passwordInput.addEventListener("keyup", function() {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
@@ -359,7 +346,7 @@
   });
 
   // Confirm_password
-  confirmPasswordInput.addEventListener("input", function () {
+  confirmPasswordInput.addEventListener("input", function() {
     const formGroup = this.closest(".form-group");
     const errorSpan = formGroup.querySelector(".form-message");
 
@@ -370,7 +357,7 @@
   });
 
   let timerId;
-  confirmPasswordInput.addEventListener("keyup", function () {
+  confirmPasswordInput.addEventListener("keyup", function() {
     if (timerId) {
       clearTimeout(timerId);
     }
@@ -387,7 +374,7 @@
     }, 500);
   });
 
-  confirmPasswordInput.addEventListener("input", function () {
+  confirmPasswordInput.addEventListener("input", function() {
     const formGroup = this.closest(".form-group");
     const errorSpan = formGroup.querySelector(".form-message");
 
@@ -424,16 +411,16 @@
   });
 
 
-// Handle delete button
-const deleteForm = document.getElementById("deleteForm");
-deleteForm.addEventListener("submit", async function (e) {
-  e.preventDefault();
-  // Show modal
-  const result = await showConfirmDialog("confirmDeleteModal");
-  if (result) {
-    this.submit();
-  }
-});
+  // Handle delete button
+  const deleteForm = document.getElementById("deleteForm");
+  deleteForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    // Show modal
+    const result = await showConfirmDialog("confirmDeleteModal");
+    if (result) {
+      this.submit();
+    }
+  });
 </script>
 
 <style>
