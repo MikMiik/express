@@ -1,6 +1,7 @@
 const usersService = require("@/services/users.service");
 const md5 = require("md5");
-const transporter = require("@/configs/admin/mail");
+const transporter = require("@/configs/admin/mailer");
+const { createToken, verifyToken } = require("@/utils/jwt");
 
 exports.showLoginForm = async (req, res) => {
   res.render("admin/auth/login", {
@@ -48,7 +49,23 @@ exports.register = async (req, res) => {
     ? `/uploads/${req.file.filename}`
     : `/uploads/default-avatar.jpg`;
   body.avatar = avatar;
-  await usersService.create({ ...body, password: md5(req.body.password) });
+  const user = await usersService.create({
+    ...body,
+    password: md5(req.body.password),
+  });
+  const token = createToken({ userId: user.id }, { expiresIn: 60 * 60 * 12 });
+  const verifyUrl = `${req.protocol}://${req.host}/admin/verify-email?token=${token}`;
+  const message = {
+    from: process.env.MAIL_SENDER_FROM,
+    to: "minh0936532430@gmail.com",
+    subject: "Verify Message",
+    html: `
+    <div>
+      <a href="${verifyUrl}">Link xac minh<a/>
+    </div>
+    `,
+  };
+  await transporter.sendMail(message);
   res.redirect("/admin/login");
 };
 
@@ -57,6 +74,22 @@ exports.showForgotForm = async (req, res) => {
     layout: "./admin/layouts/auth",
   });
 };
+
+exports.sendForgotEmail = async (req, res) => {
+  const message = {
+    from: process.env.MAIL_SENDER_FROM,
+    to: req.body.email,
+    subject: "Reset Link",
+    html: `
+    <div>
+      <p style = "color: red"> Bye </p>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPgVqPfCA2AvKZIYM_vcKxX0ZSxJBeb7YUDQ&s"/>
+    </div>
+    `,
+  };
+  await transporter.sendMail(message);
+};
+
 exports.showResetForm = async (req, res) => {
   res.render("admin/auth/reset-password", {
     layout: "./admin/layouts/auth",
@@ -66,4 +99,24 @@ exports.showResetForm = async (req, res) => {
 exports.logout = async (req, res) => {
   delete req.session.userId;
   return res.redirect("/admin/login");
+};
+
+exports.verifyEmail = async (req, res) => {
+  const token = req.query.token;
+  const result = verifyToken(token);
+  if (result.success) {
+    const userId = result.data.userId;
+    const user = await usersService.getById(userId);
+    if (user.verified_at) {
+      req.flash("info", "Liên kết xác minh đã hết hạn hoặc không hợp lệ");
+      return res.redirect("/admin/login");
+    }
+    await usersService.update(userId, {
+      verified_at: new Date(),
+    });
+    req.flash("success", "Verify success");
+    return res.redirect("/admin/login");
+  }
+  req.flash("error", "Verify failed");
+  res.redirect("/admin/login");
 };
