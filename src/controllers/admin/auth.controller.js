@@ -2,6 +2,7 @@ const usersService = require("@/services/users.service");
 const md5 = require("md5");
 const transporter = require("@/configs/admin/mailer");
 const { createToken, verifyToken } = require("@/utils/jwt");
+const loadMail = require("@/utils/loadEmail");
 
 exports.showLoginForm = async (req, res) => {
   res.render("admin/auth/login", {
@@ -15,18 +16,6 @@ exports.login = async (req, res) => {
   const email = req.body.email;
   const password = md5(req.body.password);
   const user = await usersService.getByEmailAndPassword(email, password);
-  const message = {
-    from: process.env.MAIL_SENDER_FROM,
-    to: "minh0936532430@gmail.com",
-    subject: "List Message",
-    html: `
-    <div>
-      <p style = "color: red"> Bye </p>
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPgVqPfCA2AvKZIYM_vcKxX0ZSxJBeb7YUDQ&s"/>
-    </div>
-    `,
-  };
-  await transporter.sendMail(message);
 
   if (user) {
     req.session.userId = user.id;
@@ -55,15 +44,16 @@ exports.register = async (req, res) => {
   });
   const token = createToken({ userId: user.id }, { expiresIn: 60 * 60 * 12 });
   const verifyUrl = `${req.protocol}://${req.host}/admin/verify-email?token=${token}`;
+  const template = await loadMail("auth/verification", {
+    token,
+    userId: user.id,
+    verifyUrl,
+  });
   const message = {
     from: process.env.MAIL_SENDER_FROM,
     to: "minh0936532430@gmail.com",
     subject: "Verify Message",
-    html: `
-    <div>
-      <a href="${verifyUrl}">Link xac minh<a/>
-    </div>
-    `,
+    html: template,
   };
   await transporter.sendMail(message);
   res.redirect("/admin/login");
@@ -108,7 +98,7 @@ exports.verifyEmail = async (req, res) => {
     const userId = result.data.userId;
     const user = await usersService.getById(userId);
     if (user.verified_at) {
-      req.flash("info", "Liên kết xác minh đã hết hạn hoặc không hợp lệ");
+      req.flash("info", "Verification link is expired or invalid");
       return res.redirect("/admin/login");
     }
     await usersService.update(userId, {

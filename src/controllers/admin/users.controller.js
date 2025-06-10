@@ -4,12 +4,12 @@ const md5 = require("md5");
 
 exports.index = async (req, res) => {
   const { default_page, default_limit, max_limit } = paginationConfig;
-
   const page = +req.query.page > 0 ? +req.query.page : default_page;
   let limit = +req.query.limit > 0 ? +req.query.limit : default_limit;
   let maxLimit = max_limit;
   if (limit > maxLimit) limit = maxLimit;
   const { items, total } = await usersService.getAll(page, limit);
+
   res.render("admin/users/index", {
     users: items,
     total,

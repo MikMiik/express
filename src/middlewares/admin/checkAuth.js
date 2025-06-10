@@ -8,19 +8,13 @@ function checkAuth(req, res, next) {
 
   if (!res.locals.auth && isAuthRequired) {
     return res.redirect("/admin/login");
-  } else if (
-    res.locals.auth &&
-    !res.locals.auth.verified_at &&
-    isAuthRequired
-  ) {
+  }
+  if (res.locals.auth && !res.locals.auth.verified_at && isAuthRequired) {
     req.flash("error", "Vui lòng xác minh địa chỉ email trước.");
     return res.redirect("/admin/login");
-  } else if (
-    res.locals.auth &&
-    !isAuthRequired &&
-    res.locals.auth.verified_at
-  ) {
-    return res.redirect("/admin/");
+  }
+  if (res.locals.auth && !isAuthRequired && res.locals.auth.verified_at) {
+    return res.redirect("/admin/dashboard");
   }
   next();
 }
