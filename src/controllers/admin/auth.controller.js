@@ -2,7 +2,7 @@ const usersService = require("@/services/users.service");
 const md5 = require("md5");
 const transporter = require("@/configs/admin/mailer");
 const { createToken, verifyToken } = require("@/utils/jwt");
-const loadMail = require("@/utils/loadEmail");
+const queue = require("@/utils/queue");
 
 exports.showLoginForm = async (req, res) => {
   res.render("admin/auth/login", {
@@ -43,19 +43,10 @@ exports.register = async (req, res) => {
     password: md5(req.body.password),
   });
   const token = createToken({ userId: user.id }, { expiresIn: 60 * 60 * 12 });
+
   const verifyUrl = `${req.protocol}://${req.host}/admin/verify-email?token=${token}`;
-  const template = await loadMail("auth/verification", {
-    token,
-    userId: user.id,
-    verifyUrl,
-  });
-  const message = {
-    from: process.env.MAIL_SENDER_FROM,
-    to: "minh0936532430@gmail.com",
-    subject: "Verify Message",
-    html: template,
-  };
-  await transporter.sendMail(message);
+
+  queue.dispatch("sendVerifyEmailJob", { userId: user.id, token, verifyUrl });
   res.redirect("/admin/login");
 };
 
@@ -98,7 +89,10 @@ exports.verifyEmail = async (req, res) => {
     const userId = result.data.userId;
     const user = await usersService.getById(userId);
     if (user.verified_at) {
+      console.log("exist");
       req.flash("info", "Verification link is expired or invalid");
+      req.flash();
+      console.log(req.flash);
       return res.redirect("/admin/login");
     }
     await usersService.update(userId, {

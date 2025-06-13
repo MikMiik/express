@@ -10,7 +10,7 @@ function checkAuth(req, res, next) {
     return res.redirect("/admin/login");
   }
   if (res.locals.auth && !res.locals.auth.verified_at && isAuthRequired) {
-    req.flash("error", "Vui lòng xác minh địa chỉ email trước.");
+    req.flash("error", "Please verify your account by email first");
     return res.redirect("/admin/login");
   }
   if (res.locals.auth && !isAuthRequired && res.locals.auth.verified_at) {
