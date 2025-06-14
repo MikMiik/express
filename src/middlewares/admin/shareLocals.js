@@ -11,11 +11,13 @@ async function shareLocals(req, res, next) {
       res.locals.auth = user;
     }
   }
+
   res.locals.flash = req.flash() || {};
+  delete req.session.flash;
+
   res.locals.formatDate = formatDate;
   res.locals.formatDay = formatDay;
   res.locals.getVisiblePages = getVisiblePages;
-  delete req.session.flash;
   next();
 }
 

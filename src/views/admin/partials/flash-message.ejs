@@ -1,6 +1,7 @@
 <% if (flash && Object.keys(flash).length > 0) { %>
 <div class="flash-message-container">
-  <% for (let key in flash) { %> <% for (let message of flash[key]) { %>
+  <% for (let key in flash) { %>
+  <% for (let message of flash[key]) { %>
   <div class="flash-message <%= key %>">
     <p><%= message %></p>
   </div>

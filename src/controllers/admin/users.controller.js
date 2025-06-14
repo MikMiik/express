@@ -22,7 +22,7 @@ exports.index = async (req, res) => {
 exports.show = async (req, res) => {
   user = await usersService.getById(req.params.id);
   let flash = "";
-  if (user.id == "128") {
+  if (user.id == "148") {
     req.flash("info", "Do not delete this user");
     flash = req.flash("info");
   }
@@ -53,6 +53,7 @@ exports.store = async (req, res) => {
 
 exports.edit = async (req, res) => {
   const user = await usersService.getById(req.params.id);
+
   res.render("admin/users/edit", {
     user,
     errors: {},

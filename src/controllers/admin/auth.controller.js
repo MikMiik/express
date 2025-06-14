@@ -89,9 +89,7 @@ exports.verifyEmail = async (req, res) => {
     const userId = result.data.userId;
     const user = await usersService.getById(userId);
     if (user.verified_at) {
-      console.log("exist");
       req.flash("info", "Verification link is expired or invalid");
-      req.flash();
       console.log(req.flash);
       return res.redirect("/admin/login");
     }

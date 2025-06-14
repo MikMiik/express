@@ -18,6 +18,7 @@ async function queueWorker() {
 }
 
 async function jobProcess(job) {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const handler = handlers[job.type];
   if (handler) {
     try {
@@ -26,6 +27,15 @@ async function jobProcess(job) {
       await queueService.update(job.id, { status: "completed" });
     } catch (error) {
       await queueService.update(job.id, { status: "reject" });
+      console.log("Error:", error.message);
+      if (job.retries_count < job.max_retries) {
+        await queueService.update(job.id, {
+          status: "reject",
+          retries_count: (job.retries_count += 1),
+        });
+        console.log(`Retry times: ${job.retries_count}`);
+        jobProcess(job);
+      }
     }
   }
 }

@@ -1,6 +1,11 @@
 const sessionService = require("@/services/session.service");
 const { randomUUID } = require("node:crypto");
 async function handleSession(req, res, next) {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, 100);
+  });
   let _id = req.cookies.id;
   let session = _id && (await sessionService.getById(_id));
   if (!session) {
