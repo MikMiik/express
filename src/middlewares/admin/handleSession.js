@@ -1,11 +1,7 @@
 const sessionService = require("@/services/session.service");
 const { randomUUID } = require("node:crypto");
+
 async function handleSession(req, res, next) {
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, 100);
-  });
   let _id = req.cookies.id;
   let session = _id && (await sessionService.getById(_id));
   if (!session) {
@@ -25,7 +21,7 @@ async function handleSession(req, res, next) {
       secure: process.env.NODE_ENV === "production",
     });
   }
-  // console.log(req.sess)
+
   req.session = JSON.parse(session?.data ?? null) ?? {};
   // req.setFlash = (data) => {
   //   req.session.flash = data;

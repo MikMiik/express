@@ -22,7 +22,7 @@ exports.index = async (req, res) => {
 exports.show = async (req, res) => {
   user = await usersService.getById(req.params.id);
   let flash = "";
-  if (user.id == "148") {
+  if (user.id == "159") {
     req.flash("info", "Do not delete this user");
     flash = req.flash("info");
   }

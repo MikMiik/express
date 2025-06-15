@@ -1,3 +1,5 @@
+const sessionService = require("@/services/session.service");
+
 const format = require("util").format;
 
 const flash = (options) => {
@@ -34,13 +36,18 @@ function _flash(type, msg, ...args) {
       return msgs;
     }
     (msgs[type] = msgs[type] || []).push(msg);
-
+    sessionService.update(this.cookies.id, {
+      data: JSON.stringify({ ...this.session, flash: msgs }),
+    });
     return msgs;
   } else if (type) {
     const messages = msgs[type];
     delete msgs[type];
     return { [type]: messages };
   } else {
+    sessionService.update(this.cookies.id, {
+      data: JSON.stringify({ ...this.session, flash: msgs }),
+    });
     return msgs;
   }
 }
