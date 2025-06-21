@@ -27,6 +27,16 @@ class UsersService {
     return user;
   }
 
+  async getSoftDeleteUsers() {
+    const user = await usersModel.findByDeletedAt();
+    return user;
+  }
+
+  async countNewUsers() {
+    const count = await usersModel.countNewUsers();
+    return count;
+  }
+
   async create(data) {
     const user = await usersModel.create(data);
     return user;

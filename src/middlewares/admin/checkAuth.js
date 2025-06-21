@@ -14,7 +14,7 @@ function checkAuth(req, res, next) {
     return res.redirect("/admin/login");
   }
   if (res.locals.auth && !isAuthRequired && res.locals.auth.verified_at) {
-    return res.redirect("/admin/dashboard");
+    return res.redirect("/admin/");
   }
   next();
 }

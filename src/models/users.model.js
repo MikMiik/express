@@ -1,5 +1,6 @@
 const { db } = require("@/configs/db");
 const { buildInsertQuery, buildUpdateQuery } = require("@/utils/queryBuilder");
+const dayjs = require("dayjs");
 
 const table = "`users`";
 
@@ -17,6 +18,17 @@ exports.count = async () => {
     `select count(*) as total from ${table}`,
   );
   return total;
+};
+
+exports.countNewUsers = async () => {
+  const date = dayjs().subtract(1, "day").format("YYYY-MM-DD");
+  const startTime = `${date} 00:00:00`;
+  const endTime = `${date} 23:59:59`;
+  const [[{ count }]] = await db.query(
+    `select count(*) as count from ${table} where created_at between ? and ?`,
+    [startTime, endTime],
+  );
+  return count;
 };
 
 exports.findById = async (id) => {
@@ -47,6 +59,13 @@ exports.findByPhoneNumber = async (phone) => {
     phone,
   ]);
   return users[0];
+};
+
+exports.findByDeletedAt = async () => {
+  const [users] = await db.query(
+    `SELECT * FROM ${table} WHERE deleted_at is not null`,
+  );
+  return users;
 };
 
 exports.create = async (data) => {

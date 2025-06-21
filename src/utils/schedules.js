@@ -5,10 +5,4 @@ const queue = require("@/utils/queue");
 
 cron.schedule("00 00 20 * * *", () => {
   console.log("running a task every minute");
-
-  queue.dispatch("sendVerifyEmailJob", {
-    userId: 43,
-    token: 123,
-    verifyUrl: ":)))",
-  });
 });

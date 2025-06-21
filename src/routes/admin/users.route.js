@@ -15,6 +15,7 @@ router.post(
 router.get("/create", usersController.create);
 router.get("/:id/edit", usersController.edit);
 router.delete("/:id/force-delete", usersController.forceDelete);
+router.delete("/:id/delete", usersController.softDelete);
 router.put(
   "/:id",
   handleUpload.single("avatar"),

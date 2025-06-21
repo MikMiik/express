@@ -18,7 +18,7 @@
     <a href="/admin/users" class="btn btn-secondary">
       <i class="fas fa-arrow-left"></i> Back to Users
     </a>
-    <form id="deleteForm" method="POST" action="/admin/users/<%= user.id %>/force-delete?_method=DELETE">
+    <form id="deleteForm" method="POST" action="/admin/users/<%= user.id %>/delete?_method=DELETE">
       <button type="submit" class="btn btn-danger" id="deleteUserBtn" style="margin-left: 10px">
         <i class="fas fa-trash"></i>
         Delete User
@@ -200,7 +200,7 @@
   <div class="modal-content">
     <h3 class="modal-title">Confirm Delete</h3>
     <div class="modal-body">
-      Are you sure you want to delete user "<%= auth.name %>"?
+      Are you sure you want to delete user "<%= auth.name %>" after 30 days?
     </div>
     <div class="modal-footer">
       <button type="button" id="cancelDelete" class="btn btn-secondary" data-cancel>

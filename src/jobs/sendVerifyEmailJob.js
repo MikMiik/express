@@ -13,7 +13,7 @@ async function sendVerifyEmailJob(job) {
   });
   const message = {
     from: process.env.MAIL_SENDER_FROM,
-    to: "minh0936532430@gmail.com",
+    to: "minh093653243@gmail.com",
     subject: "Verify Message",
     html: template,
   };

@@ -1,6 +1,7 @@
 const usersService = require("@/services/users.service");
 const paginationConfig = require("@/configs/pagination");
 const md5 = require("md5");
+const dayjs = require("dayjs");
 
 exports.index = async (req, res) => {
   const { default_page, default_limit, max_limit } = paginationConfig;
@@ -78,5 +79,13 @@ exports.update = async (req, res) => {
 exports.forceDelete = async (req, res) => {
   await usersService.remove(req.params.id);
   req.flash("success", "Delete successful");
+  res.redirect("/admin/users");
+};
+
+exports.softDelete = async (req, res) => {
+  const date = dayjs().format("YYYY-MM-DD HH:mm:ss");
+  await usersService.update(req.params.id, {
+    deleted_at: date,
+  });
   res.redirect("/admin/users");
 };
