@@ -30,6 +30,7 @@ const handleSession = require("@/middlewares/admin/handleSession");
 const shareLocals = require("@/middlewares/admin/shareLocals");
 const checkAuth = require("@/middlewares/admin/checkAuth");
 const flash = require("@/middlewares/admin/flash");
+const sequelize = require("@/configs/database");
 
 /*------------------------------------------------------------ */
 
@@ -75,4 +76,13 @@ app.use(errorHandler);
   app.listen(port, () => {
     console.log(`http://localhost:${port}/admin`);
   });
+})();
+
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
 })();

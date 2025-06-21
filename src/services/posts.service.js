@@ -1,29 +1,29 @@
 const postsModel = require("@/models/posts.model");
-
+const Post = require("@/models/postsORM.model");
 class PostsService {
   async getAll(page = 1, limit = 10) {
-    const items = await postsModel.findAll(page, limit);
-    const total = await postsModel.count();
-    return { items, total };
+    const posts = await Post.findAll({ limit: 5 });
+    return posts;
   }
 
   async getById(id) {
-    const post = await postsModel.findById(id);
+    const post = await Post.findOne({ where: { id } });
     return post;
   }
 
   async create(data) {
-    const post = await postsModel.create(data);
+    const post = await Post.create(data);
     return post;
   }
 
   async update(id, data) {
-    const post = await postsModel.update(id, data);
+    const post = await Post.update(data, { where: { id } });
+    console.log(post);
     return post;
   }
 
   async remove(id) {
-    const result = await postsModel.remove(id);
+    const result = await Post.destroy({ where: { id } });
     return result;
   }
 }

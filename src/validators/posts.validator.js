@@ -8,12 +8,12 @@ exports.createPostValidator = [
       notEmpty: { errorMessage: "Title is not empty." },
     },
     description: {
-      exists: { errorMessage: "Description is required" },
-      notEmpty: { errorMessage: "Description is not empty." },
+      // exists: { errorMessage: "Description is required" },
+      // notEmpty: { errorMessage: "Description is not empty." },
     },
     content: {
-      exists: { errorMessage: "Content is required" },
-      notEmpty: { errorMessage: "Content is not empty." },
+      // exists: { errorMessage: "Content is required" },
+      // notEmpty: { errorMessage: "Content is not empty." },
     },
   }),
   handleValidationErrors,

@@ -5,14 +5,14 @@ const throw404 = require("@/utils/throw404");
 exports.getList = async (req, res) => {
   const result = await postsService.getAll(req.page, req.limit);
   if (!result) throw404();
-  res.paginate(result);
+  res.success(200, result);
 };
 
 exports.getOne = async (req, res) => {
-  const comments = await commentsService.getByPostId(req.post.id);
+  // const comments = await commentsService.getByPostId(req.post.id);
   const data = {
-    ...req.post,
-    comments,
+    ...req.post.dataValues,
+    // comments,
   };
   res.success(200, data);
 };
