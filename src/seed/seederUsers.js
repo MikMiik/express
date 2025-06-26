@@ -10,6 +10,7 @@ function createUsernameSlug(name) {
   return slugify(name, {
     lower: true,
     strict: true,
+    // strict: loại bỏ các ký tự không an toàn (accent, kí tự đặc biệt).
     replacement: "-",
   });
 }
@@ -83,11 +84,11 @@ async function generateUsers(count = 100) {
       bio: faker.lorem.sentences(3, " "),
       address: faker.location.streetAddress(true),
       blocked_at: faker.datatype.boolean(0.1) ? faker.date.recent() : null, // 10% chance bị block
-      created_at: faker.date.between({
-        from: "2022-01-01T00:00:00.000Z",
-        to: "2025-06-14T00:00:00.000Z",
-      }),
-      updated_at: faker.date.recent(),
+      // created_at: faker.date.between({
+      //   from: "2022-01-01T00:00:00.000Z",
+      //   to: "2025-06-14T00:00:00.000Z",
+      // }),
+      // updated_at: faker.date.recent(),
       verified_at: faker.datatype.boolean(0.8) ? faker.date.recent() : null, // 80% chance được verify
     };
 

@@ -1,4 +1,3 @@
-const postsModel = require("@/models/posts.model");
 const Post = require("@/models/postsORM.model");
 class PostsService {
   async getAll(page = 1, limit = 10) {
